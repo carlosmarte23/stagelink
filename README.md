@@ -51,7 +51,7 @@ pnpm dev
 ## 🚧 Project Status
 
 Current Phase: MVP / Frontend Implementation.
-The project currently operates with a mocked backend to focus on UI/UX interactions. Future updates will introduce a real API integration.
+The project currently operates with a mocked backend to focus on UI/UX interactions. Future updates will introduce a real API integration under /server within this repository.
 
 ## Author:
 
