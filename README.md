@@ -1,16 +1,64 @@
-# React + Vite
+# 🎟️ StageLink
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**A modern, frontend-first concert ticketing experience.**
 
-Currently, two official plugins are available:
+StageLink is a React-based application designed to simulate a complete e-commerce flow for live events. While the product is a ticketing platform, the technical goal is to demonstrate **clean frontend architecture**, robust **state management**, and a seamless **UX/UI** implementation.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+> **⚠️ Note:** This is a portfolio project using a mocked backend and local persistence. No real payments are processed.
 
-## React Compiler
+## 🎨 Design & Inspiration
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+The UI inspired by the **Stitch design** to ensure visual consistency and accessibility.
+[View Design Prototype (Stitch)](https://stitch.withgoogle.com/projects/7174623962662235921)
 
-## Expanding the ESLint configuration
+## Screenshots
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Coming Soon...
+
+## ✨ Key Features (MVP)
+
+- **Event Discovery:** Browse and filter events with instant search capabilities.
+- **Smart Booking:** Select ticket types and manage quantities dynamically.
+- **Persistent Cart:** Review and edit orders with state persistence (via `localStorage`).
+- **Simulated Checkout:** A friction-free purchase flow that generates ticket IDs without real transactions.
+- **My Tickets:** View your purchased tickets in a digital wallet format.
+
+## 🛠️ Tech Stack
+
+- **Core:** React + Vite
+- **Routing:** React Router (SPA)
+- **Data:** Mocked Local JSON (simulating REST API)
+- **State/Storage:** Custom Hooks + LocalStorage API
+
+## 🚀 Getting Started
+
+Follow these steps to run the project locally:
+
+### Install dependencies
+
+```bash
+pnpm install
+# or npm install
+```
+
+### Run the development server
+
+```bash
+pnpm dev
+# or npm run dev
+```
+
+## 🚧 Project Status
+
+Current Phase: MVP / Frontend Implementation.
+The project currently operates with a mocked backend to focus on UI/UX interactions. Future updates will introduce a real API integration.
+
+## Author:
+
+Carlos Marte
+
+Github: https://github.com/carlosmarte23
+
+## License
+
+MIT
