@@ -12,7 +12,7 @@
 }
 
 .header {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid var(--border);
 }
 
 .header__inner {
@@ -33,7 +33,7 @@
   }
 
   &:focus-visible {
-    outline: 0.125rem solid currentColor;
+    outline: 0.125rem solid var(--focus-ring);
     outline-offset: 0.2rem;
     border-radius: 0.25rem;
   }
@@ -52,7 +52,7 @@
 }
 
 .footer {
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  border-top: 1px solid var(--border);
   font-size: 0.75rem;
   opacity: 0.75;
 }
@@ -78,7 +78,7 @@
   }
 
   &:focus-visible {
-    outline: 0.125rem solid currentColor;
+    outline: 0.125rem solid var(--focus-ring);
     outline-offset: 0.2rem;
   }
 }
