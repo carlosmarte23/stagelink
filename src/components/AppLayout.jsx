@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 const navLinkClass = ({ isActive }) =>
   `nav__link ${isActive ? "nav__link--active" : ""}`;
@@ -8,9 +8,10 @@ export default function AppLayout({ children }) {
     <div className="app">
       <header className="header">
         <div className="container header__inner">
-          <span className="brand">StageLink</span>
+          <Link to="/" className="brand">
+            StageLink
+          </Link>
           <nav className="nav">
-            {/* placeholder: no real links yet */}
             <NavLink to="/" end className={navLinkClass}>
               Home
             </NavLink>
