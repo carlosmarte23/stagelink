@@ -9,8 +9,13 @@
   padding: 0;
 }
 
+#root {
+  min-height: 100%;
+}
+
 html,
-body {
+body,
+#root {
   height: 100%;
 }
 
@@ -56,8 +61,4 @@ a {
 ul,
 ol {
   list-style: none;
-}
-
-#root {
-  min-height: 100%;
 }
