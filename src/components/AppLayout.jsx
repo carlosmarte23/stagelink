@@ -1,3 +1,8 @@
+import { NavLink } from "react-router-dom";
+
+const navLinkClass = ({ isActive }) =>
+  `nav__link ${isActive ? "nav__link--active" : ""}`;
+
 export default function AppLayout({ children }) {
   return (
     <div className="app">
@@ -6,8 +11,15 @@ export default function AppLayout({ children }) {
           <span className="brand">StageLink</span>
           <nav className="nav">
             {/* placeholder: no real links yet */}
-            <span>Cart</span>
-            <span>My Tickets</span>
+            <NavLink to="/" end className={navLinkClass}>
+              Home
+            </NavLink>
+            <NavLink to="/cart" className={navLinkClass}>
+              Cart
+            </NavLink>
+            <NavLink to="/my-tickets" className={navLinkClass}>
+              My Tickets
+            </NavLink>
           </nav>
         </div>
       </header>
