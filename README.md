@@ -11,9 +11,16 @@ StageLink is a React-based application designed to simulate a complete e-commerc
 The UI inspired by the **Stitch design** to ensure visual consistency and accessibility.
 [View Design Prototype (Stitch)](https://stitch.withgoogle.com/projects/7174623962662235921)
 
-## Screenshots
+## Screenshots (Stitch design)
 
-Coming Soon...
+[![Home Design](./docs/design/home.png "Home Page")](./docs/design/home.png "Open full size")  
+_Home Page_
+
+[![Event Detail Design](./docs/design/event-detail.png "Event Detail Page")](./docs/design/event-detail.png "Open full size")  
+_Event Detail Page_
+
+[![Checkout Design](./docs/design/cart-checkout.png "Checkout Page")](./docs/design/cart-checkout.png "Open full size")  
+_Checkout Page_
 
 ## ✨ Key Features (MVP)
 
