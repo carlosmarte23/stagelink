@@ -16,8 +16,9 @@ Backend APIs, database design, authentication server, and real payments are inte
 
 Public
 
-- `/` Home (Discover)
-- `/event/:eventId` Event Detail
+- `/` Home (Landing)
+- `/events` Events (Explore)
+- `/events/:eventId` Event Detail
 - `/cart` Checkout flow (can be multi-step inside the route)
 - `/my-tickets` My Tickets
 - `*` NotFound
@@ -68,48 +69,53 @@ localStorage
 - Global background/text styles
 - Spline Sans loaded
 
-2. Home UI (Discover)
+2. Home UI (Landing)
 
 - Hero banner with CTA
+- Featured events preview (cards from mock data)
+- CTA navigates to `/events`
+
+3. Events UI (Explore)
+
 - Filters sidebar (UI + basic filtering)
-- Featured events grid (cards from mock data)
+- Events grid (cards from mock data)
 - Pagination UI
 - Empty and loading states
 
-3. Event Detail UI
+4. Event Detail UI
 
 - Event header/media section
 - Ticket tiers and quantity controls
 - “Sold out” state
 - Add to cart behavior
 
-4. Checkout UI (Cart)
+5. Checkout UI (Cart)
 
 - Review step (items + totals)
 - Payment step (fake payment form)
 - Confirmation step (order summary + QR placeholder)
 - Persist orders/tickets, clear cart
 
-5. My Tickets UI
+6. My Tickets UI
 
 - Tabs (Upcoming / Past)
 - Search + sorting UI
 - Ticket cards and actions (UI + minimal behavior)
 
-6. Auth UI (Login/Register/Forgot)
+7. Auth UI (Login/Register/Forgot)
 
 - Forms and validation
 - Fake session state (optional)
 - Header reflects auth state (optional)
 
-7. Admin UI (UI-first)
+8. Admin UI (UI-first)
 
 - Admin layout with sidebar
 - Dashboard cards (mock data)
 - Orders & Tickets management table (mock)
 - Basic CRUD screens (UI only): users/roles/venues/concerts/events/prices
 
-8. Polish
+9. Polish
 
 - Accessibility pass (focus-visible, labels, keyboard)
 - Responsive refinements

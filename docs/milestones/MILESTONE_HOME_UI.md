@@ -1,8 +1,8 @@
-# Milestone: Home UI (Discover)
+# Milestone: Home UI (Landing)
 
 Target screen
 
-- Stitch Home (Discover): hero banner + filters sidebar + featured events grid + pagination + footer
+- Stitch Home (Landing): hero banner + featured events grid + newsletter signup
 
 Goal
 Build the Home page UI so it visually matches the design and behaves like a real app using mock data.
@@ -46,10 +46,8 @@ Acceptance check
 Structure Home into clear sections:
 
 - Hero section (title, subtitle, CTA button)
-- Content area with:
-  - left: Filters panel (placeholder UI)
-  - right: “Featured Events” heading + grid placeholder
-- Pagination placeholder
+- Content area with “Featured Events” heading + grid placeholder
+- Newsletter signup form placeholder
 - Make sure spacing matches the design proportions (container widths, gaps)
 
 Acceptance check
@@ -75,63 +73,11 @@ Acceptance check
 
 - With 6 mock events, the grid visually resembles the design.
 
-### 4) Build Filters panel UI
-
-Match sidebar:
-
-- Artist/Event search input (UI only at first)
-- Date select (dropdown)
-- Genre chips (multi-select UI)
-- Venue select
-- Buttons: Apply Filters, Clear
-
-Behavior
-
-- Keep state locally in Home for now
-- Apply Filters filters the dataset
-- Clear resets filters
-- You can start with only 1 or 2 filters working (genre + venue), then expand
-
-Acceptance check
-
-- Clicking chips changes selection
-- Apply Filters updates the grid
-- Clear resets
-
-### 5) Pagination UI
-
-Match bottom pagination:
-
-- prev/next
-- page numbers
-- active page state
-
-Behavior
-
-- Frontend-only pagination:
-  - page size (example 6)
-  - compute total pages from filtered results
-  - change page updates visible items
-
-Acceptance check
-
-- Pagination changes the visible events.
-
-### 6) States: empty and loading
-
-Add:
-
-- Empty state when filters return 0 results
-- Loading skeleton (simple, reusable) that you can re-use later
-
-Acceptance check
-
-- You can simulate loading with a short timeout and show skeletons.
-
 ## Definition of Done
 
-- Home matches the Stitch screen layout (hero, sidebar, grid, pagination)
+- Home matches the Stitch screen layout (hero, featured grid, newsletter)
+- Clicking hero CTA navigates to Events route
+- EventCard UI matches the design
 - Clicking “Get Tickets” navigates to Event Detail route
-- Filters work for at least 2 dimensions (genre + venue recommended)
-- Empty state exists
+- Newsletter form is functional (valdate email and log at least log to console and toast notification)
 - No console errors
