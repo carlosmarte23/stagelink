@@ -1,0 +1,208 @@
+[
+  {
+    "id": "evt_001",
+    "title": "Neon Nights Tour",
+    "date": "2026-02-14T20:00:00Z",
+    "venueName": "The Grand Arena",
+    "city": "Philadelphia, PA",
+    "imageUrl": "https://images.unsplash.com/photo-1622136352909-642073a6be1f?auto=format&fit=crop&fm=jpg&q=60&w=2400",
+    "priceFrom": 79,
+    "genres": ["Pop", "Electronic"],
+    "isFeatured": true
+  },
+  {
+    "id": "evt_002",
+    "title": "Midnight Bass Rave",
+    "date": "2026-02-21T23:00:00Z",
+    "venueName": "Neon Warehouse",
+    "city": "Baltimore, MD",
+    "imageUrl": "https://images.unsplash.com/photo-1768053917161-34fc3365c9b2?auto=format&fit=crop&fm=jpg&q=60&w=2400",
+    "priceFrom": 49,
+    "genres": ["EDM", "Electronic"],
+    "isFeatured": true
+  },
+  {
+    "id": "evt_003",
+    "title": "Indie Sunset Sessions",
+    "date": "2026-03-01T00:30:00Z",
+    "venueName": "Skyline Pavilion",
+    "city": "New York, NY",
+    "imageUrl": "https://images.unsplash.com/photo-1604177052603-c2b4cff228db?auto=format&fit=crop&fm=jpg&q=60&w=2400",
+    "priceFrom": 65,
+    "genres": ["Indie", "Rock"],
+    "isFeatured": true
+  },
+  {
+    "id": "evt_004",
+    "title": "Hip-Hop Takeover: Live Cypher",
+    "date": "2026-03-07T02:00:00Z",
+    "venueName": "Uptown Theater",
+    "city": "Washington, DC",
+    "imageUrl": "https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?auto=format&fit=crop&fm=jpg&q=60&w=2400",
+    "priceFrom": 59,
+    "genres": ["Hip-Hop"],
+    "isFeatured": true
+  },
+  {
+    "id": "evt_005",
+    "title": "Guitar Spotlight: Live in Mono",
+    "date": "2026-03-12T01:30:00Z",
+    "venueName": "The Metro Club",
+    "city": "Boston, MA",
+    "imageUrl": "https://images.unsplash.com/photo-1466584820433-9ad1cc6798f3?auto=format&fit=crop&fm=jpg&q=60&w=2400",
+    "priceFrom": 55,
+    "genres": ["Rock"],
+    "isFeatured": true
+  },
+  {
+    "id": "evt_006",
+    "title": "Stadium Lights Festival",
+    "date": "2026-03-20T22:00:00Z",
+    "venueName": "Starlight Amphitheater",
+    "city": "Newark, NJ",
+    "imageUrl": "https://images.unsplash.com/photo-1760160741849-0809daa8e4c8?auto=format&fit=crop&fm=jpg&q=60&w=2400",
+    "priceFrom": 99,
+    "genres": ["Pop", "Rock"],
+    "isFeatured": true
+  },
+  {
+    "id": "evt_007",
+    "title": "Downtown Jazz Festival",
+    "date": "2026-03-28T23:00:00Z",
+    "venueName": "Riverfront Hall",
+    "city": "Chicago, IL",
+    "imageUrl": "https://images.unsplash.com/photo-1622136352909-642073a6be1f?auto=format&fit=crop&fm=jpg&q=60&w=2400",
+    "priceFrom": 49,
+    "genres": ["Jazz"]
+  },
+  {
+    "id": "evt_008",
+    "title": "Latin Heat: Night of Salsa",
+    "date": "2026-04-03T01:00:00Z",
+    "venueName": "Harbor Stage",
+    "city": "Miami, FL",
+    "imageUrl": "https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?auto=format&fit=crop&fm=jpg&q=60&w=2400",
+    "priceFrom": 59,
+    "genres": ["Latin"]
+  },
+  {
+    "id": "evt_009",
+    "title": "Synthwave Dreams",
+    "date": "2026-04-05T02:00:00Z",
+    "venueName": "Neon Warehouse",
+    "city": "Atlanta, GA",
+    "imageUrl": "https://images.unsplash.com/photo-1768053917161-34fc3365c9b2?auto=format&fit=crop&fm=jpg&q=60&w=2400",
+    "priceFrom": 45,
+    "genres": ["Electronic", "Pop"]
+  },
+  {
+    "id": "evt_010",
+    "title": "Acoustic Stories: Unplugged",
+    "date": "2026-04-10T00:30:00Z",
+    "venueName": "Uptown Theater",
+    "city": "Austin, TX",
+    "imageUrl": "https://images.unsplash.com/photo-1466584820433-9ad1cc6798f3?auto=format&fit=crop&fm=jpg&q=60&w=2400",
+    "priceFrom": 39,
+    "genres": ["Indie"]
+  },
+  {
+    "id": "evt_011",
+    "title": "Metal Forge Night",
+    "date": "2026-04-12T23:30:00Z",
+    "venueName": "Riverfront Hall",
+    "city": "Cleveland, OH",
+    "imageUrl": "https://images.unsplash.com/photo-1604177052603-c2b4cff228db?auto=format&fit=crop&fm=jpg&q=60&w=2400",
+    "priceFrom": 69,
+    "genres": ["Metal", "Rock"]
+  },
+  {
+    "id": "evt_012",
+    "title": "R&B Velvet Sessions",
+    "date": "2026-04-18T01:00:00Z",
+    "venueName": "The Metro Club",
+    "city": "Charlotte, NC",
+    "imageUrl": "https://images.unsplash.com/photo-1622136352909-642073a6be1f?auto=format&fit=crop&fm=jpg&q=60&w=2400",
+    "priceFrom": 55,
+    "genres": ["R&B"]
+  },
+  {
+    "id": "evt_013",
+    "title": "Country Road Live",
+    "date": "2026-04-24T00:00:00Z",
+    "venueName": "Skyline Pavilion",
+    "city": "Nashville, TN",
+    "imageUrl": "https://images.unsplash.com/photo-1466584820433-9ad1cc6798f3?auto=format&fit=crop&fm=jpg&q=60&w=2400",
+    "priceFrom": 59,
+    "genres": ["Country"]
+  },
+  {
+    "id": "evt_014",
+    "title": "EDM Skyline Takeover",
+    "date": "2026-04-25T23:00:00Z",
+    "venueName": "Harbor Stage",
+    "city": "San Diego, CA",
+    "imageUrl": "https://images.unsplash.com/photo-1768053917161-34fc3365c9b2?auto=format&fit=crop&fm=jpg&q=60&w=2400",
+    "priceFrom": 89,
+    "genres": ["EDM"]
+  },
+  {
+    "id": "evt_015",
+    "title": "Pop Icons Live",
+    "date": "2026-05-02T01:00:00Z",
+    "venueName": "The Grand Arena",
+    "city": "Los Angeles, CA",
+    "imageUrl": "https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?auto=format&fit=crop&fm=jpg&q=60&w=2400",
+    "priceFrom": 129,
+    "genres": ["Pop"]
+  },
+  {
+    "id": "evt_016",
+    "title": "Indie Night: New Sounds",
+    "date": "2026-05-08T00:30:00Z",
+    "venueName": "The Metro Club",
+    "city": "San Francisco, CA",
+    "imageUrl": "https://images.unsplash.com/photo-1604177052603-c2b4cff228db?auto=format&fit=crop&fm=jpg&q=60&w=2400",
+    "priceFrom": 45,
+    "genres": ["Indie"]
+  },
+  {
+    "id": "evt_017",
+    "title": "Hip-Hop Arena: Main Event",
+    "date": "2026-05-16T01:00:00Z",
+    "venueName": "The Grand Arena",
+    "city": "Houston, TX",
+    "imageUrl": "https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?auto=format&fit=crop&fm=jpg&q=60&w=2400",
+    "priceFrom": 99,
+    "genres": ["Hip-Hop"]
+  },
+  {
+    "id": "evt_018",
+    "title": "Electronic Bloom",
+    "date": "2026-05-22T02:00:00Z",
+    "venueName": "Neon Warehouse",
+    "city": "Denver, CO",
+    "imageUrl": "https://images.unsplash.com/photo-1768053917161-34fc3365c9b2?auto=format&fit=crop&fm=jpg&q=60&w=2400",
+    "priceFrom": 59,
+    "genres": ["Electronic"]
+  },
+  {
+    "id": "evt_019",
+    "title": "Jazz After Dark",
+    "date": "2026-05-29T01:00:00Z",
+    "venueName": "Uptown Theater",
+    "city": "New Orleans, LA",
+    "imageUrl": "https://images.unsplash.com/photo-1622136352909-642073a6be1f?auto=format&fit=crop&fm=jpg&q=60&w=2400",
+    "priceFrom": 49,
+    "genres": ["Jazz", "R&B"]
+  },
+  {
+    "id": "evt_020",
+    "title": "Summer Rock Fest",
+    "date": "2026-06-06T22:00:00Z",
+    "venueName": "Starlight Amphitheater",
+    "city": "Pittsburgh, PA",
+    "imageUrl": "https://images.unsplash.com/photo-1760160741849-0809daa8e4c8?auto=format&fit=crop&fm=jpg&q=60&w=2400",
+    "priceFrom": 89,
+    "genres": ["Rock"]
+  }
+]
