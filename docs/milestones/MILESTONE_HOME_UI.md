@@ -67,7 +67,7 @@ Match the event card pattern:
 
 Important behavior
 
-- Button and/or card links to `/event/:eventId` using the event id
+- Button and/or card links to `/events/:eventId` using the event id
 
 Acceptance check
 
