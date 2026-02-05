@@ -25,9 +25,7 @@ export default function AppLayout({ children }) {
         </div>
       </header>
 
-      <main className="main">
-        <div className="container">{children}</div>
-      </main>
+      <main className="main">{children}</main>
 
       <footer className="footer">
         <div className="container footer__inner">
