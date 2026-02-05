@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
 import events from "../data/events.json";
+import styles from "./Home.module.css";
 
+const HERO_URL =
+  "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?q=80&w=1280&auto=format&fit=crop";
 export default function Home() {
   const featured = events
     .filter((event) => event.isFeatured)
@@ -8,52 +11,54 @@ export default function Home() {
     .slice(0, 6);
   return (
     <>
-      <section className="hero" aria-labelledby="home-hero-title">
-        <div className="hero__content">
-          <h1 id="home-hero-title">
-            Live music, <span className="highlight">unforgettable</span>{" "}
+      <section className={styles.hero} aria-labelledby="home-hero-title">
+        <div
+          className={styles.heroBg}
+          style={{ backgroundImage: `url(${HERO_URL})` }}
+          aria-hidden="true"
+        />
+        <div className={styles.heroOverlay} aria-hidden="true" />
+
+        <div className={styles.heroInner}>
+          <h1 className={styles.heroTitle}>
+            Live music, <span className={styles.highlight}>unforgettable</span>{" "}
             moments.
           </h1>
-          <p>
+          <p className={styles.heroText}>
             The modern way to experience live events. Discover curated concerts
             and get your tickets in seconds.
           </p>
-          <Link to="/events" className="button button--primary">
-            Explore
+          <Link
+            to="/events"
+            className={`button button--primary ${styles.heroCta}`}
+          >
+            Explore Events
           </Link>
-        </div>
-        <div className="hero__image" aria-hidden="true">
-          <img
-            src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?q=80&w=1280&auto=format&fit=crop"
-            alt=""
-          />
         </div>
       </section>
 
-      <section className="content">
+      <section className="container content">
         <div className="content__heading">
           <p>Selected for you</p>
           <h2>Featured Events</h2>
           <Link to="/events">View all events</Link>
         </div>
         <div className="featured-grid">
-          {events
-            .filter((event) => event.isFeatured)
-            .map((event) => (
-              <Link
-                key={event.id}
-                to={`/events/${event.id}`}
-                className="card card--featured"
-              >
-                {/* <img src={event.imageUrl} alt="" /> */}
-                <div className="card__content">
-                  <p>{event.date}</p>
-                  <h3>{event.title}</h3>
-                  <p>{event.venueName}</p>
-                  <h3>{event.city}</h3>
-                </div>
-              </Link>
-            ))}
+          {featured.map((event) => (
+            <Link
+              key={event.id}
+              to={`/events/${event.id}`}
+              className="card card--featured"
+            >
+              {/* <img src={event.imageUrl} alt="" /> */}
+              <div className="card__content">
+                <p>{event.date}</p>
+                <h3>{event.title}</h3>
+                <p>{event.venueName}</p>
+                <h3>{event.city}</h3>
+              </div>
+            </Link>
+          ))}
         </div>
       </section>
       <section className="newsletter-form">
