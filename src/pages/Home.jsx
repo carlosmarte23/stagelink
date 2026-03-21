@@ -1,8 +1,7 @@
-import { Link } from "react-router-dom";
 import events from "../data/events.json";
-import styles from "./Home.module.css";
+
 import HomeHero from "../components/home/HomeHero/HomeHero.jsx";
-import EventCard from "../components/events/EventCard/EventCard.jsx";
+import FeaturedEventsSection from "../components/home/FeaturedEventsSection/FeaturedEventsSection.jsx";
 
 export default function Home() {
   const featured = events
@@ -14,20 +13,7 @@ export default function Home() {
       <HomeHero />
 
       <div className="container">
-        <section id="featured-events" className={styles.featured}>
-          <div className={styles.featuredHeader}>
-            <p className={styles.kicker}>Selected for you</p>
-            <h2 className={styles.featuredTitle}>Featured Events</h2>
-            <Link to="/events" className={styles.viewAll}>
-              View all events
-            </Link>
-          </div>
-          <div className={styles.featuredGrid}>
-            {featured.map((event) => (
-              <EventCard key={event.id} event={event} variant={"featured"} />
-            ))}
-          </div>
-        </section>
+        <FeaturedEventsSection events={featured} />
         <section className="newsletter-form">
           <h2>Never miss a beat.</h2>
           <p>
