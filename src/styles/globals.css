@@ -29,7 +29,7 @@ a {
   cursor: pointer;
 
   border: 1px solid transparent;
-  background: var(--white-05);
+  background: var(--white-10);
   color: var(--text-strong);
 
   transition:
