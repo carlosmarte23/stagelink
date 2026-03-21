@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import AppLayout from "./components/AppLayout";
+import AppLayout from "./components/layout/AppLayout.jsx";
 import Cart from "./pages/Cart";
 import EventListings from "./pages/EventListings";
 import EventDetail from "./pages/EventDetail";
