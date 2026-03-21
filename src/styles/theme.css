@@ -6,7 +6,8 @@
     sans-serif;
 
   /* Colors */
-  --purple-rgb: 164 19 236;
+  --purple: 164 19 236;
+  --purple-dark: 51, 22, 65;
 
   --bg-light: #f7f6f8;
   --bg-dark: #121212;
@@ -22,18 +23,23 @@
   --white-05: rgba(255, 255, 255, 0.05);
   --white-10: rgba(255, 255, 255, 0.1);
   --white-20: rgba(255, 255, 255, 0.2);
+  --white-70: rgba(255, 255, 255, 0.7);
+  --white-80: rgba(255, 255, 255, 0.8);
+  --white-90: rgba(255, 255, 255, 0.9);
 
   /* Tokens */
   --bg: var(--bg-dark);
-  --surface-1: var(--white-05); /* cards, sidebar panels */
-  --surface-2: var(--white-10); /* inputs, topbar translucent areas */
-  --surface-3: var(--white-20); /* hover surfaces */
+  --surface-1: rgb(24, 24, 24); /* cards, sidebar panels */
+  --surface-2: rgb(32, 32, 32); /* inputs, topbar translucent areas */
+  --surface-3: rgb(48, 48, 48); /* hover surfaces */
 
   --border: var(--white-10);
+  --border-hover: var(--white-20);
 
-  --primary: rgb(var(--purple-rgb));
-  --primary-hover: rgb(var(--purple-rgb) / 0.9);
+  --primary: rgb(var(--purple));
+  --primary-hover: rgb(var(--purple) / 0.9);
   --on-primary: var(--text-strong);
+  --primary-dark: rgb(var(--purple-dark));
 
   /* Header blur overlay */
   --header-bg: rgba(18, 18, 18, 0.8);
@@ -45,5 +51,5 @@
   --radius-full: 9999px;
 
   /* Focus ring */
-  --focus-ring: rgb(var(--purple-rgb) / 0.6);
+  --focus-ring: rgb(var(--purple) / 0.6);
 }
