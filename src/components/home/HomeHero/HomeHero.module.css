@@ -65,6 +65,7 @@
     gap: 1rem;
     margin: 0 auto;
     width: 85dvw;
+    transition: transform 0.2s ease-in-out;
   }
 }
 
