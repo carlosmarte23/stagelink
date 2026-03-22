@@ -1,7 +1,7 @@
 .featuredSection {
   padding-top: 2rem;
   width: 100%;
-  max-width: 90em;
+  max-width: 95vw;
   margin: 0 auto;
 
   .header {
@@ -102,6 +102,7 @@
 /* tablet */
 @media (min-width: 768px) {
   .featuredSection {
+    max-width: 90vw;
     .header {
       width: 100%;
 
