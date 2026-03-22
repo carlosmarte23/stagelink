@@ -12,10 +12,8 @@ export default function Home() {
   return (
     <>
       <HomeHero />
-
       <div className="container">
         <FeaturedEventsSection events={featured} />
-        {/* TODO: Add newsletter form into a separate component and style it */}
         <NewsletterForm />
       </div>
     </>
