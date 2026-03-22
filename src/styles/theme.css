@@ -9,6 +9,9 @@
   --purple: 164 19 236;
   --purple-dark: 51, 22, 65;
 
+  --purple-deep: rgb(34 8 46);
+  --purple-deeper: rgb(24 4 34);
+
   --bg-light: #f7f6f8;
   --bg-dark: #121212;
 
@@ -53,4 +56,17 @@
 
   /* Focus ring */
   --focus-ring: rgb(var(--purple) / 0.6);
+
+  --gradient-surface-primary:
+    radial-gradient(
+      circle at 80% 50%,
+      rgb(var(--purple) / 0.12) 0%,
+      transparent 35%
+    ),
+    linear-gradient(
+      90deg,
+      var(--purple-deeper) 0%,
+      var(--purple-deep) 55%,
+      rgb(46 8 66) 100%
+    );
 }
