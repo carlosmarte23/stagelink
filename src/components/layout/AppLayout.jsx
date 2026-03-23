@@ -12,8 +12,8 @@ export default function AppLayout({ children }) {
             StageLink
           </Link>
           <nav className="nav">
-            <NavLink to="/" end className={navLinkClass}>
-              Home
+            <NavLink to="/events" end className={navLinkClass}>
+              Events
             </NavLink>
             <NavLink to="/cart" className={navLinkClass}>
               Cart
@@ -25,9 +25,7 @@ export default function AppLayout({ children }) {
         </div>
       </header>
 
-      <main className="main">
-        <div className="container">{children}</div>
-      </main>
+      <main className="main">{children}</main>
 
       <footer className="footer">
         <div className="container footer__inner">

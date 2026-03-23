@@ -11,3 +11,70 @@ body {
 a {
   color: inherit;
 }
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-xl);
+
+  font-weight: 700;
+  font-size: 0.95rem;
+  line-height: 1;
+
+  text-decoration: none;
+  cursor: pointer;
+
+  border: 1px solid transparent;
+  background: var(--white-10);
+  color: var(--text-strong);
+
+  transition:
+    filter 140ms ease,
+    background 140ms ease,
+    border-color 140ms ease,
+    color 140ms ease,
+    transform 140ms ease;
+
+  &:focus-visible,
+  &:hover {
+    background: var(--white-20);
+    transform: scale(1.02);
+  }
+  &:focus-visible {
+    outline: 0.125rem solid var(--focus-ring);
+    outline-offset: 0.2rem;
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+
+  &:disabled,
+  &[aria-disabled="true"] {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.button--primary {
+  background: var(--primary);
+  color: var(--on-primary);
+  box-shadow: 0 16px 30px rgba(164, 19, 236, 0.22);
+
+  &:hover {
+    background: var(--primary-hover);
+  }
+}
+
+.button--secondary {
+  background: var(--white-80);
+  color: var(--black);
+
+  &:hover {
+    background: var(--white-90);
+  }
+}

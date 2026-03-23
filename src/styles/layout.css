@@ -6,7 +6,7 @@
 
 .container {
   width: 100%;
-  max-width: 70rem;
+  max-width: 1440px;
   margin: 0 auto;
   padding: 1rem;
 }
@@ -48,7 +48,6 @@
 
 .main {
   flex: 1;
-  padding: 1.5rem 0;
 }
 
 .footer {

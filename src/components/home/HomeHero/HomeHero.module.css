@@ -1,0 +1,137 @@
+/* Hero */
+.hero {
+  position: relative;
+  width: 100%;
+  height: calc(100dvh - 4rem);
+  min-height: 520px;
+  display: grid;
+  place-items: start;
+  gap: 1rem;
+
+  background-image:
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.7) 0%,
+      rgba(0, 0, 0, 0.7) 85%,
+      var(--bg) 100%
+    ),
+    var(--hero-bg-url);
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  overflow: hidden;
+
+  .heroInner {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 2;
+    gap: 1.5rem;
+    width: 100%;
+    padding: 0 0.75rem;
+    text-align: center;
+  }
+
+  .heroTitle {
+    margin: 5rem 0 1rem;
+    color: var(--text-strong);
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1.1;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
+  }
+
+  .highlight {
+    color: var(--primary);
+  }
+
+  .heroText {
+    margin: 0 auto;
+
+    max-width: 42rem;
+    opacity: 0.8;
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    line-height: 1.6;
+    text-wrap: balance;
+  }
+
+  .heroCta {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin: 0 auto;
+    width: 85dvw;
+    transition: transform 0.2s ease-in-out;
+  }
+}
+
+/* Small screens */
+@media (max-width: 359px) {
+  .hero {
+    .heroInner {
+      gap: 0.25rem;
+      .heroTitle {
+        font-size: 2.5rem;
+        margin-top: 10dvh;
+      }
+
+      .heroCta {
+        gap: 0.75rem;
+      }
+    }
+  }
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+  .hero {
+    .heroInner {
+      gap: 1.5rem;
+      margin: 0 auto;
+      margin-top: 15dvh;
+      max-width: 80vw;
+
+      .heroTitle {
+        margin: 0;
+        font-size: 5rem;
+      }
+
+      .heroText {
+        font-size: 1.5rem;
+      }
+
+      .heroCta {
+        margin-top: 1.25rem;
+        flex-direction: row;
+        font-size: 1.25rem;
+      }
+    }
+  }
+}
+
+/* Extra Large */
+@media (min-width: 1300px) {
+  .hero {
+    .heroInner {
+      margin-top: 20dvh;
+      max-width: 80rem;
+
+      .heroTitle {
+        font-size: 6rem;
+      }
+
+      .heroText {
+        font-size: 1.75rem;
+      }
+
+      .heroCta {
+        font-size: 1.5rem;
+        max-width: 50rem;
+      }
+    }
+  }
+}
