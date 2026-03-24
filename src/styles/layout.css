@@ -50,16 +50,6 @@
   flex: 1;
 }
 
-.footer {
-  border-top: 1px solid var(--border);
-  font-size: 0.75rem;
-  opacity: 0.75;
-}
-
-.footer__inner {
-  text-align: center;
-}
-
 .nav__link {
   display: inline-block;
   padding: 0.25rem 0.5rem;
