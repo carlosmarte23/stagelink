@@ -1,4 +1,4 @@
-import PublicHeader from "./header/PublicHeader";
+import PublicHeader from "./PublicHeader/PublicHeader.jsx";
 
 export default function AppLayout({ children }) {
   return (

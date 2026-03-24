@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 
 import logoIcon from "../../../assets/branding/stagelink-logo.png";
-import styles from "../header/PublicHeader.module.css";
+import styles from "./PublicHeader.module.css";
 
 export default function PublicHeader() {
   const navLinkClass = ({ isActive }) =>
