@@ -13,7 +13,7 @@ export default function PublicHeader() {
     { to: "/my-tickets", label: "My Tickets" },
   ];
 
-  const [isMenuOpen, setIsMenuOpen] = useState(true);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   function handleToggleMenu() {
     setIsMenuOpen((prev) => !prev);
