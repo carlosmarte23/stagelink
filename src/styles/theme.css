@@ -8,12 +8,15 @@
   /* Colors */
   --purple: 164 19 236;
   --purple-dark: 51, 22, 65;
+  --purple-deep: 34, 8, 46;
+  --purple-deeper: 24, 4, 34;
 
-  --purple-deep: rgb(34 8 46);
-  --purple-deeper: rgb(24 4 34);
+  --purple-deep-rgb: rgb(var(--purple-deep));
+  --purple-deeper-rgb: rgb(var(--purple-deeper));
 
   --bg-light: #f7f6f8;
   --bg-dark: #121212;
+  --bg-mobile-menu: rgba(var(--purple-deep), 0.8);
 
   --text-strong: #ffffff;
   --text: #eaeaea;
@@ -67,8 +70,8 @@
     ),
     linear-gradient(
       90deg,
-      var(--purple-deeper) 0%,
-      var(--purple-deep) 55%,
+      var(--purple-deeper-rgb) 0%,
+      var(--purple-deep-rgb) 55%,
       rgb(46 8 66) 100%
     );
 }

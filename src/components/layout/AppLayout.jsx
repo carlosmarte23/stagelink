@@ -1,37 +1,12 @@
-import { Link, NavLink } from "react-router-dom";
-
-const navLinkClass = ({ isActive }) =>
-  `nav__link ${isActive ? "nav__link--active" : ""}`;
+import PublicHeader from "./PublicHeader/PublicHeader.jsx";
+import PublicFooter from "./PublicFooter/PublicFooter.jsx";
 
 export default function AppLayout({ children }) {
   return (
     <div className="app">
-      <header className="header">
-        <div className="container header__inner">
-          <Link to="/" className="brand">
-            StageLink
-          </Link>
-          <nav className="nav">
-            <NavLink to="/events" end className={navLinkClass}>
-              Events
-            </NavLink>
-            <NavLink to="/cart" className={navLinkClass}>
-              Cart
-            </NavLink>
-            <NavLink to="/my-tickets" className={navLinkClass}>
-              My Tickets
-            </NavLink>
-          </nav>
-        </div>
-      </header>
-
+      <PublicHeader />
       <main className="main">{children}</main>
-
-      <footer className="footer">
-        <div className="container footer__inner">
-          <small>&copy; 2026 StageLink (Portfolio project)</small>
-        </div>
-      </footer>
+      <PublicFooter />
     </div>
   );
 }
