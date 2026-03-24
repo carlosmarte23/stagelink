@@ -63,21 +63,123 @@
       display: none;
     }
 
-    .actions {
+    .menuToggle {
+      justify-self: end;
+
+      .menuButton {
+        position: relative;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        cursor: pointer;
+        background-color: transparent;
+        border: none;
+        gap: 0.25rem;
+
+        .buttonLine {
+          position: absolute;
+          display: block;
+          width: 1.5rem;
+          height: 0.2rem;
+          left: 50%;
+          transform: translateX(-50%);
+          background-color: var(--text);
+          border-radius: var(--radius);
+
+          transition:
+            transform 0.2s ease-in-out,
+            opacity 0.2s ease-in-out;
+
+          &:nth-child(1) {
+            top: 25%;
+            transform: translate(-50%, 50%);
+          }
+          &:nth-child(2) {
+            top: 50%;
+          }
+          &:nth-child(3) {
+            top: 75%;
+            transform: translate(-50%, -50%);
+          }
+        }
+
+        &.menuButtonOpen {
+          .buttonLine {
+            &:nth-child(1) {
+              top: 50%;
+              transform: translate(-50%, -50%) rotate(45deg);
+            }
+            &:nth-child(2) {
+              opacity: 0;
+            }
+            &:nth-child(3) {
+              top: 50%;
+              transform: translate(-50%, -50%) rotate(-45deg);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .mobileMenu {
+    position: absolute;
+    top: calc(100% + 0.75rem);
+    left: 1rem;
+    right: 1rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 2;
+    gap: 3rem;
+
+    padding: 1rem;
+    padding-top: 1.5rem;
+    border-radius: var(--radius-lg);
+    background: var(--surface-2);
+    box-shadow: 0 0 0.5rem 0.25rem rgba(0, 0, 0, 0.1);
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(-5rem);
+
+    transition:
+      opacity 0.2s ease-in-out,
+      transform 0.2s ease-in-out;
+
+    &.mobileMenuOpen {
+      opacity: 100%;
+      transform: translateY(0);
+      pointer-events: all;
+    }
+
+    .mobileNav {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+
+      .mobileNavLink {
+        font-size: 1.5rem;
+      }
+    }
+
+    .mobileActions {
       justify-self: end;
       flex-direction: row;
       align-items: center;
       gap: 0.5rem;
+      width: 100%;
 
       .cta {
-        padding: 0.5rem 1rem;
-        font-size: 1rem;
-      }
-    }
+        width: 100%;
 
-    .menuToggle {
-      display: block;
-      justify-self: end;
+        font-size: 1.25rem;
+      }
     }
   }
 
@@ -144,6 +246,15 @@
       .actions {
         display: flex;
         gap: 0.5rem;
+        justify-self: end;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.5rem;
+
+        .cta {
+          padding: 0.5rem 1rem;
+          font-size: 1rem;
+        }
       }
 
       .menuToggle {
