@@ -3,6 +3,7 @@
   width: 100%;
   max-width: 95vw;
   margin: 0 auto;
+  scroll-margin-top: 4rem;
 
   .header {
     flex-direction: column;
