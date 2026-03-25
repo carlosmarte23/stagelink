@@ -7,10 +7,6 @@
     .content {
       min-width: 0;
 
-      .toolbar {
-        width: 100%;
-      }
-
       .eventsList {
         width: 100%;
       }

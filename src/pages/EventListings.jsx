@@ -1,3 +1,5 @@
+import EventsToolbar from "../components/events/EventsToolbar/EventsToolbar.jsx";
+
 import styles from "./EventListings.module.css";
 
 export default function EventListings() {
@@ -5,7 +7,12 @@ export default function EventListings() {
     <section className={styles.page}>
       <div className={`container ${styles.layout}`}>
         <div className={styles.content}>
-          <div className={styles.toolbar}>Events Toolbar Component</div>
+          <EventsToolbar
+            resultsCount={40}
+            onOpenFilters={() => {}}
+            sortValue="recommended"
+            onSortChange={() => {}}
+          />
           <div className={styles.eventsList}>EventsList component</div>
           <div className={styles.pagination}>Pagination Component</div>
         </div>
