@@ -1,0 +1,54 @@
+.page {
+  width: 100%;
+  padding-block: 1.5rem 3rem;
+  .layout {
+    display: block;
+
+    .content {
+      min-width: 0;
+
+      .toolbar {
+        width: 100%;
+      }
+
+      .eventsList {
+        width: 100%;
+      }
+
+      .pagination {
+        width: 100%;
+      }
+    }
+  }
+
+  .desktopFilters {
+    display: none;
+  }
+
+  .mobileFiltersDialog {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .page {
+    padding-block: 2rem 3.5rem;
+
+    .layout {
+      display: grid;
+      grid-template-columns: 17.5rem minmax(0, 1fr);
+      grid-template-areas: "filters content";
+      gap: 2rem;
+      align-items: start;
+
+      .content {
+        grid-area: content;
+      }
+
+      .desktopFilters {
+        display: block;
+        grid-area: filters;
+      }
+    }
+  }
+}
