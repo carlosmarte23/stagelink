@@ -1,8 +1,12 @@
 import EventsToolbar from "../components/events/EventsToolbar/EventsToolbar.jsx";
+import EventsGrid from "../components/events/EventsGrid/EventsGrid.jsx";
 
+import events from "../data/events.json";
 import styles from "./EventListings.module.css";
 
 export default function EventListings() {
+  const eventsSample = events.slice(0, 10);
+
   return (
     <section className={styles.page}>
       <div className={`container ${styles.layout}`}>
@@ -13,7 +17,9 @@ export default function EventListings() {
             sortValue="recommended"
             onSortChange={() => {}}
           />
-          <div className={styles.eventsList}>EventsList component</div>
+
+          <EventsGrid events={eventsSample} />
+
           <div className={styles.pagination}>Pagination Component</div>
         </div>
 

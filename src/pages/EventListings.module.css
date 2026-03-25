@@ -7,10 +7,6 @@
     .content {
       min-width: 0;
 
-      .eventsList {
-        width: 100%;
-      }
-
       .pagination {
         width: 100%;
       }
@@ -34,7 +30,7 @@
       display: grid;
       grid-template-columns: 17.5rem minmax(0, 1fr);
       grid-template-areas: "filters content";
-      gap: 2rem;
+      gap: 1rem;
       align-items: start;
 
       .content {
