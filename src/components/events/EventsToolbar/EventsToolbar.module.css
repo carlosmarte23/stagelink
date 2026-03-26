@@ -2,11 +2,12 @@
   display: grid;
   gap: 1rem;
   width: 100%;
+  justify-content: flex-start;
 
   .header {
     display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
+    flex-direction: column;
+    align-items: flex-start;
     gap: 0.25rem;
 
     .title {
@@ -24,17 +25,36 @@
   }
 
   .controls {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    justify-self: center;
+    display: flex;
+    flex-direction: row;
     gap: 0.75rem;
 
     .filtersButton,
     .sortSelect {
       min-height: 2.75rem;
+      border: 1px solid var(--border);
     }
 
     .filtersButton {
-      width: 100%;
+      width: fit-content;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius-lg);
+      background-color: var(--surface-2);
+      color: var(--text);
+      font-size: 0.875rem;
+      line-height: 1.25rem;
+      cursor: pointer;
+
+      .filtersIcon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
     }
 
     .sortLabel {
@@ -51,8 +71,63 @@
         border: 0;
         clip: rect(0, 0, 0, 0);
       }
+
       .sortSelect {
-        width: 100%;
+        padding-inline: 1rem 2.5rem;
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+
+        background-color: var(--surface-2);
+        color: var(--text);
+
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background-image:
+          linear-gradient(45deg, transparent 50%, var(--text-muted) 50%),
+          linear-gradient(135deg, var(--text-muted) 50%, transparent 50%);
+        background-position:
+          calc(100% - 1.1rem) calc(50% - 0.15rem),
+          calc(100% - 0.8rem) calc(50% - 0.15rem);
+        background-size:
+          0.35rem 0.35rem,
+          0.35rem 0.35rem;
+        background-repeat: no-repeat;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .toolbar {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    .header {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 0.5rem;
+    }
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .toolbar {
+    flex-direction: row;
+    justify-content: space-between;
+
+    .header {
+      justify-content: flex-start;
+    }
+
+    .controls {
+      .filtersButton {
+        display: none;
       }
     }
   }
