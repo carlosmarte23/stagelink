@@ -3,6 +3,7 @@ import { useState } from "react";
 import EventsToolbar from "../components/events/EventsToolbar/EventsToolbar.jsx";
 import EventsGrid from "../components/events/EventsGrid/EventsGrid.jsx";
 import EventsFiltersPanel from "../components/events/EventsFiltersPanel/EventFiltersPanel.jsx";
+import Pagination from "../components/shared/Pagination/Pagination.jsx";
 
 import events from "../data/events.json";
 import styles from "./EventListings.module.css";
@@ -27,7 +28,7 @@ export default function EventListings() {
 
           <EventsGrid events={eventsSample} />
 
-          <div className={styles.pagination}>Pagination Component</div>
+          <Pagination />
         </div>
 
         <aside className={styles.desktopFilters}>
