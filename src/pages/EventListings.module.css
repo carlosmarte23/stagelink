@@ -1,6 +1,8 @@
 .page {
   width: 100%;
+
   padding-block: 1.5rem 3rem;
+
   .layout {
     display: block;
 
@@ -17,8 +19,50 @@
     display: none;
   }
 
-  .mobileFiltersDialog {
-    display: none;
+  .mobileFiltersModal {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+
+    .mobileFiltersBackdrop {
+      position: absolute;
+      inset: 0;
+      border: 0;
+      padding: 0;
+      margin: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      cursor: default;
+    }
+
+    .mobileFiltersShell {
+      position: absolute;
+      top: calc(4.5rem + 0.75rem);
+      right: 1rem;
+      bottom: 1rem;
+      left: 1rem;
+
+      display: grid;
+      gap: 0.5rem;
+      grid-template-rows: auto minmax(0, 1fr);
+
+      pointer-events: none;
+
+      .mobileFiltersClose {
+        justify-self: flex-end;
+        width: auto;
+        pointer-events: auto;
+        background-color: var(--surface-2);
+        font-weight: 600;
+      }
+
+      .mobileFiltersPanel {
+        min-height: 0;
+        overflow-y: auto;
+        scroll-behavior: contain;
+        -webkit-overflow-scrolling: touch;
+        pointer-events: auto;
+      }
+    }
   }
 }
 
@@ -28,7 +72,7 @@
 
     .layout {
       display: grid;
-      grid-template-columns: 17.5rem minmax(0, 1fr);
+      grid-template-columns: 1fr 2.5fr;
       grid-template-areas: "filters content";
       gap: 1rem;
       align-items: start;
@@ -40,6 +84,10 @@
       .desktopFilters {
         display: block;
         grid-area: filters;
+      }
+
+      .mobileFiltersDialog {
+        display: none;
       }
     }
   }
