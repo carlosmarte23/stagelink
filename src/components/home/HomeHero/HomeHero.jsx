@@ -1,13 +1,23 @@
-import styles from "./HomeHero.module.css";
 import { Link } from "react-router-dom";
 
+import heroImg from "../../../assets/images/hero-image.webp";
+import styles from "./HomeHero.module.css";
+
 export default function HomeHero() {
-  const HERO_BG_URL =
-    "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?q=80&w=1280&auto=format&fit=crop";
   return (
     <section
       className={styles.hero}
-      style={{ "--hero-bg-url": `url(${HERO_BG_URL})` }}
+      style={{
+        backgroundImage: `
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.7) 0%,
+      rgba(0, 0, 0, 0.7) 85%,
+      var(--bg) 100%
+    ),
+    url(${heroImg})
+    `,
+      }}
       aria-labelledby="home-hero-title"
     >
       <div className={styles.heroInner}>

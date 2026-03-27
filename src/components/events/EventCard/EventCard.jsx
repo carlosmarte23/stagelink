@@ -1,8 +1,15 @@
 import { Link } from "react-router-dom";
+
+import { buildUnspashImageUrl } from "../../../utils/images.js";
 import styles from "./EventCard.module.css";
 
 export default function EventCard({ event, variant = "default" }) {
   const showCity = variant !== "featured";
+
+  const imgSrc = buildUnspashImageUrl(event.imageUrl, {
+    width: 400,
+    quality: 70,
+  });
 
   const cardClassName = `${styles.card}
   ${variant === "listings" ? styles.listings : ""}`;
@@ -17,7 +24,7 @@ export default function EventCard({ event, variant = "default" }) {
     <>
       <Link to={`/events/${event.id}`} className={cardClassName}>
         <div className={styles.cardHeader}>
-          <img src={event.imageUrl} alt="" />
+          <img src={imgSrc} alt="" loading="lazy" decoding="async" />
         </div>
         <div className={styles.cardInner}>
           <div className={styles.cardBody}>
