@@ -40,6 +40,7 @@ Includes
 - Events grid rendered from mock data
 - Static pagination UI
 - Base responsive structure for the page layout
+- Card-only explore presentation for this iteration, with no view toggle yet
 
 Suggested branch
 
@@ -92,9 +93,11 @@ Scope
 
 - Create the main `/events` page layout with a left sidebar and right content area
 - Add the page title and results count area
-- Add toolbar controls for view toggle and sorting UI
+- Add toolbar controls for sorting UI with a card-only explore view
 - Render event cards from mock data in a grid
 - Add a pagination section visually, even if not functional yet
+- Show the total catalog count in the toolbar while rendering only the first paginated slice of cards
+- Keep the static filters representative rather than exhaustive; venue filters can be added later when interactions are wired
 - Match the general spacing, alignment, and proportions of the design
 
 Suggested commits
@@ -110,7 +113,15 @@ Acceptance check
 - Visiting `/events` shows a page that visually reads as the final explore screen
 - The sidebar, toolbar, grid, and pagination area are all present
 - Event cards are rendered from mock data
+- The toolbar can show the total catalog count even if only the first page slice of cards is rendered
+- The filters sidebar establishes the visual foundation even if some future sections such as venue are not present yet
 - The page feels structurally complete even before interactions are wired
+
+Implementation notes
+
+- PR1 intentionally ships with a single card view, so a list/grid toggle is out of scope unless later design needs change
+- The initial results count may represent the full mock catalog before filters, while the visible cards represent the first paginated slice
+- The mobile filters modal may keep part of the underlying page visible as an intentional presentation choice as long as the panel remains readable and dismissible
 
 ### Part 2) Interactions
 
@@ -192,3 +203,4 @@ This is not mandatory, but a clean structure could be:
 - Clicking an event navigates to Event Detail
 - No console errors
 - Layout is responsive and reasonably accessible
+
