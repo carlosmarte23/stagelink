@@ -1,4 +1,6 @@
 import { Route, Routes } from "react-router-dom";
+
+import ScrollToTop from "./components/shared/ScrollToTop.jsx";
 import AppLayout from "./components/layout/AppLayout.jsx";
 import Cart from "./pages/Cart";
 import EventListings from "./pages/EventListings";
@@ -10,6 +12,7 @@ import NotFound from "./pages/NotFound";
 function App() {
   return (
     <AppLayout>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/cart" element={<Cart />} />
