@@ -35,34 +35,35 @@ export default function EventListings() {
           <EventsFiltersPanel eventCount={eventCount} />
         </aside>
 
-        {isFilterOpen && (
-          <div className={styles.mobileFiltersModal} role="presentation">
+        <div
+          className={`${styles.mobileFiltersModal} ${isFilterOpen ? styles.open : ""}`}
+          role="presentation"
+        >
+          <button
+            type="button"
+            className={styles.mobileFiltersBackdrop}
+            aria-label="Close Filters"
+            onClick={() => setIsFilterOpen(false)}
+          />
+
+          <div
+            className={styles.mobileFiltersShell}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Filters"
+          >
             <button
               type="button"
-              className={styles.mobileFiltersBackdrop}
-              aria-label="Close Filters"
+              className={`button ${styles.mobileFiltersClose}`}
               onClick={() => setIsFilterOpen(false)}
-            />
-
-            <div
-              className={styles.mobileFiltersShell}
-              role="dialog"
-              aria-modal="true"
-              aria-label="Filters"
             >
-              <button
-                type="button"
-                className={`button ${styles.mobileFiltersClose}`}
-                onClick={() => setIsFilterOpen(false)}
-              >
-                Close
-              </button>
-              <div className={styles.mobileFiltersPanel}>
-                <EventsFiltersPanel eventCount={eventCount} />
-              </div>
+              Close
+            </button>
+            <div className={styles.mobileFiltersPanel}>
+              <EventsFiltersPanel eventCount={eventCount} />
             </div>
           </div>
-        )}
+        </div>
       </div>
     </section>
   );
