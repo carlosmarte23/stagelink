@@ -1,0 +1,216 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  overflow: hidden;
+  padding: 1rem;
+  color: var(--text);
+  background-color: var(--surface-2);
+  border-radius: var(--radius-xl);
+
+  .header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    justify-content: space-between;
+    padding-bottom: 1.25rem;
+
+    .title {
+      margin: 0;
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1.25;
+      color: var(--text-strong);
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    .clearButton {
+      display: inline-flex;
+      align-items: center;
+      font-size: 1rem;
+      background-color: var(--surface-3);
+    }
+  }
+
+  .groups {
+    display: grid;
+    gap: 2rem;
+
+    .group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      padding-bottom: 2rem;
+      border-bottom: var(--border) 1px solid;
+
+      .groupHeader {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+
+        .groupIcon {
+          width: 1.5rem;
+          height: 1.5rem;
+
+          & svg {
+            width: 1.25rem;
+            height: 1.25rem;
+            display: block;
+          }
+        }
+
+        .groupTitle {
+          font-size: 1.25rem;
+          font-weight: 700;
+          line-height: 1.25;
+          color: var(--text-strong);
+        }
+      }
+
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+
+        .chip {
+          padding: 0.625rem 1rem;
+          border: none;
+          border-radius: var(--radius-xl);
+          background-color: var(--surface-3);
+          color: var(--text-strong);
+          font-size: 0.875rem;
+          line-height: 1;
+          transition: transform 0.2s ease;
+
+          &:hover,
+          &:focus-visible {
+            font-weight: 700;
+            transform: scale(1.05);
+          }
+
+          &:focus-visible {
+            outline: 0.125rem solid var(--focus-ring);
+            outline-offset: 0.1rem;
+          }
+
+          &:active {
+            transform: scale(0.95);
+          }
+
+          &.chipActive {
+            transform: scale(1.05);
+            background-color: var(--primary);
+            color: var(--text-strong);
+            font-weight: 700;
+            pointer-events: none;
+          }
+        }
+      }
+
+      .dateOptions {
+        margin-top: 0.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        font-size: 1.25rem;
+        line-height: 1.3;
+        font-weight: 500;
+
+        .option {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+
+          input {
+            appearance: auto;
+            -webkit-appearance: auto;
+            -moz-appearance: auto;
+            width: 1.25rem;
+            height: 1.25rem;
+            margin: 0;
+            accent-color: var(--primary);
+            cursor: pointer;
+          }
+        }
+      }
+
+      .priceRange {
+        display: grid;
+        gap: 0.5rem;
+
+        .rangeTrack {
+          position: relative;
+          height: 1.75rem;
+        }
+
+        .rangeTrackInactive,
+        .rangeTrackActive {
+          position: absolute;
+          top: 50%;
+          height: 0.375rem;
+          transform: translateY(-50%);
+          border-radius: var(--radius);
+        }
+
+        .rangeTrackInactive {
+          left: 0;
+          right: 0;
+          background-color: var(--surface-3);
+          z-index: 1;
+        }
+
+        .rangeTrackActive {
+          inset-inline: 0;
+          left: 25%;
+          right: 10%;
+          background-color: var(--primary);
+          z-index: 2;
+        }
+
+        .rangeThumb {
+          position: absolute;
+          top: 50%;
+          width: 1.25rem;
+          height: 1.25rem;
+          transform: translate(-50%, -50%);
+          border: white 3px solid;
+          border-radius: var(--radius-xl);
+          background-color: var(--white);
+          cursor: pointer;
+          z-index: 3;
+        }
+
+        .rangeThumbMin {
+          left: 25%;
+        }
+
+        .rangeThumbMax {
+          left: 90%;
+        }
+
+        .rangeLabels {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          font-size: 1rem;
+          line-height: 1.25;
+          color: var(--text-muted);
+        }
+      }
+    }
+  }
+
+  .clearButton {
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+  }
+}

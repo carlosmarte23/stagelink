@@ -1,8 +1,12 @@
 import { Link } from "react-router-dom";
 import styles from "./EventCard.module.css";
 
-export default function EventCard({ event, variant }) {
+export default function EventCard({ event, variant = "default" }) {
   const showCity = variant !== "featured";
+
+  const cardClassName = `${styles.card}
+  ${variant === "listings" ? styles.listings : ""}`;
+
   const formattedDate = new Intl.DateTimeFormat("en-US", {
     month: "short",
     day: "numeric",
@@ -11,7 +15,7 @@ export default function EventCard({ event, variant }) {
 
   return (
     <>
-      <Link to={`/events/${event.id}`} className={styles.card}>
+      <Link to={`/events/${event.id}`} className={cardClassName}>
         <div className={styles.cardHeader}>
           <img src={event.imageUrl} alt="" />
         </div>
