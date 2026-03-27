@@ -4,6 +4,19 @@ import heroImg from "../../../assets/images/hero-image.webp";
 import styles from "./HomeHero.module.css";
 
 export default function HomeHero() {
+  function handleScrollToFeatured(event) {
+    event.preventDefault();
+
+    const section = document.getElementById("featured-events");
+
+    if (!section) return;
+
+    section.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  }
+
   return (
     <section
       className={styles.hero}
@@ -32,6 +45,7 @@ export default function HomeHero() {
         <div className={styles.heroCta}>
           <a
             href="#featured-events"
+            onClick={handleScrollToFeatured}
             className={`button button--primary ${styles.heroCta}`}
           >
             Explore Featured Events
