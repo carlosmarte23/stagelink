@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import EventsToolbar from "../components/events/EventsToolbar/EventsToolbar.jsx";
 import EventsGrid from "../components/events/EventsGrid/EventsGrid.jsx";
@@ -14,6 +14,32 @@ export default function EventListings() {
   const eventCount = filteredEvents.length;
 
   const eventsSample = events.slice(0, 10); // TODO: apply pagination
+
+  useEffect(() => {
+    if (!isFilterOpen) return;
+
+    const previousStyles = {
+      overflow: document.body.style.overflow,
+      position: document.body.style.position,
+      top: document.body.style.top,
+      width: document.body.style.width,
+    };
+
+    const scrollY = window.scrollY;
+
+    document.body.style.overflow = "hidden";
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${window.scrollY}px`;
+    document.body.style.width = "100%";
+
+    return () => {
+      document.body.style.overflow = previousStyles.overflow;
+      document.body.style.position = previousStyles.position;
+      document.body.style.top = previousStyles.top;
+      document.body.style.width = previousStyles.width;
+      window.scrollTo(0, scrollY);
+    };
+  }, [isFilterOpen]);
 
   return (
     <section className={styles.page}>
