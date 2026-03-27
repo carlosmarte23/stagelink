@@ -8,15 +8,6 @@
   place-items: start;
   gap: 1rem;
 
-  background-image:
-    linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0.7) 0%,
-      rgba(0, 0, 0, 0.7) 85%,
-      var(--bg) 100%
-    ),
-    var(--hero-bg-url);
-
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

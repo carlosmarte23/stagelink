@@ -5,7 +5,7 @@
     "date": "2026-02-14T20:00:00Z",
     "venueName": "The Grand Arena",
     "city": "Philadelphia, PA",
-    "imageUrl": "https://images.unsplash.com/photo-1622136352909-642073a6be1f?auto=format&fit=crop&fm=jpg&q=60&w=2400",
+    "imageUrl": "https://images.unsplash.com/photo-1622136352909-642073a6be1f",
     "priceFrom": 79,
     "genres": ["Pop", "Electronic"],
     "isFeatured": true
@@ -16,7 +16,7 @@
     "date": "2026-02-21T23:00:00Z",
     "venueName": "Neon Warehouse",
     "city": "Baltimore, MD",
-    "imageUrl": "https://images.unsplash.com/photo-1768053917161-34fc3365c9b2?auto=format&fit=crop&fm=jpg&q=60&w=2400",
+    "imageUrl": "https://images.unsplash.com/photo-1768053917161-34fc3365c9b2",
     "priceFrom": 49,
     "genres": ["EDM", "Electronic"],
     "isFeatured": true
@@ -27,7 +27,7 @@
     "date": "2026-03-01T00:30:00Z",
     "venueName": "Skyline Pavilion",
     "city": "New York, NY",
-    "imageUrl": "https://images.unsplash.com/photo-1604177052603-c2b4cff228db?auto=format&fit=crop&fm=jpg&q=60&w=2400",
+    "imageUrl": "https://images.unsplash.com/photo-1604177052603-c2b4cff228db",
     "priceFrom": 65,
     "genres": ["Indie", "Rock"],
     "isFeatured": true
@@ -38,7 +38,7 @@
     "date": "2026-03-07T02:00:00Z",
     "venueName": "Uptown Theater",
     "city": "Washington, DC",
-    "imageUrl": "https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?auto=format&fit=crop&fm=jpg&q=60&w=2400",
+    "imageUrl": "https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b",
     "priceFrom": 59,
     "genres": ["Hip-Hop"],
     "isFeatured": true
@@ -49,7 +49,7 @@
     "date": "2026-03-12T01:30:00Z",
     "venueName": "The Metro Club",
     "city": "Boston, MA",
-    "imageUrl": "https://images.unsplash.com/photo-1466584820433-9ad1cc6798f3?auto=format&fit=crop&fm=jpg&q=60&w=2400",
+    "imageUrl": "https://images.unsplash.com/photo-1466584820433-9ad1cc6798f3",
     "priceFrom": 55,
     "genres": ["Rock"],
     "isFeatured": true
@@ -60,7 +60,7 @@
     "date": "2026-03-20T22:00:00Z",
     "venueName": "Starlight Amphitheater",
     "city": "Newark, NJ",
-    "imageUrl": "https://images.unsplash.com/photo-1760160741849-0809daa8e4c8?auto=format&fit=crop&fm=jpg&q=60&w=2400",
+    "imageUrl": "https://images.unsplash.com/photo-1760160741849-0809daa8e4c8",
     "priceFrom": 99,
     "genres": ["Pop", "Rock"],
     "isFeatured": true
@@ -71,7 +71,7 @@
     "date": "2026-03-28T23:00:00Z",
     "venueName": "Riverfront Hall",
     "city": "Chicago, IL",
-    "imageUrl": "https://images.unsplash.com/photo-1622136352909-642073a6be1f?auto=format&fit=crop&fm=jpg&q=60&w=2400",
+    "imageUrl": "https://images.unsplash.com/photo-1622136352909-642073a6be1f",
     "priceFrom": 49,
     "genres": ["Jazz"]
   },
@@ -81,7 +81,7 @@
     "date": "2026-04-03T01:00:00Z",
     "venueName": "Harbor Stage",
     "city": "Miami, FL",
-    "imageUrl": "https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?auto=format&fit=crop&fm=jpg&q=60&w=2400",
+    "imageUrl": "https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b",
     "priceFrom": 59,
     "genres": ["Latin"]
   },
@@ -91,7 +91,7 @@
     "date": "2026-04-05T02:00:00Z",
     "venueName": "Neon Warehouse",
     "city": "Atlanta, GA",
-    "imageUrl": "https://images.unsplash.com/photo-1768053917161-34fc3365c9b2?auto=format&fit=crop&fm=jpg&q=60&w=2400",
+    "imageUrl": "https://images.unsplash.com/photo-1768053917161-34fc3365c9b2",
     "priceFrom": 45,
     "genres": ["Electronic", "Pop"]
   },
@@ -101,7 +101,7 @@
     "date": "2026-04-10T00:30:00Z",
     "venueName": "Uptown Theater",
     "city": "Austin, TX",
-    "imageUrl": "https://images.unsplash.com/photo-1466584820433-9ad1cc6798f3?auto=format&fit=crop&fm=jpg&q=60&w=2400",
+    "imageUrl": "https://images.unsplash.com/photo-1466584820433-9ad1cc6798f3",
     "priceFrom": 39,
     "genres": ["Indie"]
   },
@@ -111,7 +111,7 @@
     "date": "2026-04-12T23:30:00Z",
     "venueName": "Riverfront Hall",
     "city": "Cleveland, OH",
-    "imageUrl": "https://images.unsplash.com/photo-1604177052603-c2b4cff228db?auto=format&fit=crop&fm=jpg&q=60&w=2400",
+    "imageUrl": "https://images.unsplash.com/photo-1604177052603-c2b4cff228db",
     "priceFrom": 69,
     "genres": ["Metal", "Rock"]
   },
@@ -121,7 +121,7 @@
     "date": "2026-04-18T01:00:00Z",
     "venueName": "The Metro Club",
     "city": "Charlotte, NC",
-    "imageUrl": "https://images.unsplash.com/photo-1622136352909-642073a6be1f?auto=format&fit=crop&fm=jpg&q=60&w=2400",
+    "imageUrl": "https://images.unsplash.com/photo-1622136352909-642073a6be1f",
     "priceFrom": 55,
     "genres": ["R&B"]
   },
@@ -131,7 +131,7 @@
     "date": "2026-04-24T00:00:00Z",
     "venueName": "Skyline Pavilion",
     "city": "Nashville, TN",
-    "imageUrl": "https://images.unsplash.com/photo-1466584820433-9ad1cc6798f3?auto=format&fit=crop&fm=jpg&q=60&w=2400",
+    "imageUrl": "https://images.unsplash.com/photo-1466584820433-9ad1cc6798f3",
     "priceFrom": 59,
     "genres": ["Country"]
   },
@@ -141,7 +141,7 @@
     "date": "2026-04-25T23:00:00Z",
     "venueName": "Harbor Stage",
     "city": "San Diego, CA",
-    "imageUrl": "https://images.unsplash.com/photo-1768053917161-34fc3365c9b2?auto=format&fit=crop&fm=jpg&q=60&w=2400",
+    "imageUrl": "https://images.unsplash.com/photo-1768053917161-34fc3365c9b2",
     "priceFrom": 89,
     "genres": ["EDM"]
   },
@@ -151,7 +151,7 @@
     "date": "2026-05-02T01:00:00Z",
     "venueName": "The Grand Arena",
     "city": "Los Angeles, CA",
-    "imageUrl": "https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?auto=format&fit=crop&fm=jpg&q=60&w=2400",
+    "imageUrl": "https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b",
     "priceFrom": 129,
     "genres": ["Pop"]
   },
@@ -161,7 +161,7 @@
     "date": "2026-05-08T00:30:00Z",
     "venueName": "The Metro Club",
     "city": "San Francisco, CA",
-    "imageUrl": "https://images.unsplash.com/photo-1604177052603-c2b4cff228db?auto=format&fit=crop&fm=jpg&q=60&w=2400",
+    "imageUrl": "https://images.unsplash.com/photo-1604177052603-c2b4cff228db",
     "priceFrom": 45,
     "genres": ["Indie"]
   },
@@ -171,7 +171,7 @@
     "date": "2026-05-16T01:00:00Z",
     "venueName": "The Grand Arena",
     "city": "Houston, TX",
-    "imageUrl": "https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b?auto=format&fit=crop&fm=jpg&q=60&w=2400",
+    "imageUrl": "https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b",
     "priceFrom": 99,
     "genres": ["Hip-Hop"]
   },
@@ -181,7 +181,7 @@
     "date": "2026-05-22T02:00:00Z",
     "venueName": "Neon Warehouse",
     "city": "Denver, CO",
-    "imageUrl": "https://images.unsplash.com/photo-1768053917161-34fc3365c9b2?auto=format&fit=crop&fm=jpg&q=60&w=2400",
+    "imageUrl": "https://images.unsplash.com/photo-1768053917161-34fc3365c9b2",
     "priceFrom": 59,
     "genres": ["Electronic"]
   },
@@ -191,7 +191,7 @@
     "date": "2026-05-29T01:00:00Z",
     "venueName": "Uptown Theater",
     "city": "New Orleans, LA",
-    "imageUrl": "https://images.unsplash.com/photo-1622136352909-642073a6be1f?auto=format&fit=crop&fm=jpg&q=60&w=2400",
+    "imageUrl": "https://images.unsplash.com/photo-1622136352909-642073a6be1f",
     "priceFrom": 49,
     "genres": ["Jazz", "R&B"]
   },
@@ -201,7 +201,7 @@
     "date": "2026-06-06T22:00:00Z",
     "venueName": "Starlight Amphitheater",
     "city": "Pittsburgh, PA",
-    "imageUrl": "https://images.unsplash.com/photo-1760160741849-0809daa8e4c8?auto=format&fit=crop&fm=jpg&q=60&w=2400",
+    "imageUrl": "https://images.unsplash.com/photo-1760160741849-0809daa8e4c8",
     "priceFrom": 89,
     "genres": ["Rock"]
   }
