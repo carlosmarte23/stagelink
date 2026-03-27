@@ -19,10 +19,6 @@ body,
   height: 100%;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
 body {
   min-height: 100%;
   font-family:
@@ -34,7 +30,6 @@ body {
     sans-serif;
   line-height: 1.5;
   text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
 }
 
 img,
