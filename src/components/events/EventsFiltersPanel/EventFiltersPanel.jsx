@@ -1,6 +1,10 @@
+import { useState } from "react";
+
 import styles from "./EventFiltersPanel.module.css";
 
 export default function EventFiltersPanel({ eventCount }) {
+  const [hasActiveFilters, setHasActiveFilters] = useState(false);
+
   return (
     <div className={styles.panel}>
       <div className={styles.header}>
@@ -139,10 +143,14 @@ export default function EventFiltersPanel({ eventCount }) {
           </div>
         </section>
       </div>
-      <button type="button" className={`button ${styles.clearButton}`}>
+      <button
+        type="button"
+        disabled={!hasActiveFilters}
+        aria-disabled={!hasActiveFilters}
+        className={`button ${styles.clearButton}`}
+      >
         Clear All
-      </button>{" "}
-      {/* TODO: adapt disable style when no filters selected*/}
+      </button>
     </div>
   );
 }
