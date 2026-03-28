@@ -8,77 +8,31 @@ import Pagination from "../components/shared/Pagination/Pagination.jsx";
 import events from "../data/events.json";
 import styles from "./EventListings.module.css";
 
-export default function EventListings() {
-  // Initial Values
-  const INITIAL_FILTERS = {
-    genre: "all",
-    dateRange: "any-date",
-    priceMin: 0,
-    priceMax: 250,
-  };
+import {
+  INITIAL_FILTERS,
+  DATE_RANGE_OPTIONS,
+} from "../features/events/config/eventListingConfig.js";
 
+import {
+  getUpcomingEvents,
+  getGenreOptions,
+  filterEvents,
+  hasActiveFilters,
+} from "../features/events/lib/eventListingUtils.js";
+
+export default function EventListings() {
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [filters, setFilters] = useState(INITIAL_FILTERS);
 
-  // Filter options
-  const genreOptions = [
-    { value: "all", label: "All" },
-    ...Array.from(new Set(events.flatMap((event) => event.genres)))
-      .sort()
-      .map((genre) => ({ value: genre.toLowerCase(), label: genre })),
-  ];
+  const genreOptions = getGenreOptions(events);
+  const dateRangeOptions = DATE_RANGE_OPTIONS;
 
-  const dateRangeOptions = [
-    { value: "any-date", label: "Any date" },
-    { value: "this-weekend", label: "This weekend" },
-    { value: "next-seven-days", label: "Next 7 days" },
-    { value: "this-month", label: "This month" },
-    { value: "next-month", label: "Next month" },
-  ];
-
-  // Upcoming events
-
-  const upcomingEvents = events.filter((event) => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const eventDate = new Date(event.date);
-    return eventDate > today;
-  });
-
-  // Filters
-  const filterEvents = (events, filters) => {
-    let filteredEvents = events;
-
-    // genre
-    if (filters.genre.toLowerCase() !== "all") {
-      filteredEvents = filteredEvents.filter((event) =>
-        event.genres.some((genre) => genre.toLowerCase() === filters.genre),
-      );
-    }
-
-    // date range
-    if (filters.dateRange.toLowerCase() === "any-date") {
-      filteredEvents = filteredEvents.filter((event) => event.date !== null);
-    } // TODO: implement date range filter with predefined ranges on UI.
-
-    // price range
-    filteredEvents = filteredEvents.filter(
-      (event) =>
-        event.priceFrom >= filters.priceMin &&
-        event.priceFrom <= filters.priceMax,
-    );
-
-    return filteredEvents;
-  };
-
-  const filteredEvents = filterEvents(upcomingEvents, filters); // TODO: apply all filters
+  const upcomingEvents = getUpcomingEvents(events);
+  const filteredEvents = filterEvents(upcomingEvents, filters);
   const eventCount = filteredEvents.length;
 
-  const hasActiveFilters = Object.keys(filters).some(
-    (key) => filters[key] !== INITIAL_FILTERS[key],
-  );
+  const isClearDisabled = !hasActiveFilters(filters, INITIAL_FILTERS);
 
-  // Handlers
   const handleFilterChange = (key, value) => {
     setFilters((prevFilters) => ({
       ...prevFilters,
@@ -131,6 +85,18 @@ export default function EventListings() {
     };
   }, [isFilterModalOpen]);
 
+  const filtersPanelProps = {
+    filters,
+    genreOptions,
+    onGenreChange: (value) => handleFilterChange("genre", value),
+    dateRangeOptions,
+    onDateRangeChange: (value) => handleFilterChange("dateRange", value),
+
+    hasActiveFilters: !isClearDisabled,
+    onClearFilters: handleClearFilters,
+    eventCount,
+  };
+
   return (
     <section className={styles.page}>
       <div className={`container ${styles.layout}`}>
@@ -148,18 +114,7 @@ export default function EventListings() {
         </div>
 
         <aside className={styles.desktopFilters}>
-          <EventsFiltersPanel
-            filters={filters}
-            genreOptions={genreOptions}
-            onGenreChange={(value) => handleFilterChange("genre", value)}
-            dateRangeOptions={dateRangeOptions}
-            onDateRangeChange={(value) =>
-              handleFilterChange("dateRange", value)
-            }
-            hasActiveFilters={hasActiveFilters}
-            onClearFilters={() => handleClearFilters()}
-            eventCount={eventCount}
-          />
+          <EventsFiltersPanel {...filtersPanelProps} />
         </aside>
 
         <div
@@ -187,18 +142,7 @@ export default function EventListings() {
               Close
             </button>
             <div className={styles.mobileFiltersPanel}>
-              <EventsFiltersPanel
-                filters={filters}
-                genreOptions={genreOptions}
-                onGenreChange={(value) => handleFilterChange("genre", value)}
-                dateRangeOptions={dateRangeOptions}
-                onDateRangeChange={(value) =>
-                  handleFilterChange("dateRange", value)
-                }
-                hasActiveFilters={hasActiveFilters}
-                onClearFilters={handleClearFilters}
-                eventCount={eventCount}
-              />
+              <EventsFiltersPanel {...filtersPanelProps} />
             </div>
           </div>
         </div>
