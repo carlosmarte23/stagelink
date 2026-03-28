@@ -5,6 +5,7 @@ export default function EventFiltersPanel({
   genreOptions,
   onGenreChange,
   hasActiveFilters,
+  onClearFilters,
   eventCount,
 }) {
   return (
@@ -162,6 +163,7 @@ export default function EventFiltersPanel({
         type="button"
         disabled={!hasActiveFilters}
         aria-disabled={!hasActiveFilters}
+        onClick={onClearFilters}
         className={`button ${styles.clearButton}`}
       >
         Clear All

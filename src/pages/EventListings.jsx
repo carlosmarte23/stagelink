@@ -74,6 +74,37 @@ export default function EventListings() {
   const filteredEvents = filterEvents(events, filters); // TODO: apply filters
   const eventCount = filteredEvents.length;
 
+  const hasActiveFilters = Object.keys(filters).some(
+    (key) => filters[key] !== INITIAL_FILTERS[key],
+  );
+
+  // Handlers
+  const handleFilterChange = (key, value) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [key]: value,
+    }));
+  };
+
+  const scrollPageToTop = () => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  };
+
+  const handleClearFilters = () => {
+    setFilters(INITIAL_FILTERS);
+    if (isFilterModalOpen) {
+      setIsFilterModalOpen(false);
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(scrollPageToTop);
+      });
+
+      return;
+    }
+
+    scrollPageToTop();
+  };
+
   useEffect(() => {
     if (!isFilterModalOpen) return;
 
@@ -122,6 +153,7 @@ export default function EventListings() {
             genreOptions={genreOptions}
             onGenreChange={(value) => handleFilterChange("genre", value)}
             hasActiveFilters={hasActiveFilters}
+            onClearFilters={() => handleClearFilters()}
             eventCount={eventCount}
           />
         </aside>
@@ -156,6 +188,7 @@ export default function EventListings() {
                 genreOptions={genreOptions}
                 onGenreChange={(value) => handleFilterChange("genre", value)}
                 hasActiveFilters={hasActiveFilters}
+                onClearFilters={handleClearFilters}
                 eventCount={eventCount}
               />
             </div>
