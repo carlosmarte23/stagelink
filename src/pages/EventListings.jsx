@@ -35,6 +35,15 @@ export default function EventListings() {
       .sort()
       .map((genre) => ({ value: genre.toLowerCase(), label: genre })),
   ];
+  // Upcoming events
+
+  const upcomingEvents = events.filter((event) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const eventDate = new Date(event.date);
+    return eventDate > today;
+  });
+
   const filterEvents = (events, filters) => {
     let filteredEvents = events;
 

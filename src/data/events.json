@@ -103,7 +103,8 @@
     "city": "Austin, TX",
     "imageUrl": "https://images.unsplash.com/photo-1466584820433-9ad1cc6798f3",
     "priceFrom": 39,
-    "genres": ["Indie"]
+    "genres": ["Indie"],
+    "isFeatured": true
   },
   {
     "id": "evt_011",
@@ -113,7 +114,8 @@
     "city": "Cleveland, OH",
     "imageUrl": "https://images.unsplash.com/photo-1604177052603-c2b4cff228db",
     "priceFrom": 69,
-    "genres": ["Metal", "Rock"]
+    "genres": ["Metal", "Rock"],
+    "isFeatured": true
   },
   {
     "id": "evt_012",
@@ -143,7 +145,8 @@
     "city": "San Diego, CA",
     "imageUrl": "https://images.unsplash.com/photo-1768053917161-34fc3365c9b2",
     "priceFrom": 89,
-    "genres": ["EDM"]
+    "genres": ["EDM"],
+    "isFeatured": true
   },
   {
     "id": "evt_015",
@@ -173,7 +176,8 @@
     "city": "Houston, TX",
     "imageUrl": "https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b",
     "priceFrom": 99,
-    "genres": ["Hip-Hop"]
+    "genres": ["Hip-Hop"],
+    "isFeatured": true
   },
   {
     "id": "evt_018",
@@ -203,6 +207,7 @@
     "city": "Pittsburgh, PA",
     "imageUrl": "https://images.unsplash.com/photo-1760160741849-0809daa8e4c8",
     "priceFrom": 89,
-    "genres": ["Rock"]
+    "genres": ["Rock"],
+    "isFeatured": true
   }
 ]
