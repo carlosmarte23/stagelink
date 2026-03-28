@@ -1,3 +1,12 @@
+import {
+  getThisWeekendRange,
+  getThisWeekRange,
+  getNextSevenDays,
+  getThisMonthRange,
+  getNextThirtyDays,
+  isEventInDateRange,
+} from "../../../utils/dates.js";
+
 export function getGenreOptions(events) {
   return [
     { value: "all", label: "All" },
@@ -18,7 +27,7 @@ export function getUpcomingEvents(events, now = new Date()) {
 }
 
 // TODO: apply all filters
-export function filterEvents(events, filters) {
+export function filterEvents(events, filters, now = new Date()) {
   let filteredEvents = events;
 
   // genre
@@ -31,8 +40,54 @@ export function filterEvents(events, filters) {
   // date range
   if (filters.dateRange.toLowerCase() === "any-date") {
     filteredEvents = filteredEvents.filter((event) => event.date !== null);
-  } // TODO: implement date range filter with predefined ranges on UI.
+  } else
+    switch (filters.dateRange.toLowerCase()) {
+      // TODO: implement date range filter with predefined ranges on UI.
+      case "this-weekend": {
+        const { start, end } = getThisWeekendRange(now);
 
+        filteredEvents = filteredEvents.filter((event) =>
+          isEventInDateRange(event.date, start, end),
+        );
+        break;
+      }
+      case "this-week": {
+        const { start, end } = getThisWeekRange(now);
+
+        filteredEvents = filteredEvents.filter((event) =>
+          isEventInDateRange(event.date, start, end),
+        );
+        break;
+      }
+      case "next-seven-days":
+        {
+          const { start, end } = getNextSevenDays(now);
+
+          filteredEvents = filteredEvents.filter((event) =>
+            isEventInDateRange(event.date, start, end),
+          );
+        }
+        break;
+      case "this-month":
+        {
+          const { start, end } = getThisMonthRange(now);
+          filteredEvents = filteredEvents.filter((event) =>
+            isEventInDateRange(event.date, start, end),
+          );
+        }
+        break;
+      case "next-thirty-days":
+        {
+          const { start, end } = getNextThirtyDays(now);
+          filteredEvents = filteredEvents.filter((event) =>
+            isEventInDateRange(event.date, start, end),
+          );
+        }
+        break;
+      default: {
+        filteredEvents = filteredEvents.filter((event) => event.date !== null);
+      }
+    }
   // price range
   filteredEvents = filteredEvents.filter(
     (event) =>

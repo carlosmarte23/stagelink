@@ -12,7 +12,5 @@ export const DATE_RANGE_OPTIONS = [
   { value: "this-weekend", label: "This weekend" },
   { value: "next-seven-days", label: "Next 7 days" },
   { value: "this-month", label: "This month" },
-  { value: "next-month", label: "Next month" },
+  { value: "next-thirty-days", label: "Next 30 days" },
 ];
-
-export const ITEMS_PER_PAGE = 10;

@@ -28,7 +28,7 @@ export default function EventListings() {
   const dateRangeOptions = DATE_RANGE_OPTIONS;
 
   const upcomingEvents = getUpcomingEvents(events);
-  const filteredEvents = filterEvents(upcomingEvents, filters);
+  const filteredEvents = filterEvents(upcomingEvents, filters, new Date());
   const eventCount = filteredEvents.length;
 
   const isClearDisabled = !hasActiveFilters(filters, INITIAL_FILTERS);
