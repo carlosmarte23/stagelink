@@ -71,7 +71,7 @@ export default function EventListings() {
     return filteredEvents;
   };
 
-  const filteredEvents = filterEvents(events, filters); // TODO: apply filters
+  const filteredEvents = filterEvents(upcomingEvents, filters); // TODO: apply all filters
   const eventCount = filteredEvents.length;
 
   const hasActiveFilters = Object.keys(filters).some(
