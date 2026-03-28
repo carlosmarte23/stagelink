@@ -9,14 +9,64 @@ import events from "../data/events.json";
 import styles from "./EventListings.module.css";
 
 export default function EventListings() {
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const filteredEvents = events; // TODO: apply filters
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+
+  // Filters
+  const INITIAL_FILTERS = {
+    genre: "all",
+    dateRange: "any-date",
+    priceMin: 0,
+    priceMax: 250,
+  };
+
+  const [filters, setFilters] = useState(INITIAL_FILTERS);
+  const [hasActiveFilters, setHasActiveFilters] = useState(false);
+
+  const handleFilterChange = (key, value) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [key]: value,
+    }));
+  };
+
+  const genreOptions = [
+    { value: "all", label: "All" },
+    ...Array.from(new Set(events.flatMap((event) => event.genres)))
+      .sort()
+      .map((genre) => ({ value: genre.toLowerCase(), label: genre })),
+  ];
+  const filterEvents = (events, filters) => {
+    let filteredEvents = events;
+
+    // genre
+    if (filters.genre.toLowerCase() !== "all") {
+      filteredEvents = filteredEvents.filter((event) =>
+        event.genres.some(
+          (genre) => genre.toLowerCase() === filters.genre.toLowerCase(),
+        ),
+      );
+    }
+
+    // date range
+    if (filters.dateRange.toLowerCase() === "any-date") {
+      filteredEvents = filteredEvents.filter((event) => event.date !== null);
+    } // TODO: implement date range filter with predefined ranges on UI.
+
+    // price range
+    filteredEvents = filteredEvents.filter(
+      (event) =>
+        event.priceFrom >= filters.priceMin &&
+        event.priceFrom <= filters.priceMax,
+    );
+
+    return filteredEvents;
+  };
+
+  const filteredEvents = filterEvents(events, filters); // TODO: apply filters
   const eventCount = filteredEvents.length;
 
-  const eventsSample = events.slice(0, 10); // TODO: apply pagination
-
   useEffect(() => {
-    if (!isFilterOpen) return;
+    if (!isFilterModalOpen) return;
 
     const previousStyles = {
       overflow: document.body.style.overflow,
@@ -39,7 +89,7 @@ export default function EventListings() {
       document.body.style.width = previousStyles.width;
       window.scrollTo(0, scrollY);
     };
-  }, [isFilterOpen]);
+  }, [isFilterModalOpen]);
 
   return (
     <section className={styles.page}>
@@ -47,29 +97,35 @@ export default function EventListings() {
         <div className={styles.content}>
           <EventsToolbar
             resultsCount={eventCount}
-            onOpenFilters={() => setIsFilterOpen(true)}
+            onOpenFilters={() => setIsFilterModalOpen(true)}
             sortValue="recommended"
             onSortChange={() => {}}
           />
 
-          <EventsGrid events={eventsSample} />
+          <EventsGrid events={filteredEvents} />
 
           <Pagination />
         </div>
 
         <aside className={styles.desktopFilters}>
-          <EventsFiltersPanel eventCount={eventCount} />
+          <EventsFiltersPanel
+            filters={filters}
+            genreOptions={genreOptions}
+            onGenreChange={(value) => handleFilterChange("genre", value)}
+            hasActiveFilters={hasActiveFilters}
+            eventCount={eventCount}
+          />
         </aside>
 
         <div
-          className={`${styles.mobileFiltersModal} ${isFilterOpen ? styles.open : ""}`}
+          className={`${styles.mobileFiltersModal} ${isFilterModalOpen ? styles.open : ""}`}
           role="presentation"
         >
           <button
             type="button"
             className={styles.mobileFiltersBackdrop}
             aria-label="Close Filters"
-            onClick={() => setIsFilterOpen(false)}
+            onClick={() => setIsFilterModalOpen(false)}
           />
 
           <div
@@ -81,12 +137,18 @@ export default function EventListings() {
             <button
               type="button"
               className={`button ${styles.mobileFiltersClose}`}
-              onClick={() => setIsFilterOpen(false)}
+              onClick={() => setIsFilterModalOpen(false)}
             >
               Close
             </button>
             <div className={styles.mobileFiltersPanel}>
-              <EventsFiltersPanel eventCount={eventCount} />
+              <EventsFiltersPanel
+                filters={filters}
+                genreOptions={genreOptions}
+                onGenreChange={(value) => handleFilterChange("genre", value)}
+                hasActiveFilters={hasActiveFilters}
+                eventCount={eventCount}
+              />
             </div>
           </div>
         </div>

@@ -1,10 +1,12 @@
-import { useState } from "react";
-
 import styles from "./EventFiltersPanel.module.css";
 
-export default function EventFiltersPanel({ eventCount }) {
-  const [hasActiveFilters, setHasActiveFilters] = useState(false);
-
+export default function EventFiltersPanel({
+  filters,
+  genreOptions,
+  onGenreChange,
+  hasActiveFilters,
+  eventCount,
+}) {
   return (
     <div className={styles.panel}>
       <div className={styles.header}>
@@ -38,7 +40,20 @@ export default function EventFiltersPanel({ eventCount }) {
             <h3 className={styles.groupTitle}>Genres</h3>
           </div>
           <div className={styles.chips}>
-            <button
+            {genreOptions.map((genre) => {
+              const isActive = genre.value === filters.genre;
+              return (
+                <button
+                  key={genre.value}
+                  type="button"
+                  onClick={() => onGenreChange(genre.value)}
+                  className={`${styles.chip} ${isActive ? styles.chipActive : ""}`}
+                >
+                  {genre.label}
+                </button>
+              );
+            })}
+            {/* <button
               type="button"
               className={`${styles.chip} ${styles.chipActive}`}
             >
@@ -55,7 +70,7 @@ export default function EventFiltersPanel({ eventCount }) {
             </button>
             <button type="button" className={styles.chip}>
               Latin
-            </button>
+            </button> */}
           </div>
         </section>
 
