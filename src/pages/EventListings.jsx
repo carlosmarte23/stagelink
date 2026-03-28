@@ -9,9 +9,7 @@ import events from "../data/events.json";
 import styles from "./EventListings.module.css";
 
 export default function EventListings() {
-  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
-
-  // Filters
+  // Initial Values
   const INITIAL_FILTERS = {
     genre: "all",
     dateRange: "any-date",
@@ -19,22 +17,25 @@ export default function EventListings() {
     priceMax: 250,
   };
 
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [filters, setFilters] = useState(INITIAL_FILTERS);
-  const [hasActiveFilters, setHasActiveFilters] = useState(false);
 
-  const handleFilterChange = (key, value) => {
-    setFilters((prevFilters) => ({
-      ...prevFilters,
-      [key]: value,
-    }));
-  };
-
+  // Filter options
   const genreOptions = [
     { value: "all", label: "All" },
     ...Array.from(new Set(events.flatMap((event) => event.genres)))
       .sort()
       .map((genre) => ({ value: genre.toLowerCase(), label: genre })),
   ];
+
+  const dateRangeOptions = [
+    { value: "any-date", label: "Any date" },
+    { value: "this-weekend", label: "This weekend" },
+    { value: "next-seven-days", label: "Next 7 days" },
+    { value: "this-month", label: "This month" },
+    { value: "next-month", label: "Next month" },
+  ];
+
   // Upcoming events
 
   const upcomingEvents = events.filter((event) => {
@@ -44,15 +45,14 @@ export default function EventListings() {
     return eventDate > today;
   });
 
+  // Filters
   const filterEvents = (events, filters) => {
     let filteredEvents = events;
 
     // genre
     if (filters.genre.toLowerCase() !== "all") {
       filteredEvents = filteredEvents.filter((event) =>
-        event.genres.some(
-          (genre) => genre.toLowerCase() === filters.genre.toLowerCase(),
-        ),
+        event.genres.some((genre) => genre.toLowerCase() === filters.genre),
       );
     }
 
@@ -152,6 +152,10 @@ export default function EventListings() {
             filters={filters}
             genreOptions={genreOptions}
             onGenreChange={(value) => handleFilterChange("genre", value)}
+            dateRangeOptions={dateRangeOptions}
+            onDateRangeChange={(value) =>
+              handleFilterChange("dateRange", value)
+            }
             hasActiveFilters={hasActiveFilters}
             onClearFilters={() => handleClearFilters()}
             eventCount={eventCount}
@@ -187,6 +191,10 @@ export default function EventListings() {
                 filters={filters}
                 genreOptions={genreOptions}
                 onGenreChange={(value) => handleFilterChange("genre", value)}
+                dateRangeOptions={dateRangeOptions}
+                onDateRangeChange={(value) =>
+                  handleFilterChange("dateRange", value)
+                }
                 hasActiveFilters={hasActiveFilters}
                 onClearFilters={handleClearFilters}
                 eventCount={eventCount}

@@ -4,6 +4,8 @@ export default function EventFiltersPanel({
   filters,
   genreOptions,
   onGenreChange,
+  dateRangeOptions,
+  onDateRangeChange,
   hasActiveFilters,
   onClearFilters,
   eventCount,
@@ -54,24 +56,6 @@ export default function EventFiltersPanel({
                 </button>
               );
             })}
-            {/* <button
-              type="button"
-              className={`${styles.chip} ${styles.chipActive}`}
-            >
-              All
-            </button>
-            <button type="button" className={styles.chip}>
-              Pop
-            </button>
-            <button type="button" className={styles.chip}>
-              Rock
-            </button>
-            <button type="button" className={styles.chip}>
-              Hip-Hop
-            </button>
-            <button type="button" className={styles.chip}>
-              Latin
-            </button> */}
           </div>
         </section>
 
@@ -92,7 +76,22 @@ export default function EventFiltersPanel({
             <h3 className={styles.groupTitle}>Date Range</h3>
           </div>
           <div className={styles.dateOptions}>
-            <label className={styles.option}>
+            {dateRangeOptions.map((dateRange) => {
+              const isActive = dateRange.value === filters.dateRange;
+              return (
+                <label key={dateRange.value} className={styles.option}>
+                  <input
+                    type="radio"
+                    name="dateRange"
+                    checked={isActive}
+                    onChange={() => onDateRangeChange(dateRange.value)}
+                    value={dateRange.value}
+                  />
+                  <span>{dateRange.label}</span>
+                </label>
+              );
+            })}
+            {/* <label className={styles.option}>
               <input type="radio" name="dateRange" checked readOnly />
               <span>Any Date</span>
             </label>
@@ -115,7 +114,7 @@ export default function EventFiltersPanel({
             <label className={styles.option}>
               <input type="radio" name="dateRange" />
               <span>Next Month</span>
-            </label>
+            </label> */}
           </div>
         </section>
 
