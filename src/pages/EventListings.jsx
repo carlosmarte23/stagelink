@@ -142,7 +142,7 @@ export default function EventListings() {
               Close
             </button>
             <div className={styles.mobileFiltersPanel}>
-              <EventsFiltersPanel {...filtersPanelProps} />
+              <EventsFiltersPanel {...filtersPanelProps} isMobile={true} />
             </div>
           </div>
         </div>

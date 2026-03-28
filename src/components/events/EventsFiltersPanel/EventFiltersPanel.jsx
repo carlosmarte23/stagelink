@@ -9,6 +9,7 @@ export default function EventFiltersPanel({
   hasActiveFilters,
   onClearFilters,
   eventCount,
+  isMobile,
 }) {
   return (
     <div className={styles.panel}>
@@ -82,7 +83,7 @@ export default function EventFiltersPanel({
                 <label key={dateRange.value} className={styles.option}>
                   <input
                     type="radio"
-                    name="dateRange"
+                    name={`dateRange-${isMobile ? "mobile" : "desktop"}`}
                     checked={isActive}
                     onChange={() => onDateRangeChange(dateRange.value)}
                     value={dateRange.value}
