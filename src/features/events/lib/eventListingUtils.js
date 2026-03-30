@@ -16,6 +16,15 @@ export function getGenreOptions(events) {
   ];
 }
 
+export function getVenueOptions(events) {
+  return [
+    { value: "all", label: "All" },
+    ...Array.from(new Set(events.flatMap((event) => event.venue)))
+      .sort()
+      .map((venue) => ({ value: venue.toLowerCase(), label: venue })),
+  ];
+}
+
 export function getUpcomingEvents(events, now = new Date()) {
   const today = new Date(now);
   today.setHours(0, 0, 0, 0);
@@ -37,12 +46,18 @@ export function filterEvents(events, filters, now = new Date()) {
     );
   }
 
+  // venue
+  if (filters.venue.toLowerCase() !== "all") {
+    filteredEvents = filteredEvents.filter(
+      (event) => event.venue.toLowerCase() === filters.venue,
+    );
+  }
+
   // date range
   if (filters.dateRange.toLowerCase() === "any-date") {
     filteredEvents = filteredEvents.filter((event) => event.date !== null);
   } else
     switch (filters.dateRange.toLowerCase()) {
-      // TODO: implement date range filter with predefined ranges on UI.
       case "this-weekend": {
         const { start, end } = getThisWeekendRange(now);
 

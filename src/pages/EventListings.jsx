@@ -17,6 +17,7 @@ import {
 import {
   getUpcomingEvents,
   getGenreOptions,
+  getVenueOptions,
   filterEvents,
   hasActiveFilters,
 } from "../features/events/lib/eventListingUtils.js";
@@ -26,6 +27,7 @@ export default function EventListings() {
   const [filters, setFilters] = useState(INITIAL_FILTERS);
 
   const genreOptions = getGenreOptions(events);
+  const venueOptions = getVenueOptions(events);
   const dateRangeOptions = DATE_RANGE_OPTIONS;
 
   const upcomingEvents = getUpcomingEvents(events);
@@ -111,6 +113,8 @@ export default function EventListings() {
     filters,
     genreOptions,
     onGenreChange: (value) => handleFilterChange("genre", value),
+    venueOptions,
+    onVenueChange: (value) => handleFilterChange("venue", value),
     dateRangeOptions,
     onDateRangeChange: (value) => handleFilterChange("dateRange", value),
     priceRange: PRICE_RANGE,

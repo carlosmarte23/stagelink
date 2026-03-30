@@ -55,7 +55,7 @@ export default function EventCard({ event, variant = "default" }) {
                 </svg>
               </span>
               <span className={styles.text}>
-                {event.venueName}
+                {event.venue}
                 {showCity && event.city && ` · ${event.city}`}
               </span>
             </div>
