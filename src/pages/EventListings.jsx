@@ -13,6 +13,7 @@ import {
   INITIAL_SORT_OPTION,
   DATE_RANGE_OPTIONS,
   PRICE_RANGE,
+  EVENTS_PER_PAGE,
 } from "../features/events/config/eventListingConfig.js";
 
 import {
@@ -29,6 +30,7 @@ export default function EventListings() {
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [filters, setFilters] = useState(INITIAL_FILTERS);
   const [sortValue, setSortValue] = useState(INITIAL_SORT_OPTION);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const upcomingEvents = getUpcomingEvents(events);
 
@@ -40,15 +42,24 @@ export default function EventListings() {
   const filteredEvents = filterEvents(upcomingEvents, filters, new Date());
 
   const sortedEvents = sortEvents(filteredEvents, sortValue);
-  const eventCount = sortedEvents.length;
+  const eventsCount = sortedEvents.length;
 
   const isClearDisabled = !hasActiveFilters(filters, INITIAL_FILTERS);
+
+  // pagination
+  const totalPages = Math.ceil(eventsCount / EVENTS_PER_PAGE);
+  const startIndex = (currentPage - 1) * EVENTS_PER_PAGE;
+  const endIndex = startIndex + EVENTS_PER_PAGE;
+
+  const paginatedEvents = sortedEvents.slice(startIndex, endIndex);
 
   const handleFilterChange = (key, value) => {
     setFilters((prevFilters) => ({
       ...prevFilters,
       [key]: value,
     }));
+
+    setCurrentPage(1);
   };
 
   const handleMinPriceChange = (value) => {
@@ -73,6 +84,7 @@ export default function EventListings() {
 
   const handleClearFilters = () => {
     setFilters(INITIAL_FILTERS);
+    setCurrentPage(1);
     if (isFilterModalOpen) {
       setIsFilterModalOpen(false);
 
@@ -84,6 +96,15 @@ export default function EventListings() {
     }
 
     scrollPageToTop();
+  };
+
+  const handleSortChange = (value) => {
+    setSortValue(value);
+    setCurrentPage(1);
+  };
+
+  const handlePageChange = (value) => {
+    setCurrentPage(value);
   };
 
   const scrollPageToTop = () => {
@@ -131,7 +152,7 @@ export default function EventListings() {
     onMaxPriceChange: handleMaxPriceChange,
     hasActiveFilters: !isClearDisabled,
     onClearFilters: handleClearFilters,
-    eventCount,
+    eventCount: eventsCount,
     isMobile: false,
   };
 
@@ -140,15 +161,21 @@ export default function EventListings() {
       <div className={`container ${styles.layout}`}>
         <div className={styles.content}>
           <EventsToolbar
-            resultsCount={eventCount}
+            resultsCount={eventsCount}
             onOpenFilters={() => setIsFilterModalOpen(true)}
             sortValue={sortValue}
-            onSortChange={(e) => setSortValue(e.target.value)}
+            onSortChange={(e) => handleSortChange(e.target.value)}
           />
 
-          <EventsGrid events={sortedEvents} />
+          <EventsGrid events={paginatedEvents} />
 
-          <Pagination />
+          {totalPages > 1 && (
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+            />
+          )}
         </div>
 
         <aside className={styles.desktopFilters}>
