@@ -5,7 +5,14 @@ import FeaturedEventsSection from "../components/home/FeaturedEventsSection/Feat
 import NewsletterForm from "../components/home/NewsletterForm/NewsletterForm.jsx";
 
 export default function Home() {
-  const featured = events
+  const upcomingEvents = events.filter((event) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const eventDate = new Date(event.date);
+    return eventDate > today;
+  });
+
+  const featured = upcomingEvents
     .filter((event) => event.isFeatured)
     .sort((a, b) => new Date(a.date) - new Date(b.date))
     .slice(0, 6);

@@ -1,9 +1,29 @@
-import { useState } from "react";
-
 import styles from "./EventFiltersPanel.module.css";
+import { getPriceRangeLabel } from "../../../features/events/lib/eventListingUtils.js";
 
-export default function EventFiltersPanel({ eventCount }) {
-  const [hasActiveFilters, setHasActiveFilters] = useState(false);
+export default function EventFiltersPanel({
+  filters,
+  genreOptions,
+  onGenreChange,
+  venueOptions,
+  onVenueChange,
+  cityOptions,
+  onCityChange,
+  dateRangeOptions,
+  onDateRangeChange,
+  priceRange,
+  onMinPriceChange,
+  onMaxPriceChange,
+  hasActiveFilters,
+  onClearFilters,
+  eventCount,
+  isMobile,
+}) {
+  const range = priceRange.max - priceRange.min;
+  const minPercent = ((filters.priceMin - priceRange.min) / range) * 100;
+  const maxPercent = ((filters.priceMax - priceRange.min) / range) * 100;
+
+  const priceRangeLabel = getPriceRangeLabel(filters, priceRange);
 
   return (
     <div className={styles.panel}>
@@ -38,24 +58,103 @@ export default function EventFiltersPanel({ eventCount }) {
             <h3 className={styles.groupTitle}>Genres</h3>
           </div>
           <div className={styles.chips}>
-            <button
-              type="button"
-              className={`${styles.chip} ${styles.chipActive}`}
-            >
-              All
-            </button>
-            <button type="button" className={styles.chip}>
-              Pop
-            </button>
-            <button type="button" className={styles.chip}>
-              Rock
-            </button>
-            <button type="button" className={styles.chip}>
-              Hip-Hop
-            </button>
-            <button type="button" className={styles.chip}>
-              Latin
-            </button>
+            {genreOptions.map((genre) => {
+              const isActive = genre.value === filters.genre;
+              return (
+                <button
+                  key={genre.value}
+                  type="button"
+                  onClick={() => onGenreChange(genre.value)}
+                  className={`${styles.chip} ${isActive ? styles.chipActive : ""}`}
+                >
+                  {genre.label}
+                </button>
+              );
+            })}
+          </div>
+        </section>
+
+        <section className={styles.group}>
+          <div className={styles.groupHeader}>
+            <span className={styles.groupIcon} aria-hidden="true">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+                <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0" />
+              </svg>
+            </span>
+            <h3 className={styles.groupTitle}>City</h3>
+          </div>
+
+          <div className={styles.chips}>
+            {cityOptions.map((city) => {
+              const isActive = city.value === filters.city;
+              return (
+                <button
+                  key={city.value}
+                  type="button"
+                  onClick={() => onCityChange(city.value)}
+                  className={`${styles.chip} ${isActive ? styles.chipActive : ""}`}
+                >
+                  {city.label}
+                </button>
+              );
+            })}
+          </div>
+        </section>
+
+        <section className={styles.group}>
+          <div className={styles.groupHeader}>
+            <span className={styles.groupIcon} aria-hidden="true">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M3 21l18 0" />
+                <path d="M9 8l1 0" />
+                <path d="M9 12l1 0" />
+                <path d="M9 16l1 0" />
+                <path d="M14 8l1 0" />
+                <path d="M14 12l1 0" />
+                <path d="M14 16l1 0" />
+                <path d="M5 21v-16a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v16" />
+              </svg>
+            </span>
+            <h3 className={styles.groupTitle}>Venue</h3>
+          </div>
+
+          <div className={styles.chips}>
+            {venueOptions.map((venue) => {
+              const isActive = venue.value === filters.venue;
+              return (
+                <button
+                  key={venue.value}
+                  type="button"
+                  onClick={() => onVenueChange(venue.value)}
+                  className={`${styles.chip} ${isActive ? styles.chipActive : ""}`}
+                >
+                  {venue.label}
+                </button>
+              );
+            })}
           </div>
         </section>
 
@@ -76,30 +175,21 @@ export default function EventFiltersPanel({ eventCount }) {
             <h3 className={styles.groupTitle}>Date Range</h3>
           </div>
           <div className={styles.dateOptions}>
-            <label className={styles.option}>
-              <input type="radio" name="dateRange" checked readOnly />
-              <span>Any Date</span>
-            </label>
-
-            <label className={styles.option}>
-              <input type="radio" name="dateRange" />
-              <span>This Weekend</span>
-            </label>
-
-            <label className={styles.option}>
-              <input type="radio" name="dateRange" />
-              <span>Next 7 Days</span>
-            </label>
-
-            <label className={styles.option}>
-              <input type="radio" name="dateRange" />
-              <span>This Month</span>
-            </label>
-
-            <label className={styles.option}>
-              <input type="radio" name="dateRange" />
-              <span>Next Month</span>
-            </label>
+            {dateRangeOptions.map((dateRange) => {
+              const isActive = dateRange.value === filters.dateRange;
+              return (
+                <label key={dateRange.value} className={styles.option}>
+                  <input
+                    type="radio"
+                    name={`dateRange-${isMobile ? "mobile" : "desktop"}`}
+                    checked={isActive}
+                    onChange={() => onDateRangeChange(dateRange.value)}
+                    value={dateRange.value}
+                  />
+                  <span>{dateRange.label}</span>
+                </label>
+              );
+            })}
           </div>
         </section>
 
@@ -125,20 +215,44 @@ export default function EventFiltersPanel({ eventCount }) {
             </span>
             <h3 className={styles.groupTitle}>Price Range</h3>
           </div>
+          <div className={styles.priceRangeLabel}>
+            <p>{priceRangeLabel}</p>
+          </div>
           <div className={styles.priceRange}>
             <div className={styles.rangeTrack} aria-hidden="true">
               <span className={styles.rangeTrackInactive} />
-              <span className={styles.rangeTrackActive} />
               <span
-                className={`${styles.rangeThumb} ${styles.rangeThumbMin}`}
+                style={{
+                  left: `${minPercent}%`,
+                  right: `${100 - maxPercent}%`,
+                }}
+                className={styles.rangeTrackActive}
               />
-              <span
-                className={`${styles.rangeThumb} ${styles.rangeThumbMax}`}
+              <input
+                min={priceRange.min}
+                max={priceRange.max}
+                step={priceRange.step}
+                value={filters.priceMin}
+                onChange={(e) => onMinPriceChange(e.target.value)}
+                type="range"
+                aria-label="Min Price"
+                className={`${styles.rangeInput} ${styles.rangeInputMin}`}
+              />
+              <input
+                min={priceRange.min}
+                max={priceRange.max}
+                step={priceRange.step}
+                value={filters.priceMax}
+                onChange={(e) => onMaxPriceChange(e.target.value)}
+                type="range"
+                aria-label="Max Price"
+                className={`${styles.rangeInput} ${styles.rangeInputMax}`}
               />
             </div>
+
             <div className={styles.rangeLabels}>
-              <span className={styles.rangeLabel}>$40</span>
-              <span className={styles.rangeLabel}>$250+</span>
+              <span className={styles.rangeLabel}>{`$${priceRange.min}`}</span>
+              <span className={styles.rangeLabel}>{`$${priceRange.max}`}</span>
             </div>
           </div>
         </section>
@@ -147,6 +261,7 @@ export default function EventFiltersPanel({ eventCount }) {
         type="button"
         disabled={!hasActiveFilters}
         aria-disabled={!hasActiveFilters}
+        onClick={onClearFilters}
         className={`button ${styles.clearButton}`}
       >
         Clear All

@@ -140,7 +140,16 @@
         }
       }
 
+      .priceRangeLabel {
+        text-align: left;
+        font-size: 0.875rem;
+        line-height: 1.25;
+        color: var(--text-muted);
+        margin: 0;
+      }
+
       .priceRange {
+        position: relative;
         display: grid;
         gap: 0.5rem;
 
@@ -173,25 +182,30 @@
           z-index: 2;
         }
 
-        .rangeThumb {
+        .rangeInput {
           position: absolute;
-          top: 50%;
-          width: 1.25rem;
-          height: 1.25rem;
-          transform: translate(-50%, -50%);
-          border: white 3px solid;
-          border-radius: var(--radius-xl);
-          background-color: var(--white);
+          top: calc(50% - 0.5rem);
+          height: 1rem;
+          width: 100%;
+          appearance: none;
+          -webkit-appearance: none;
+          -moz-appearance: none;
+          background-color: transparent;
           cursor: pointer;
+          pointer-events: none;
           z-index: 3;
-        }
 
-        .rangeThumbMin {
-          left: 25%;
-        }
-
-        .rangeThumbMax {
-          left: 90%;
+          &::-webkit-slider-thumb {
+            width: 1.25rem;
+            height: 1.25rem;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            border-radius: 50%;
+            background-color: var(--primary);
+            cursor: grab;
+            pointer-events: auto;
+          }
         }
 
         .rangeLabels {

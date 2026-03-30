@@ -8,15 +8,90 @@ import Pagination from "../components/shared/Pagination/Pagination.jsx";
 import events from "../data/events.json";
 import styles from "./EventListings.module.css";
 
-export default function EventListings() {
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const filteredEvents = events; // TODO: apply filters
-  const eventCount = filteredEvents.length;
+import {
+  INITIAL_FILTERS,
+  INITIAL_SORT_OPTION,
+  DATE_RANGE_OPTIONS,
+  PRICE_RANGE,
+} from "../features/events/config/eventListingConfig.js";
 
-  const eventsSample = events.slice(0, 10); // TODO: apply pagination
+import {
+  getUpcomingEvents,
+  getGenreOptions,
+  getVenueOptions,
+  getCityOptions,
+  filterEvents,
+  sortEvents,
+  hasActiveFilters,
+} from "../features/events/lib/eventListingUtils.js";
+
+export default function EventListings() {
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+  const [filters, setFilters] = useState(INITIAL_FILTERS);
+  const [sortValue, setSortValue] = useState(INITIAL_SORT_OPTION);
+
+  const upcomingEvents = getUpcomingEvents(events);
+
+  const dateRangeOptions = DATE_RANGE_OPTIONS;
+  const genreOptions = getGenreOptions(upcomingEvents);
+  const venueOptions = getVenueOptions(upcomingEvents);
+  const cityOptions = getCityOptions(upcomingEvents);
+
+  const filteredEvents = filterEvents(upcomingEvents, filters, new Date());
+
+  const sortedEvents = sortEvents(filteredEvents, sortValue);
+  const eventCount = sortedEvents.length;
+
+  const isClearDisabled = !hasActiveFilters(filters, INITIAL_FILTERS);
+
+  const handleFilterChange = (key, value) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [key]: value,
+    }));
+  };
+
+  const handleMinPriceChange = (value) => {
+    const priceMin = Number(value);
+
+    if (priceMin < PRICE_RANGE.min) return;
+
+    if (priceMin <= filters.priceMax - PRICE_RANGE.step) {
+      handleFilterChange("priceMin", priceMin);
+    }
+  };
+
+  const handleMaxPriceChange = (value) => {
+    const priceMax = Number(value);
+
+    if (priceMax > PRICE_RANGE.max) return;
+
+    if (priceMax >= filters.priceMin + PRICE_RANGE.step) {
+      handleFilterChange("priceMax", priceMax);
+    }
+  };
+
+  const handleClearFilters = () => {
+    setFilters(INITIAL_FILTERS);
+    if (isFilterModalOpen) {
+      setIsFilterModalOpen(false);
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(scrollPageToTop);
+      });
+
+      return;
+    }
+
+    scrollPageToTop();
+  };
+
+  const scrollPageToTop = () => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  };
 
   useEffect(() => {
-    if (!isFilterOpen) return;
+    if (!isFilterModalOpen) return;
 
     const previousStyles = {
       overflow: document.body.style.overflow,
@@ -39,7 +114,26 @@ export default function EventListings() {
       document.body.style.width = previousStyles.width;
       window.scrollTo(0, scrollY);
     };
-  }, [isFilterOpen]);
+  }, [isFilterModalOpen]);
+
+  const filtersPanelProps = {
+    filters,
+    genreOptions,
+    onGenreChange: (value) => handleFilterChange("genre", value),
+    venueOptions,
+    onVenueChange: (value) => handleFilterChange("venue", value),
+    cityOptions,
+    onCityChange: (value) => handleFilterChange("city", value),
+    dateRangeOptions,
+    onDateRangeChange: (value) => handleFilterChange("dateRange", value),
+    priceRange: PRICE_RANGE,
+    onMinPriceChange: handleMinPriceChange,
+    onMaxPriceChange: handleMaxPriceChange,
+    hasActiveFilters: !isClearDisabled,
+    onClearFilters: handleClearFilters,
+    eventCount,
+    isMobile: false,
+  };
 
   return (
     <section className={styles.page}>
@@ -47,29 +141,29 @@ export default function EventListings() {
         <div className={styles.content}>
           <EventsToolbar
             resultsCount={eventCount}
-            onOpenFilters={() => setIsFilterOpen(true)}
-            sortValue="recommended"
-            onSortChange={() => {}}
+            onOpenFilters={() => setIsFilterModalOpen(true)}
+            sortValue={sortValue}
+            onSortChange={(e) => setSortValue(e.target.value)}
           />
 
-          <EventsGrid events={eventsSample} />
+          <EventsGrid events={sortedEvents} />
 
           <Pagination />
         </div>
 
         <aside className={styles.desktopFilters}>
-          <EventsFiltersPanel eventCount={eventCount} />
+          <EventsFiltersPanel {...filtersPanelProps} />
         </aside>
 
         <div
-          className={`${styles.mobileFiltersModal} ${isFilterOpen ? styles.open : ""}`}
+          className={`${styles.mobileFiltersModal} ${isFilterModalOpen ? styles.open : ""}`}
           role="presentation"
         >
           <button
             type="button"
             className={styles.mobileFiltersBackdrop}
             aria-label="Close Filters"
-            onClick={() => setIsFilterOpen(false)}
+            onClick={() => setIsFilterModalOpen(false)}
           />
 
           <div
@@ -81,12 +175,12 @@ export default function EventListings() {
             <button
               type="button"
               className={`button ${styles.mobileFiltersClose}`}
-              onClick={() => setIsFilterOpen(false)}
+              onClick={() => setIsFilterModalOpen(false)}
             >
               Close
             </button>
             <div className={styles.mobileFiltersPanel}>
-              <EventsFiltersPanel eventCount={eventCount} />
+              <EventsFiltersPanel {...filtersPanelProps} isMobile={true} />
             </div>
           </div>
         </div>
