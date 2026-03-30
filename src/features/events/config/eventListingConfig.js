@@ -14,3 +14,5 @@ export const DATE_RANGE_OPTIONS = [
   { value: "this-month", label: "This month" },
   { value: "next-thirty-days", label: "Next 30 days" },
 ];
+
+export const PRICE_RANGE = { min: 0, max: 250, step: 5 };

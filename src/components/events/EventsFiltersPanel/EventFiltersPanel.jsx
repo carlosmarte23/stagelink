@@ -1,16 +1,27 @@
 import styles from "./EventFiltersPanel.module.css";
+import { getPriceRangeLabel } from "../../../features/events/lib/eventListingUtils.js";
 
+// TODO: add venue filter
 export default function EventFiltersPanel({
   filters,
   genreOptions,
   onGenreChange,
   dateRangeOptions,
   onDateRangeChange,
+  priceRange,
+  onMinPriceChange,
+  onMaxPriceChange,
   hasActiveFilters,
   onClearFilters,
   eventCount,
   isMobile,
 }) {
+  const range = priceRange.max - priceRange.min;
+  const minPercent = ((filters.priceMin - priceRange.min) / range) * 100;
+  const maxPercent = ((filters.priceMax - priceRange.min) / range) * 100;
+
+  const priceRangeLabel = getPriceRangeLabel(filters, priceRange);
+
   return (
     <div className={styles.panel}>
       <div className={styles.header}>
@@ -92,30 +103,6 @@ export default function EventFiltersPanel({
                 </label>
               );
             })}
-            {/* <label className={styles.option}>
-              <input type="radio" name="dateRange" checked readOnly />
-              <span>Any Date</span>
-            </label>
-
-            <label className={styles.option}>
-              <input type="radio" name="dateRange" />
-              <span>This Weekend</span>
-            </label>
-
-            <label className={styles.option}>
-              <input type="radio" name="dateRange" />
-              <span>Next 7 Days</span>
-            </label>
-
-            <label className={styles.option}>
-              <input type="radio" name="dateRange" />
-              <span>This Month</span>
-            </label>
-
-            <label className={styles.option}>
-              <input type="radio" name="dateRange" />
-              <span>Next Month</span>
-            </label> */}
           </div>
         </section>
 
@@ -141,20 +128,44 @@ export default function EventFiltersPanel({
             </span>
             <h3 className={styles.groupTitle}>Price Range</h3>
           </div>
+          <div className={styles.priceRangeLabel}>
+            <p>{priceRangeLabel}</p>
+          </div>
           <div className={styles.priceRange}>
             <div className={styles.rangeTrack} aria-hidden="true">
               <span className={styles.rangeTrackInactive} />
-              <span className={styles.rangeTrackActive} />
               <span
-                className={`${styles.rangeThumb} ${styles.rangeThumbMin}`}
+                style={{
+                  left: `${minPercent}%`,
+                  right: `${100 - maxPercent}%`,
+                }}
+                className={styles.rangeTrackActive}
               />
-              <span
-                className={`${styles.rangeThumb} ${styles.rangeThumbMax}`}
+              <input
+                min={priceRange.min}
+                max={priceRange.max}
+                step={priceRange.step}
+                value={filters.priceMin}
+                onChange={(e) => onMinPriceChange(e.target.value)}
+                type="range"
+                aria-label="Min Price"
+                className={`${styles.rangeInput} ${styles.rangeInputMin}`}
+              />
+              <input
+                min={priceRange.min}
+                max={priceRange.max}
+                step={priceRange.step}
+                value={filters.priceMax}
+                onChange={(e) => onMaxPriceChange(e.target.value)}
+                type="range"
+                aria-label="Max Price"
+                className={`${styles.rangeInput} ${styles.rangeInputMax}`}
               />
             </div>
+
             <div className={styles.rangeLabels}>
-              <span className={styles.rangeLabel}>$40</span>
-              <span className={styles.rangeLabel}>$250+</span>
+              <span className={styles.rangeLabel}>{`$${priceRange.min}`}</span>
+              <span className={styles.rangeLabel}>{`$${priceRange.max}`}</span>
             </div>
           </div>
         </section>

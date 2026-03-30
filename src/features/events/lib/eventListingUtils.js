@@ -26,7 +26,7 @@ export function getUpcomingEvents(events, now = new Date()) {
   });
 }
 
-// TODO: apply all filters
+// TODO: add venue filter
 export function filterEvents(events, filters, now = new Date()) {
   let filteredEvents = events;
 
@@ -96,6 +96,19 @@ export function filterEvents(events, filters, now = new Date()) {
   );
 
   return filteredEvents;
+}
+
+export function getPriceRangeLabel(filters, priceRange) {
+  const { priceMin, priceMax } = filters;
+  if (priceMin === priceRange.min && priceMax === priceRange.max) {
+    return "Any price";
+  } else if (priceMin === priceRange.min) {
+    return `Up to $${priceMax}`;
+  } else if (priceMax === priceRange.max) {
+    return `From $${priceMin}`;
+  } else {
+    return `$${priceMin} - $${priceMax}`;
+  }
 }
 
 export function hasActiveFilters(filters, initialFilters) {

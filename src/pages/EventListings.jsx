@@ -11,6 +11,7 @@ import styles from "./EventListings.module.css";
 import {
   INITIAL_FILTERS,
   DATE_RANGE_OPTIONS,
+  PRICE_RANGE,
 } from "../features/events/config/eventListingConfig.js";
 
 import {
@@ -29,6 +30,7 @@ export default function EventListings() {
 
   const upcomingEvents = getUpcomingEvents(events);
   const filteredEvents = filterEvents(upcomingEvents, filters, new Date());
+  // TODO: add sorting
   const eventCount = filteredEvents.length;
 
   const isClearDisabled = !hasActiveFilters(filters, INITIAL_FILTERS);
@@ -38,6 +40,26 @@ export default function EventListings() {
       ...prevFilters,
       [key]: value,
     }));
+  };
+
+  const handleMinPriceChange = (value) => {
+    const priceMin = Number(value);
+
+    if (priceMin < PRICE_RANGE.min) return;
+
+    if (priceMin <= filters.priceMax - PRICE_RANGE.step) {
+      handleFilterChange("priceMin", priceMin);
+    }
+  };
+
+  const handleMaxPriceChange = (value) => {
+    const priceMax = Number(value);
+
+    if (priceMax > PRICE_RANGE.max) return;
+
+    if (priceMax >= filters.priceMin + PRICE_RANGE.step) {
+      handleFilterChange("priceMax", priceMax);
+    }
   };
 
   const scrollPageToTop = () => {
@@ -91,10 +113,13 @@ export default function EventListings() {
     onGenreChange: (value) => handleFilterChange("genre", value),
     dateRangeOptions,
     onDateRangeChange: (value) => handleFilterChange("dateRange", value),
-
+    priceRange: PRICE_RANGE,
+    onMinPriceChange: handleMinPriceChange,
+    onMaxPriceChange: handleMaxPriceChange,
     hasActiveFilters: !isClearDisabled,
     onClearFilters: handleClearFilters,
     eventCount,
+    isMobile: false,
   };
 
   return (
