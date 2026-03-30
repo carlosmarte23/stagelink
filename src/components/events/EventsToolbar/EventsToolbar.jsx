@@ -1,3 +1,5 @@
+import { SORT_OPTIONS } from "../../../features/events/config/eventListingConfig";
+
 import styles from "./EventsToolbar.module.css";
 
 export default function EventsToolbar({
@@ -36,19 +38,20 @@ export default function EventsToolbar({
           </span>
           <span>Filters</span>
         </button>
-        <label className={styles.sortLabel}>
-          <span className={styles.srOnly}>Sort Events</span>
+        <div className={styles.sortField}>
+          <label className={styles.sortLabel}>Sort by:</label>
           <select
             value={sortValue}
             onChange={onSortChange}
             className={styles.sortSelect}
           >
-            <option value="recommended">Recommended</option>
-            <option value="date">Date</option>
-            <option value="price-low">Price: Low to High</option>
-            <option value="price-high">Price: High to Low</option>
+            {SORT_OPTIONS.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
           </select>
-        </label>
+        </div>
       </div>
     </div>
   );

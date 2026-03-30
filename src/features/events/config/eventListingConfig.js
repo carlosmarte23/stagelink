@@ -18,3 +18,12 @@ export const DATE_RANGE_OPTIONS = [
 ];
 
 export const PRICE_RANGE = { min: 0, max: 250, step: 5 };
+
+export const INITIAL_SORT_OPTION = "date";
+
+export const SORT_OPTIONS = [
+  { value: "date", label: "Date" },
+  { value: "recommended", label: "Recommended" },
+  { value: "price-low", label: "Price: Low to High" },
+  { value: "price-high", label: "Price: High to Low" },
+];

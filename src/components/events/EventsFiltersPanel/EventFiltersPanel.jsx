@@ -1,7 +1,6 @@
 import styles from "./EventFiltersPanel.module.css";
 import { getPriceRangeLabel } from "../../../features/events/lib/eventListingUtils.js";
 
-// TODO: add venue filter
 export default function EventFiltersPanel({
   filters,
   genreOptions,

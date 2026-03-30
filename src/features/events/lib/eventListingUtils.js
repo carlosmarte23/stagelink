@@ -44,7 +44,6 @@ export function getUpcomingEvents(events, now = new Date()) {
   });
 }
 
-// TODO: add venue filter
 export function filterEvents(events, filters, now = new Date()) {
   let filteredEvents = events;
 
@@ -127,6 +126,36 @@ export function filterEvents(events, filters, now = new Date()) {
   );
 
   return filteredEvents;
+}
+
+function getEventTime(event) {
+  return new Date(event.date).getTime();
+}
+
+export function sortEvents(events, sortOption) {
+  const sortedEvents = [...events];
+
+  switch (sortOption) {
+    case "date":
+      return sortedEvents.sort((a, b) => getEventTime(a) - getEventTime(b));
+    case "recommended":
+      sortedEvents.sort((a, b) => {
+        const aFeatured = Boolean(a.isFeatured);
+        const bFeatured = Boolean(b.isFeatured);
+        if (aFeatured !== bFeatured) {
+          return aFeatured ? -1 : 1;
+        }
+
+        return getEventTime(a) - getEventTime(b);
+      });
+      return sortedEvents;
+    case "price-low":
+      return sortedEvents.sort((a, b) => a.priceFrom - b.priceFrom);
+    case "price-high":
+      return sortedEvents.sort((a, b) => b.priceFrom - a.priceFrom);
+    default:
+      return sortedEvents;
+  }
 }
 
 export function getPriceRangeLabel(filters, priceRange) {

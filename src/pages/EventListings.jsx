@@ -10,6 +10,7 @@ import styles from "./EventListings.module.css";
 
 import {
   INITIAL_FILTERS,
+  INITIAL_SORT_OPTION,
   DATE_RANGE_OPTIONS,
   PRICE_RANGE,
 } from "../features/events/config/eventListingConfig.js";
@@ -20,24 +21,26 @@ import {
   getVenueOptions,
   getCityOptions,
   filterEvents,
+  sortEvents,
   hasActiveFilters,
 } from "../features/events/lib/eventListingUtils.js";
 
 export default function EventListings() {
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [filters, setFilters] = useState(INITIAL_FILTERS);
-
-  const dateRangeOptions = DATE_RANGE_OPTIONS;
+  const [sortValue, setSortValue] = useState(INITIAL_SORT_OPTION);
 
   const upcomingEvents = getUpcomingEvents(events);
 
+  const dateRangeOptions = DATE_RANGE_OPTIONS;
   const genreOptions = getGenreOptions(upcomingEvents);
   const venueOptions = getVenueOptions(upcomingEvents);
   const cityOptions = getCityOptions(upcomingEvents);
 
   const filteredEvents = filterEvents(upcomingEvents, filters, new Date());
-  // TODO: add sorting
-  const eventCount = filteredEvents.length;
+
+  const sortedEvents = sortEvents(filteredEvents, sortValue);
+  const eventCount = sortedEvents.length;
 
   const isClearDisabled = !hasActiveFilters(filters, INITIAL_FILTERS);
 
@@ -68,10 +71,6 @@ export default function EventListings() {
     }
   };
 
-  const scrollPageToTop = () => {
-    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
-  };
-
   const handleClearFilters = () => {
     setFilters(INITIAL_FILTERS);
     if (isFilterModalOpen) {
@@ -85,6 +84,10 @@ export default function EventListings() {
     }
 
     scrollPageToTop();
+  };
+
+  const scrollPageToTop = () => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
   };
 
   useEffect(() => {
@@ -139,11 +142,11 @@ export default function EventListings() {
           <EventsToolbar
             resultsCount={eventCount}
             onOpenFilters={() => setIsFilterModalOpen(true)}
-            sortValue="recommended"
-            onSortChange={() => {}}
+            sortValue={sortValue}
+            onSortChange={(e) => setSortValue(e.target.value)}
           />
 
-          <EventsGrid events={filteredEvents} />
+          <EventsGrid events={sortedEvents} />
 
           <Pagination />
         </div>
