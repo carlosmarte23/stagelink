@@ -2,6 +2,7 @@
 export const INITIAL_FILTERS = {
   genre: "all",
   venue: "all",
+  city: "all",
   dateRange: "any-date",
   priceMin: 0,
   priceMax: 250,

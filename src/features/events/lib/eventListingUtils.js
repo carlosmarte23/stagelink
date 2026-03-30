@@ -25,6 +25,15 @@ export function getVenueOptions(events) {
   ];
 }
 
+export function getCityOptions(events) {
+  return [
+    { value: "all", label: "All" },
+    ...Array.from(new Set(events.flatMap((event) => event.city)))
+      .sort()
+      .map((city) => ({ value: city.toLowerCase(), label: city })),
+  ];
+}
+
 export function getUpcomingEvents(events, now = new Date()) {
   const today = new Date(now);
   today.setHours(0, 0, 0, 0);
@@ -43,6 +52,13 @@ export function filterEvents(events, filters, now = new Date()) {
   if (filters.genre.toLowerCase() !== "all") {
     filteredEvents = filteredEvents.filter((event) =>
       event.genres.some((genre) => genre.toLowerCase() === filters.genre),
+    );
+  }
+
+  // city
+  if (filters.city.toLowerCase() !== "all") {
+    filteredEvents = filteredEvents.filter(
+      (event) => event.city.toLowerCase() === filters.city,
     );
   }
 

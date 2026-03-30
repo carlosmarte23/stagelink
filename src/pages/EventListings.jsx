@@ -18,6 +18,7 @@ import {
   getUpcomingEvents,
   getGenreOptions,
   getVenueOptions,
+  getCityOptions,
   filterEvents,
   hasActiveFilters,
 } from "../features/events/lib/eventListingUtils.js";
@@ -26,11 +27,14 @@ export default function EventListings() {
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [filters, setFilters] = useState(INITIAL_FILTERS);
 
-  const genreOptions = getGenreOptions(events);
-  const venueOptions = getVenueOptions(events);
   const dateRangeOptions = DATE_RANGE_OPTIONS;
 
   const upcomingEvents = getUpcomingEvents(events);
+
+  const genreOptions = getGenreOptions(upcomingEvents);
+  const venueOptions = getVenueOptions(upcomingEvents);
+  const cityOptions = getCityOptions(upcomingEvents);
+
   const filteredEvents = filterEvents(upcomingEvents, filters, new Date());
   // TODO: add sorting
   const eventCount = filteredEvents.length;
@@ -115,6 +119,8 @@ export default function EventListings() {
     onGenreChange: (value) => handleFilterChange("genre", value),
     venueOptions,
     onVenueChange: (value) => handleFilterChange("venue", value),
+    cityOptions,
+    onCityChange: (value) => handleFilterChange("city", value),
     dateRangeOptions,
     onDateRangeChange: (value) => handleFilterChange("dateRange", value),
     priceRange: PRICE_RANGE,

@@ -8,6 +8,8 @@ export default function EventFiltersPanel({
   onGenreChange,
   venueOptions,
   onVenueChange,
+  cityOptions,
+  onCityChange,
   dateRangeOptions,
   onDateRangeChange,
   priceRange,
@@ -67,6 +69,45 @@ export default function EventFiltersPanel({
                   className={`${styles.chip} ${isActive ? styles.chipActive : ""}`}
                 >
                   {genre.label}
+                </button>
+              );
+            })}
+          </div>
+        </section>
+
+        <section className={styles.group}>
+          <div className={styles.groupHeader}>
+            <span className={styles.groupIcon} aria-hidden="true">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" />
+                <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0" />
+              </svg>
+            </span>
+            <h3 className={styles.groupTitle}>City</h3>
+          </div>
+
+          <div className={styles.chips}>
+            {cityOptions.map((city) => {
+              const isActive = city.value === filters.city;
+              return (
+                <button
+                  key={city.value}
+                  type="button"
+                  onClick={() => onCityChange(city.value)}
+                  className={`${styles.chip} ${isActive ? styles.chipActive : ""}`}
+                >
+                  {city.label}
                 </button>
               );
             })}
