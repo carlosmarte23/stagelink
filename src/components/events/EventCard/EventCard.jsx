@@ -4,15 +4,19 @@ import { buildUnspashImageUrl } from "../../../utils/images.js";
 import styles from "./EventCard.module.css";
 
 export default function EventCard({ event, variant = "default" }) {
-  const showCity = variant !== "featured";
+  const showCity = variant !== "home";
 
   const imgSrc = buildUnspashImageUrl(event.imageUrl, {
     width: 400,
     quality: 70,
   });
 
+  const isFeatured = event.isFeatured;
+
   const cardClassName = `${styles.card}
-  ${variant === "listings" ? styles.listings : ""}`;
+  ${variant === "listings" ? styles.listings : ""}
+  ${variant === "suggested" ? styles.suggested : ""}
+  ${isFeatured ? styles.featured : ""}`;
 
   const formattedDate = new Intl.DateTimeFormat("en-US", {
     month: "short",
@@ -24,6 +28,7 @@ export default function EventCard({ event, variant = "default" }) {
     <>
       <Link to={`/events/${event.id}`} className={cardClassName}>
         <div className={styles.cardHeader}>
+          {isFeatured && <span className={styles.featuredBadge}>Featured</span>}
           <img src={imgSrc} alt="" loading="lazy" decoding="async" />
         </div>
         <div className={styles.cardInner}>
@@ -56,7 +61,7 @@ export default function EventCard({ event, variant = "default" }) {
               </span>
               <span className={styles.text}>
                 {event.venue}
-                {showCity && event.city && ` · ${event.city}`}
+                {showCity && event.city && ` - ${event.city}`}
               </span>
             </div>
           </div>
