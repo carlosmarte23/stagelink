@@ -45,7 +45,7 @@
       font-weight: bold;
       line-height: 1;
       text-transform: uppercase;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.04rem;
       z-index: 5;
     }
   }
@@ -99,7 +99,7 @@
         font-weight: bold;
         line-height: 1;
         text-transform: uppercase;
-        letter-spacing: 0.04em;
+        letter-spacing: 0.04rem;
       }
 
       .date {

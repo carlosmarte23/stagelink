@@ -34,7 +34,9 @@ export default function EventListings() {
   const [currentPage, setCurrentPage] = useState(1);
 
   const upcomingEvents = getUpcomingEvents(events);
-  const suggestedEvents = upcomingEvents.slice(0, 3);
+  const suggestedEvents = upcomingEvents
+    .filter((event) => event.isFeatured)
+    .slice(0, 3);
 
   const dateRangeOptions = DATE_RANGE_OPTIONS;
   const genreOptions = getGenreOptions(upcomingEvents);
@@ -164,15 +166,13 @@ export default function EventListings() {
     <section className={styles.page}>
       <div className={`container ${styles.layout}`}>
         <div className={styles.content}>
-          {eventsCount > 0 && (
-            <EventsToolbar
-              resultsCount={eventsCount}
+          <EventsToolbar
+            resultsCount={eventsCount}
             totalCount={totalEventsCount}
-              onOpenFilters={() => setIsFilterModalOpen(true)}
-              sortValue={sortValue}
-              onSortChange={(e) => handleSortChange(e.target.value)}
-            />
-          )}
+            onOpenFilters={() => setIsFilterModalOpen(true)}
+            sortValue={sortValue}
+            onSortChange={(e) => handleSortChange(e.target.value)}
+          />
 
           {eventsCount === 0 ? (
             <EventsEmptyState
