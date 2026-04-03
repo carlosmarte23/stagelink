@@ -44,6 +44,8 @@ export default function EventListings() {
   const filteredEvents = filterEvents(upcomingEvents, filters, new Date());
 
   const sortedEvents = sortEvents(filteredEvents, sortValue);
+
+  const totalEventsCount = upcomingEvents.length;
   const eventsCount = sortedEvents.length;
 
   const isClearDisabled = !hasActiveFilters(filters, INITIAL_FILTERS);
@@ -165,6 +167,7 @@ export default function EventListings() {
           {eventsCount > 0 && (
             <EventsToolbar
               resultsCount={eventsCount}
+            totalCount={totalEventsCount}
               onOpenFilters={() => setIsFilterModalOpen(true)}
               sortValue={sortValue}
               onSortChange={(e) => handleSortChange(e.target.value)}
