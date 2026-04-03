@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 
 import EventsToolbar from "../components/events/EventsToolbar/EventsToolbar.jsx";
 import EventsGrid from "../components/events/EventsGrid/EventsGrid.jsx";
+import EventsEmptyState from "../components/events/EventsEmptyState/EventsEmptyState.jsx";
 import EventsFiltersPanel from "../components/events/EventsFiltersPanel/EventFiltersPanel.jsx";
 import Pagination from "../components/shared/Pagination/Pagination.jsx";
 
@@ -33,6 +34,7 @@ export default function EventListings() {
   const [currentPage, setCurrentPage] = useState(1);
 
   const upcomingEvents = getUpcomingEvents(events);
+  const suggestedEvents = upcomingEvents.slice(0, 3);
 
   const dateRangeOptions = DATE_RANGE_OPTIONS;
   const genreOptions = getGenreOptions(upcomingEvents);
@@ -160,14 +162,23 @@ export default function EventListings() {
     <section className={styles.page}>
       <div className={`container ${styles.layout}`}>
         <div className={styles.content}>
-          <EventsToolbar
-            resultsCount={eventsCount}
-            onOpenFilters={() => setIsFilterModalOpen(true)}
-            sortValue={sortValue}
-            onSortChange={(e) => handleSortChange(e.target.value)}
-          />
+          {eventsCount > 0 && (
+            <EventsToolbar
+              resultsCount={eventsCount}
+              onOpenFilters={() => setIsFilterModalOpen(true)}
+              sortValue={sortValue}
+              onSortChange={(e) => handleSortChange(e.target.value)}
+            />
+          )}
 
-          <EventsGrid events={paginatedEvents} />
+          {eventsCount === 0 ? (
+            <EventsEmptyState
+              suggestedEvents={suggestedEvents}
+              onClearFilters={handleClearFilters}
+            />
+          ) : (
+            <EventsGrid events={paginatedEvents} />
+          )}
 
           {totalPages > 1 && (
             <Pagination
