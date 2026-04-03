@@ -4,6 +4,7 @@ import styles from "./EventsToolbar.module.css";
 
 export default function EventsToolbar({
   resultsCount,
+  totalCount,
   onOpenFilters,
   sortValue,
   onSortChange,
@@ -12,7 +13,9 @@ export default function EventsToolbar({
     <div className={styles.toolbar}>
       <div className={styles.header}>
         <h1 className={styles.title}>Upcoming Events</h1>
-        <p className={styles.results}>{`(${resultsCount} results)`}</p>
+        <p
+          className={styles.results}
+        >{`(Showing ${resultsCount} of ${totalCount} events.)`}</p>
       </div>
       <div className={styles.controls}>
         <button

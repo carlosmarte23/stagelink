@@ -11,6 +11,8 @@
   --purple-deep: 34, 8, 46;
   --purple-deeper: 24, 4, 34;
 
+  --purple-rgb: rgb(var(--purple));
+  --purple-dark-rgb: rgb(var(--purple-dark));
   --purple-deep-rgb: rgb(var(--purple-deep));
   --purple-deeper-rgb: rgb(var(--purple-deeper));
 

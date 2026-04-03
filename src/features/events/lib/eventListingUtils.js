@@ -38,10 +38,12 @@ export function getUpcomingEvents(events, now = new Date()) {
   const today = new Date(now);
   today.setHours(0, 0, 0, 0);
 
-  return events.filter((event) => {
-    const eventDate = new Date(event.date);
-    return eventDate > today;
-  });
+  return events
+    .filter((event) => {
+      const eventDate = new Date(event.date);
+      return eventDate > today;
+    })
+    .sort((a, b) => new Date(a.date) - new Date(b.date));
 }
 
 export function filterEvents(events, filters, now = new Date()) {
