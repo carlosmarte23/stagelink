@@ -7,33 +7,7 @@ import {
   isEventInDateRange,
 } from "../../../utils/dates.js";
 
-export function getGenreOptions(events) {
-  return [
-    { value: "all", label: "All" },
-    ...Array.from(new Set(events.flatMap((event) => event.genres)))
-      .sort()
-      .map((genre) => ({ value: genre.toLowerCase(), label: genre })),
-  ];
-}
-
-export function getVenueOptions(events) {
-  return [
-    { value: "all", label: "All" },
-    ...Array.from(new Set(events.flatMap((event) => event.venue)))
-      .sort()
-      .map((venue) => ({ value: venue.toLowerCase(), label: venue })),
-  ];
-}
-
-export function getCityOptions(events) {
-  return [
-    { value: "all", label: "All" },
-    ...Array.from(new Set(events.flatMap((event) => event.city)))
-      .sort()
-      .map((city) => ({ value: city.toLowerCase(), label: city })),
-  ];
-}
-
+//Events
 export function getUpcomingEvents(events, now = new Date()) {
   const today = new Date(now);
   today.setHours(0, 0, 0, 0);
@@ -158,6 +132,109 @@ export function sortEvents(events, sortOption) {
     default:
       return sortedEvents;
   }
+}
+
+// Filters Options
+function enrichEventOptions(options, events, type, selectedValue) {
+  const counts = {};
+
+  events.forEach((event) => {
+    if (type === "genres") {
+      event.genres.forEach((genre) => {
+        const key = genre.toLowerCase();
+        counts[key] = (counts[key] ?? 0) + 1;
+      });
+
+      return;
+    }
+
+    const key = event[type]?.toLowerCase();
+    if (!key) return;
+    counts[key] = (counts[key] ?? 0) + 1;
+  });
+
+  return options.map((option) => {
+    if (option.value === "all") {
+      return { ...option, disabled: false, count: events.length };
+    }
+
+    const count = counts[option.value] ?? 0;
+
+    return {
+      ...option,
+      disabled: count === 0 && option.value !== selectedValue,
+      count,
+    };
+  });
+}
+
+// export function getGenreOptions(events) {
+//   return [
+//     { value: "all", label: "All" },
+//     ...Array.from(new Set(events.flatMap((event) => event.genres)))
+//       .sort()
+//       .map((genre) => ({ value: genre.toLowerCase(), label: genre })),
+//   ];
+// }
+export function getGenreOptions(events, filters, now = new Date()) {
+  const baseOptions = [
+    { value: "all", label: "All" },
+    ...Array.from(new Set(events.flatMap((event) => event.genres)))
+      .sort()
+      .map((genre) => ({ value: genre.toLowerCase(), label: genre })),
+  ];
+
+  const availableEvents = filterEvents(
+    events,
+    { ...filters, genre: "all" },
+    now,
+  );
+
+  return enrichEventOptions(
+    baseOptions,
+    availableEvents,
+    "genres",
+    filters.genre,
+  );
+}
+
+export function getVenueOptions(events, filters, now = new Date()) {
+  const baseOptions = [
+    { value: "all", label: "All" },
+    ...Array.from(new Set(events.flatMap((event) => event.venue)))
+      .sort()
+      .map((venue) => ({ value: venue.toLowerCase(), label: venue })),
+  ];
+
+  const availableEvents = filterEvents(
+    events,
+    { ...filters, venue: "all" },
+    now,
+  );
+
+  return enrichEventOptions(
+    baseOptions,
+    availableEvents,
+    "venue",
+    filters.venue,
+  );
+}
+
+export function getCityOptions(events, filters, now = new Date()) {
+  const baseOptions = [
+    { value: "all", label: "All" },
+    ...Array.from(new Set(events.flatMap((event) => event.city)))
+      .sort()
+      .map((city) => ({ value: city.toLowerCase(), label: city })),
+  ];
+
+  const availableEvents = filterEvents(
+    events,
+    { ...filters, city: "all" },
+    now,
+  );
+
+  return enrichEventOptions(baseOptions, availableEvents, "city", filters.city);
 }
 
 export function getPriceRangeLabel(filters, priceRange) {

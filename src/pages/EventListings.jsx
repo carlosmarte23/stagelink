@@ -39,9 +39,9 @@ export default function EventListings() {
     .slice(0, 3);
 
   const dateRangeOptions = DATE_RANGE_OPTIONS;
-  const genreOptions = getGenreOptions(upcomingEvents);
-  const venueOptions = getVenueOptions(upcomingEvents);
-  const cityOptions = getCityOptions(upcomingEvents);
+  const genreOptions = getGenreOptions(upcomingEvents, filters);
+  const venueOptions = getVenueOptions(upcomingEvents, filters, new Date());
+  const cityOptions = getCityOptions(upcomingEvents, filters);
 
   const filteredEvents = filterEvents(upcomingEvents, filters, new Date());
 

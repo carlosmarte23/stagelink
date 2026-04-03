@@ -60,12 +60,16 @@ export default function EventFiltersPanel({
           <div className={styles.chips}>
             {genreOptions.map((genre) => {
               const isActive = genre.value === filters.genre;
+              const isDisabled = genre.disabled && genre.value !== "all";
+
               return (
                 <button
                   key={genre.value}
                   type="button"
                   onClick={() => onGenreChange(genre.value)}
-                  className={`${styles.chip} ${isActive ? styles.chipActive : ""}`}
+                  disabled={isDisabled}
+                  aria-disabled={isDisabled}
+                  className={`${styles.chip} ${isActive ? styles.chipActive : ""} ${isDisabled ? styles.chipDisabled : ""}`}
                 >
                   {genre.label}
                 </button>
@@ -99,12 +103,15 @@ export default function EventFiltersPanel({
           <div className={styles.chips}>
             {cityOptions.map((city) => {
               const isActive = city.value === filters.city;
+              const isDisabled = city.disabled && city.value !== "all";
               return (
                 <button
                   key={city.value}
                   type="button"
                   onClick={() => onCityChange(city.value)}
-                  className={`${styles.chip} ${isActive ? styles.chipActive : ""}`}
+                  disabled={isDisabled}
+                  aria-disabled={isDisabled}
+                  className={`${styles.chip} ${isActive ? styles.chipActive : ""} ${isDisabled ? styles.chipDisabled : ""}`}
                 >
                   {city.label}
                 </button>
@@ -144,12 +151,15 @@ export default function EventFiltersPanel({
           <div className={styles.chips}>
             {venueOptions.map((venue) => {
               const isActive = venue.value === filters.venue;
+              const isDisabled = venue.disabled && venue.value !== "all";
               return (
                 <button
                   key={venue.value}
                   type="button"
                   onClick={() => onVenueChange(venue.value)}
-                  className={`${styles.chip} ${isActive ? styles.chipActive : ""}`}
+                  disabled={isDisabled}
+                  aria-disabled={isDisabled}
+                  className={`${styles.chip} ${isActive ? styles.chipActive : ""} ${isDisabled ? styles.chipDisabled : ""}`}
                 >
                   {venue.label}
                 </button>

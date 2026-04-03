@@ -110,6 +110,11 @@
             font-weight: 700;
             pointer-events: none;
           }
+
+          &.chipDisabled {
+            opacity: 0.1;
+            pointer-events: none;
+          }
         }
       }
 
