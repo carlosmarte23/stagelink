@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import EventsToolbar from "../components/events/EventsToolbar/EventsToolbar.jsx";
 import EventsGrid from "../components/events/EventsGrid/EventsGrid.jsx";
@@ -32,6 +32,7 @@ export default function EventListings() {
   const [filters, setFilters] = useState(INITIAL_FILTERS);
   const [sortValue, setSortValue] = useState(INITIAL_SORT_OPTION);
   const [currentPage, setCurrentPage] = useState(1);
+  const shouldScrollToTopOnCloseRef = useRef(false);
 
   const upcomingEvents = getUpcomingEvents(events);
   const suggestedEvents = upcomingEvents
@@ -91,13 +92,9 @@ export default function EventListings() {
   const handleClearFilters = () => {
     setFilters(INITIAL_FILTERS);
     setCurrentPage(1);
+
     if (isFilterModalOpen) {
-      setIsFilterModalOpen(false);
-
-      requestAnimationFrame(() => {
-        requestAnimationFrame(scrollPageToTop);
-      });
-
+      closeFilterModal({ scrollToTop: true });
       return;
     }
 
@@ -115,6 +112,11 @@ export default function EventListings() {
 
   const scrollPageToTop = () => {
     window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  };
+
+  const closeFilterModal = ({ scrollToTop = false } = {}) => {
+    shouldScrollToTopOnCloseRef.current = scrollToTop;
+    setIsFilterModalOpen(false);
   };
 
   useEffect(() => {
@@ -135,10 +137,19 @@ export default function EventListings() {
     document.body.style.width = "100%";
 
     return () => {
+      const shouldScrollToTop = shouldScrollToTopOnCloseRef.current;
+
+      shouldScrollToTopOnCloseRef.current = false;
       document.body.style.overflow = previousStyles.overflow;
       document.body.style.position = previousStyles.position;
       document.body.style.top = previousStyles.top;
       document.body.style.width = previousStyles.width;
+
+      if (shouldScrollToTop) {
+        window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+        return;
+      }
+
       window.scrollTo(0, scrollY);
     };
   }, [isFilterModalOpen]);
@@ -204,7 +215,7 @@ export default function EventListings() {
             type="button"
             className={styles.mobileFiltersBackdrop}
             aria-label="Close Filters"
-            onClick={() => setIsFilterModalOpen(false)}
+            onClick={() => closeFilterModal({ scrollToTop: true })}
           />
 
           <div
@@ -216,7 +227,7 @@ export default function EventListings() {
             <button
               type="button"
               className={`button ${styles.mobileFiltersClose}`}
-              onClick={() => setIsFilterModalOpen(false)}
+              onClick={() => closeFilterModal({ scrollToTop: true })}
             >
               Close
             </button>
