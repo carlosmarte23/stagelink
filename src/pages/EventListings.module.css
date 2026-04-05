@@ -100,6 +100,15 @@
       .desktopFilters {
         display: block;
         grid-area: filters;
+        min-width: 0;
+        align-self: start;
+
+        & > * {
+          position: sticky;
+          top: calc(4.5rem + 1rem);
+          height: 80vh;
+          min-height: 0;
+        }
       }
 
       .mobileFiltersDialog {
