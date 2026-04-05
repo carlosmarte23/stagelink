@@ -15,7 +15,7 @@ export default function EventsToolbar({
         <h1 className={styles.title}>Upcoming Events</h1>
         <p
           className={styles.results}
-        >{`(Showing ${resultsCount} of ${totalCount} events.)`}</p>
+        >{`(Showing ${resultsCount} of ${totalCount} events)`}</p>
       </div>
       <div className={styles.controls}>
         <button
