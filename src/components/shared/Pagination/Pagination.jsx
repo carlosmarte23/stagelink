@@ -24,6 +24,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
       <button
         type="button"
         onClick={handlePrevious}
+        disabled={currentPage === 1}
         className={`${styles.navButton} ${currentPage === 1 ? styles.disabled : ""}`}
         aria-label="Previous Page"
       >
@@ -50,6 +51,12 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
             key={page}
             className={`${styles.pageButton} ${page === currentPage ? styles.active : ""}`}
             onClick={(e) => handlePageClick(e, page)}
+            aria-current={page === currentPage ? "page" : undefined}
+            aria-label={
+              page === currentPage
+                ? `Page ${page}, current page`
+                : `Go to page ${page}`
+            }
           >
             {page}
           </button>
@@ -58,6 +65,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
       <button
         type="button"
         onClick={handleNext}
+        disabled={currentPage === totalPages}
         className={`${styles.navButton} ${currentPage === totalPages ? styles.disabled : ""}`}
         aria-label="Next Page"
       >
