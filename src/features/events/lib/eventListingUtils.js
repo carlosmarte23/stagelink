@@ -168,14 +168,6 @@ function enrichEventOptions(options, events, type, selectedValue) {
   });
 }
 
-// export function getGenreOptions(events) {
-//   return [
-//     { value: "all", label: "All" },
-//     ...Array.from(new Set(events.flatMap((event) => event.genres)))
-//       .sort()
-//       .map((genre) => ({ value: genre.toLowerCase(), label: genre })),
-//   ];
-// }
 export function getGenreOptions(events, filters, now = new Date()) {
   const baseOptions = [
     { value: "all", label: "All" },
