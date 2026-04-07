@@ -61,6 +61,7 @@ export default function NewsletterForm() {
       </p>
       <form onSubmit={handleSubmit} noValidate className={styles.form}>
         <input
+          id="newsletter-email"
           type="email"
           required
           autoComplete="email"
@@ -68,6 +69,7 @@ export default function NewsletterForm() {
           value={email}
           onChange={handleChange}
           disabled={isSubmitting || success}
+          aria-label="Email address"
           aria-invalid={Boolean(error)}
           aria-describedby={
             error
@@ -87,7 +89,7 @@ export default function NewsletterForm() {
             ? "Subscribing..."
             : success
               ? "Subscribed!"
-              : "Suscribe"}
+              : "Subscribe"}
         </button>
       </form>
       {error && <p className={styles.errorMessage}>{error}</p>}
