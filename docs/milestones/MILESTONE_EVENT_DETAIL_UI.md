@@ -40,7 +40,6 @@ Required fields
 - `doorsAt` (optional)
 - `timezone`
 - `imageUrl`
-- `heroImageUrl` (optional)
 - `genres`
 - `isFeatured` (optional)
 - `venue.name`
@@ -69,16 +68,17 @@ Derived rules
 
 This milestone should be delivered in **5 logical stages** so the event contract, existing pages, and the new detail page evolve together.
 
-### Stage 1: Contract + Tests + Data Refactor
+### Stage 1: Contract + Data Access Layer + Tests + Data Refactor
 
 Purpose
 
-Define the new event contract, refactor the mock data early, and protect the new rules with tests before UI work.
+Define the new event contract, add a small shared data-access layer, refactor the mock data early, and protect the new rules with tests before UI work.
 
 Includes
 
 - Event Detail milestone document
 - Canonical event mock shape
+- Shared event repository as the single access point to the catalog
 - Derived helpers for pricing, sold-out state, doors fallback, and tier limits
 - Tests for the new contract and helper behavior
 
@@ -141,24 +141,26 @@ Includes
 
 ## Step-by-step Plan
 
-### Part 1) Contract + Tests + Data Refactor
+### Part 1) Contract + Data Access Layer + Tests + Data Refactor
 
 Scope
 
 - Create the Event Detail milestone doc
 - Refactor `events.json` to the canonical event shape
+- Create a small event repository that becomes the single access point to the catalog
 - Remove `priceFrom` as source-of-truth
-- Add helpers/selectors for:
+- Add shared helpers/selectors for:
   - event lookup by `eventId`
   - derived lowest available price
   - derived sold-out state
   - derived doors time
   - derived effective quantity limit
+- Keep new code from importing `events.json` directly when repository/selectors cover the use case
 - Add deterministic tests for those helpers and update any broken tests
 
 Acceptance check
 
-- The milestone document, mock data, and tests all agree on one canonical event contract
+- The milestone document, mock data, repository, and tests all agree on one canonical event contract
 
 ### Part 2) Refactor Home + Events
 
@@ -180,7 +182,7 @@ Scope
 
 - Resolve the current event from the route param
 - Render a not-found or safe fallback state when the event does not exist
-- Build the hero/media section using the event image
+- Build the hero/media section using `imageUrl` and the existing image helper for a higher-resolution source
 - Render title, description, starts time, doors time, venue name, and venue address
 - Build the mobile-first layout and desktop split layout
 - Place the ticket panel below the event summary on mobile/tablet and beside it on desktop
@@ -255,3 +257,4 @@ Required test cases
 - `doorsAt` is optional and falls back to one hour before `startsAt`
 - `perOrderLimit` defaults to `8` when omitted
 - Tier count is admin-defined, but simulated only through mock data in this milestone
+
