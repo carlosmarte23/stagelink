@@ -9,7 +9,7 @@ export default function EventsEmptyState({ suggestedEvents, onClearFilters }) {
 
   return (
     <section className={styles.section}>
-      <div className={styles.noEvents}>
+      <div id="no-events" className={styles.noEvents}>
         <div className={styles.image}>
           <svg
             xmlns="http://www.w3.org/2000/svg"

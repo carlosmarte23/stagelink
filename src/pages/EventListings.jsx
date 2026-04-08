@@ -203,7 +203,7 @@ export default function EventListings() {
           )}
         </div>
 
-        <aside className={styles.desktopFilters}>
+        <aside className={styles.desktopFilters} aria-label="Desktop Filters">
           <EventsFiltersPanel {...filtersPanelProps} />
         </aside>
 
@@ -222,7 +222,7 @@ export default function EventListings() {
             className={styles.mobileFiltersShell}
             role="dialog"
             aria-modal="true"
-            aria-label="Filters"
+            aria-label="Mobile filters"
           >
             <button
               type="button"
