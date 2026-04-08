@@ -42,8 +42,11 @@ export default function EventsToolbar({
           <span>Filters</span>
         </button>
         <div className={styles.sortField}>
-          <label className={styles.sortLabel}>Sort by:</label>
+          <label htmlFor="event-sort" className={styles.sortLabel}>
+            Sort by:
+          </label>
           <select
+            id="event-sort"
             value={sortValue}
             onChange={onSortChange}
             className={styles.sortSelect}

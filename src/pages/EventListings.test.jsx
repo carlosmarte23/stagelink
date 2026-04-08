@@ -1,4 +1,4 @@
-import { render, screen, within } from "@testing-library/react";
+import { render, screen, within, fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi, beforeEach, afterEach } from "vitest";
 import { MemoryRouter } from "react-router-dom";
@@ -103,5 +103,63 @@ describe("EventListings", () => {
     const clearedResults = getResultsSummary();
     expect(clearedResults.showing).toBe(initialResults.showing);
     expect(clearedResults.total).toBe(initialResults.total);
+  });
+
+  it("resets pagination to 1 when changing sort order", async () => {
+    const user = userEvent.setup();
+
+    render(
+      <MemoryRouter>
+        <EventListings />
+      </MemoryRouter>,
+    );
+
+    await user.click(screen.getByRole("button", { name: /go to page 2/i }));
+
+    expect(
+      screen.getByRole("button", { name: /page 2, current page/i }),
+    ).toHaveAttribute("aria-current", "page");
+
+    const sortSelect = screen.getByRole("combobox", { name: /sort by/i });
+
+    await user.selectOptions(sortSelect, "price-high");
+
+    expect(
+      screen.getByRole("button", { name: /page 1, current page/i }),
+    ).toHaveAttribute("aria-current", "page");
+
+    expect(
+      screen.queryByRole("button", { name: /page 2, current page/i }),
+    ).not.toBeInTheDocument();
+  });
+
+  it("shows empty state when filter combination has no results", async () => {
+    const user = userEvent.setup();
+
+    render(
+      <MemoryRouter>
+        <EventListings />
+      </MemoryRouter>,
+    );
+
+    await user.click(
+      within(
+        screen.getByRole("complementary", {
+          name: /desktop filters/i,
+        }),
+      ).getByRole("button", { name: /austin, tx/i }),
+    );
+
+    const minPriceSlider = within(
+      screen.getByRole("complementary", {
+        name: /desktop filters/i,
+      }),
+    ).getByLabelText(/min price/i);
+
+    fireEvent.change(minPriceSlider, { target: { value: 80 } });
+
+    expect(
+      screen.getByRole("heading", { name: /no events found/i }),
+    ).toBeInTheDocument();
   });
 });
