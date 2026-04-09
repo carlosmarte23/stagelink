@@ -35,6 +35,11 @@ describe("EventDetail", () => {
     render(renderEventDetailPage("bad-id"));
 
     expect(screen.getByText(/event not found/i)).toBeInTheDocument();
+    expect(screen.getByText(/we couldn.t find/i)).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /go back/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: /browse all events/i }),
+    ).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /go home/i })).toBeInTheDocument();
   });
 });
