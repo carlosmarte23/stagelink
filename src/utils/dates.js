@@ -94,3 +94,45 @@ export function isEventInDateRange(eventDate, start, end) {
   const value = new Date(eventDate);
   return value >= start && value <= end;
 }
+
+export function formatDateTimeParts(dateString, timezone) {
+  if (!dateString || !timezone) return null;
+
+  const dateValue = new Date(dateString);
+
+  if (isNaN(dateValue.getTime())) return null;
+
+  const fullDateFormatter = new Intl.DateTimeFormat("en-US", {
+    timezone,
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+
+  const shortDateFormatter = new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+
+  const timeFormatter = new Intl.DateTimeFormat("en-US", {
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
+  });
+
+  const timeWithTimezoneFormatter = new Intl.DateTimeFormat("en-US", {
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
+    timeZoneName: "short",
+  });
+
+  return {
+    fullDate: fullDateFormatter.format(dateValue),
+    shortDate: shortDateFormatter.format(dateValue),
+    time: timeFormatter.format(dateValue),
+    timeWithZone: timeWithTimezoneFormatter.format(dateValue),
+  };
+}

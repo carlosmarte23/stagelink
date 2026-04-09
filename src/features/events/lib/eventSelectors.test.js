@@ -4,6 +4,8 @@ import {
   getEventPriceFrom,
   isEventSoldOut,
   getDisplayDoorsAt,
+  getFormattedShowAt,
+  getFormattedDoorsAt,
   getEffectiveTierLimit,
   getVenueName,
   getVenueCity,
@@ -80,6 +82,112 @@ describe("eventSelectors", () => {
       };
 
       expect(getDisplayDoorsAt(event)).toBe("2026-02-14T19:00:00Z");
+    });
+  });
+
+  describe("getFormattedShowAt", () => {
+    it("returns the formatted show time from startsAt exist", () => {
+      const event = {
+        id: "mock_event",
+        startsAt: "2026-04-12T23:30:00Z",
+        timezone: "America/New_York",
+      };
+
+      expect(getFormattedShowAt(event)).toEqual({
+        fullDate: "Sunday, April 12, 2026",
+        shortDate: "Apr 12, 2026",
+        time: "7:30 PM",
+        timeWithZone: "7:30 PM EDT",
+      });
+    });
+
+    it("returns null if given a invalid or null showAt value", () => {
+      const event = {
+        id: "mock_event",
+        startsAt: "not-valid",
+        timezone: "America/New_York",
+      };
+
+      expect(getFormattedShowAt(event)).toBe(null);
+
+      const event2 = {
+        id: "mock_event",
+        timezone: "America/New_York",
+      };
+
+      expect(getFormattedShowAt(event2)).toBe(null);
+    });
+
+    it("returns null if timezone is missing", () => {
+      const event = {
+        id: "mock_event",
+        startsAt: "2026-04-12T23:30:00Z",
+      };
+
+      expect(getFormattedShowAt(event)).toBe(null);
+    });
+  });
+
+  describe("getFormattedDoorsAt", () => {
+    it("returns the formatted doors time from doorsAt exist", () => {
+      const event = {
+        id: "mock_event",
+        startsAt: "2026-04-12T23:30:00Z",
+        doorsAt: "2026-04-12T22:00:00Z",
+        timezone: "America/New_York",
+      };
+
+      expect(getFormattedDoorsAt(event)).toEqual({
+        fullDate: "Sunday, April 12, 2026",
+        shortDate: "Apr 12, 2026",
+        time: "6:00 PM",
+        timeWithZone: "6:00 PM EDT",
+      });
+    });
+
+    it("returns the formatted doors time derived from startsAt if doorsAt doesn't exist", () => {
+      const event = {
+        id: "mock_event",
+        startsAt: "2026-04-12T23:30:00Z",
+        timezone: "America/New_York",
+      };
+
+      expect(getFormattedDoorsAt(event)).toEqual({
+        fullDate: "Sunday, April 12, 2026",
+        shortDate: "Apr 12, 2026",
+        time: "6:30 PM",
+        timeWithZone: "6:30 PM EDT",
+      });
+    });
+
+    it("returns null if given a invalid or doorsAt value", () => {
+      const event = {
+        id: "mock_event",
+        startsAt: "2026-04-12T23:30:00Z",
+        doorsAt: "not-valid-value",
+        timezone: "America/New_York",
+      };
+
+      expect(getFormattedDoorsAt(event)).toBe(null);
+    });
+
+    it("returns null if not given a doorsAt value and startsAt is invalid", () => {
+      const event = {
+        id: "mock_event",
+        startsAt: "not-valid-value",
+        timezone: "America/New_York",
+      };
+
+      expect(getFormattedDoorsAt(event)).toBe(null);
+    });
+
+    it("returns null if timezone is missing", () => {
+      const event = {
+        id: "mock_event",
+        startsAt: "2026-04-12T23:30:00Z",
+      };
+
+      expect(getFormattedDoorsAt(event)).toBe(null);
     });
   });
 
