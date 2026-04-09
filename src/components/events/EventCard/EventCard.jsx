@@ -1,10 +1,21 @@
 import { Link } from "react-router-dom";
 
+import {
+  getVenueName,
+  getVenueCity,
+  getEventPriceFrom,
+} from "../../../features/events/lib/eventSelectors.js";
 import { buildUnspashImageUrl } from "../../../utils/images.js";
 import styles from "./EventCard.module.css";
 
 export default function EventCard({ event, variant = "default" }) {
   const showCity = variant !== "featured";
+
+  const eventVenue = getVenueName(event);
+  const eventCity = showCity ? getVenueCity(event) : null;
+  const eventPriceFrom = getEventPriceFrom(event);
+
+  if (!event) return null;
 
   const imgSrc = buildUnspashImageUrl(event.imageUrl, {
     width: 400,
@@ -22,7 +33,7 @@ export default function EventCard({ event, variant = "default" }) {
     month: "short",
     day: "numeric",
     year: "numeric",
-  }).format(new Date(event.date));
+  }).format(new Date(event.startsAt));
 
   return (
     <Link to={`/events/${event.id}`} className={cardClassName}>
@@ -59,14 +70,13 @@ export default function EventCard({ event, variant = "default" }) {
               </svg>
             </span>
             <span className={styles.text}>
-              {event.venue}
-              {showCity && event.city && ` - ${event.city}`}
+              {`${eventVenue} ${showCity && "- "} ${eventCity}`}
             </span>
           </div>
         </div>
         <div className={styles.cardFooter}>
           <p className={styles.price}>
-            <span className={styles.priceValue}>${event.priceFrom}</span>
+            <span className={styles.priceValue}>${eventPriceFrom}</span>
             <span className={styles.priceSuffix}>/seat</span>
           </p>
           <span className="button button--secondary">Get Tickets</span>
