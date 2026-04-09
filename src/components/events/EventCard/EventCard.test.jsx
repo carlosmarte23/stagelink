@@ -81,6 +81,20 @@ describe("EventCard", () => {
         screen.getByRole("link", { name: /neon nights tour/i }),
       ).toHaveAttribute("href", "/events/evt_001");
     });
+
+    it("renders sold out text instead of an undefined price when no ticket tiers are available", () => {
+      const soldOutEvent = {
+        ...event,
+        ticketTiers: event.ticketTiers.map((tier) => ({
+          ...tier,
+          remaining: 0,
+        })),
+      };
+
+      renderCard(soldOutEvent);
+      expect(screen.getByText(/sold out/i)).toBeInTheDocument();
+      expect(screen.getByText(/no tickets left/i)).toBeInTheDocument();
+    });
   });
 
   describe("featured variant", () => {
