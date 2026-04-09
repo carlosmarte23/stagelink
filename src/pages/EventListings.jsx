@@ -6,7 +6,7 @@ import EventsEmptyState from "../components/events/EventsEmptyState/EventsEmptyS
 import EventsFiltersPanel from "../components/events/EventsFiltersPanel/EventFiltersPanel.jsx";
 import Pagination from "../components/shared/Pagination/Pagination.jsx";
 
-import events from "../data/events.json";
+import { getAllEvents } from "../features/events/data/eventsRepository.js";
 import styles from "./EventListings.module.css";
 
 import {
@@ -34,7 +34,7 @@ export default function EventListings() {
   const [currentPage, setCurrentPage] = useState(1);
   const shouldScrollToTopOnCloseRef = useRef(false);
 
-  const upcomingEvents = getUpcomingEvents(events);
+  const upcomingEvents = getUpcomingEvents(getAllEvents());
   const suggestedEvents = upcomingEvents
     .filter((event) => event.isFeatured)
     .slice(0, 3);

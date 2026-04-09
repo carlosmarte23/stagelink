@@ -29,80 +29,131 @@ function createEvents() {
     {
       id: "evt_001",
       title: "Past Rock Night",
-      date: "2026-04-06T20:00:00.000Z", // past
-      venue: "Skyline Hall",
-      city: "Lancaster",
-      priceFrom: 25,
+      startsAt: "2026-04-06T20:00:00.000Z", // past
+      timezone: "America/New_York",
+      venue: {
+        name: "Skyline Hall",
+        city: "Lancaster",
+        address: "101 Main Street, Lancaster, PA 17602",
+      },
+      ticketTiers: [
+        { id: "general", name: "General", price: 25, remaining: 80 },
+      ],
       genres: ["Rock"],
       isFeatured: false,
     },
     {
       id: "evt_002",
       title: "Midweek Pop Show",
-      date: "2026-04-09T20:00:00.000Z", // this week
-      venue: "Skyline Hall",
-      city: "Lancaster",
-      priceFrom: 40,
+      startsAt: "2026-04-09T20:00:00.000Z", // this week
+      timezone: "America/New_York",
+      venue: {
+        name: "Skyline Hall",
+        city: "Lancaster",
+        address: "101 Main Street, Lancaster, PA 17602",
+      },
+      ticketTiers: [
+        { id: "general", name: "General", price: 40, remaining: 120 },
+        { id: "vip", name: "VIP", price: 80, remaining: 24 },
+      ],
       genres: ["Pop"],
       isFeatured: true,
     },
     {
       id: "evt_003",
       title: "Friday EDM Rush",
-      date: "2026-04-10T22:00:00.000Z", // this weekend
-      venue: "River Center",
-      city: "Philadelphia",
-      priceFrom: 65,
+      startsAt: "2026-04-10T22:00:00.000Z", // this weekend
+      timezone: "America/New_York",
+      venue: {
+        name: "River Center",
+        city: "Philadelphia",
+        address: "220 River Road, Philadelphia, PA 19106",
+      },
+      ticketTiers: [
+        { id: "general", name: "General", price: 65, remaining: 90 },
+        { id: "vip", name: "VIP", price: 120, remaining: 18 },
+      ],
       genres: ["Electronic", "EDM"],
       isFeatured: false,
     },
     {
       id: "evt_004",
       title: "Saturday Latin Fest",
-      date: "2026-04-11T19:00:00.000Z", // this weekend
-      venue: "River Center",
-      city: "Philadelphia",
-      priceFrom: 95,
+      startsAt: "2026-04-11T19:00:00.000Z", // this weekend
+      timezone: "America/New_York",
+      venue: {
+        name: "River Center",
+        city: "Philadelphia",
+        address: "220 River Road, Philadelphia, PA 19106",
+      },
+      ticketTiers: [
+        { id: "general", name: "General", price: 95, remaining: 60 },
+        { id: "vip", name: "VIP", price: 150, remaining: 10 },
+      ],
       genres: ["Latin", "Pop"],
       isFeatured: true,
     },
     {
       id: "evt_005",
       title: "Sunday Jazz Brunch",
-      date: "2026-04-12T16:00:00.000Z", // this weekend
-      venue: "Blue Note Room",
-      city: "New York",
-      priceFrom: 55,
+      startsAt: "2026-04-12T16:00:00.000Z", // this weekend
+      timezone: "America/New_York",
+      venue: {
+        name: "Blue Note Room",
+        city: "New York",
+        address: "55 Broadway, New York, NY 10004",
+      },
+      ticketTiers: [
+        { id: "general", name: "General", price: 55, remaining: 100 },
+      ],
       genres: ["Jazz"],
       isFeatured: false,
     },
     {
       id: "evt_006",
       title: "Next Week Indie Lights",
-      date: "2026-04-15T20:00:00.000Z", // next seven days boundary area
-      venue: "Blue Note Room",
-      city: "New York",
-      priceFrom: 70,
+      startsAt: "2026-04-15T20:00:00.000Z", // next seven days boundary area
+      timezone: "America/New_York",
+      venue: {
+        name: "Blue Note Room",
+        city: "New York",
+        address: "55 Broadway, New York, NY 10004",
+      },
+      ticketTiers: [
+        { id: "general", name: "General", price: 70, remaining: 75 },
+      ],
       genres: ["Indie", "Rock"],
       isFeatured: true,
     },
     {
       id: "evt_007",
       title: "Late April Hip-Hop Takeover",
-      date: null, // null date case
-      venue: "Capital Stage",
-      city: "Washington",
-      priceFrom: 110,
+      startsAt: null, // null date case
+      timezone: "America/New_York",
+      venue: {
+        name: "Capital Stage",
+        city: "Washington",
+        address: "10 Liberty Avenue, Washington, DC 20001",
+      },
+      ticketTiers: [
+        { id: "general", name: "General", price: 110, remaining: 50 },
+      ],
       genres: ["Hip-Hop"],
       isFeatured: false,
     },
     {
       id: "evt_008",
       title: "Date TBA Acoustic Session",
-      date: "2026-05-01T21:00:00.000Z", // inside next thirty days, outside next seven
-      venue: "Skyline Hall",
-      city: "Lancaster",
-      priceFrom: 35,
+      startsAt: "2026-05-01T21:00:00.000Z", // inside next thirty days, outside next seven
+      timezone: "America/New_York",
+      venue: {
+        name: "Skyline Hall",
+        city: "Lancaster",
+        address: "101 Main Street, Lancaster, PA 17602",
+      },
+      ticketTiers: [
+        { id: "general", name: "General", price: 35, remaining: 64 },
+      ],
       genres: ["Acoustic", "Folk"],
       isFeatured: false,
     },
@@ -110,7 +161,7 @@ function createEvents() {
 }
 
 function getSortableEvents() {
-  return createEvents().filter((event) => event.date !== null);
+  return createEvents().filter((event) => event.startsAt !== null);
 }
 
 const baseFilters = {

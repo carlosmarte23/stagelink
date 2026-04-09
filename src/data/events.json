@@ -2,212 +2,662 @@
   {
     "id": "evt_001",
     "title": "Neon Nights Tour",
-    "date": "2026-02-14T20:00:00Z",
-    "venue": "The Grand Arena",
-    "city": "Philadelphia, PA",
+    "description": "A high-energy pop and electronic showcase with immersive lights, synth-driven hooks, and a late-night arena atmosphere.",
+    "startsAt": "2026-02-14T20:00:00Z",
+    "doorsAt": "2026-02-14T19:00:00Z",
+    "timezone": "America/New_York",
     "imageUrl": "https://images.unsplash.com/photo-1622136352909-642073a6be1f",
-    "priceFrom": 79,
     "genres": ["Pop", "Electronic"],
-    "isFeatured": true
+    "isFeatured": true,
+    "venue": {
+      "name": "The Grand Arena",
+      "city": "Philadelphia, PA",
+      "address": "101 Arena Plaza, Philadelphia, PA 19107"
+    },
+    "ticketTiers": [
+      {
+        "id": "general",
+        "name": "General",
+        "description": "Access to the main floor and lower bowl seating.",
+        "price": 79,
+        "remaining": 180,
+        "perOrderLimit": 8
+      },
+      {
+        "id": "vip",
+        "name": "VIP",
+        "description": "Priority entry with premium sightlines and a merch bundle.",
+        "price": 139,
+        "remaining": 42,
+        "perOrderLimit": 6
+      },
+      {
+        "id": "meet-greet",
+        "name": "Meet & Greet",
+        "description": "Includes photo opportunity, early access, and exclusive laminate.",
+        "price": 229,
+        "remaining": 16,
+        "perOrderLimit": 2
+      }
+    ]
   },
   {
     "id": "evt_002",
     "title": "Midnight Bass Rave",
-    "date": "2026-02-21T23:00:00Z",
-    "venue": "Neon Warehouse",
-    "city": "Baltimore, MD",
+    "description": "A warehouse rave built around heavy bass drops, neon visuals, and an all-night dancefloor energy.",
+    "startsAt": "2026-02-21T23:00:00Z",
+    "timezone": "America/New_York",
     "imageUrl": "https://images.unsplash.com/photo-1768053917161-34fc3365c9b2",
-    "priceFrom": 49,
     "genres": ["EDM", "Electronic"],
-    "isFeatured": true
+    "isFeatured": true,
+    "venue": {
+      "name": "Neon Warehouse",
+      "city": "Baltimore, MD",
+      "address": "55 Harbor Industrial Way, Baltimore, MD 21202"
+    },
+    "ticketTiers": [
+      {
+        "id": "general",
+        "name": "General",
+        "description": "Standing-room entry to the full rave experience.",
+        "price": 49,
+        "remaining": 240,
+        "perOrderLimit": 8
+      },
+      {
+        "id": "vip",
+        "name": "VIP",
+        "description": "Fast-track entry and access to the elevated lounge.",
+        "price": 99,
+        "remaining": 58,
+        "perOrderLimit": 6
+      }
+    ]
   },
   {
     "id": "evt_003",
     "title": "Indie Sunset Sessions",
-    "date": "2026-03-01T00:30:00Z",
-    "venue": "Skyline Pavilion",
-    "city": "New York, NY",
+    "description": "An intimate indie-rock evening pairing warm guitar tones with a laid-back rooftop atmosphere.",
+    "startsAt": "2026-03-01T00:30:00Z",
+    "timezone": "America/New_York",
     "imageUrl": "https://images.unsplash.com/photo-1604177052603-c2b4cff228db",
-    "priceFrom": 65,
     "genres": ["Indie", "Rock"],
-    "isFeatured": true
+    "isFeatured": true,
+    "venue": {
+      "name": "Skyline Pavilion",
+      "city": "New York, NY",
+      "address": "88 River Terrace, New York, NY 10013"
+    },
+    "ticketTiers": [
+      {
+        "id": "general",
+        "name": "General",
+        "description": "Open seating for the full showcase.",
+        "price": 65,
+        "remaining": 124,
+        "perOrderLimit": 8
+      }
+    ]
   },
   {
     "id": "evt_004",
     "title": "Hip-Hop Takeover: Live Cypher",
-    "date": "2026-03-07T02:00:00Z",
-    "venue": "Uptown Theater",
-    "city": "Washington, DC",
+    "description": "A live cypher night featuring rotating MCs, surprise guest sets, and a crowd-driven battle atmosphere.",
+    "startsAt": "2026-03-07T02:00:00Z",
+    "doorsAt": "2026-03-07T01:00:00Z",
+    "timezone": "America/New_York",
     "imageUrl": "https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b",
-    "priceFrom": 59,
     "genres": ["Hip-Hop"],
-    "isFeatured": true
+    "isFeatured": true,
+    "venue": {
+      "name": "Uptown Theater",
+      "city": "Washington, DC",
+      "address": "420 U Street NW, Washington, DC 20001"
+    },
+    "ticketTiers": [
+      {
+        "id": "general",
+        "name": "General",
+        "description": "Standard floor and balcony admission.",
+        "price": 59,
+        "remaining": 140,
+        "perOrderLimit": 8
+      },
+      {
+        "id": "vip",
+        "name": "VIP",
+        "description": "Expedited entry and premium balcony access.",
+        "price": 109,
+        "remaining": 30,
+        "perOrderLimit": 4
+      },
+      {
+        "id": "meet-greet",
+        "name": "Meet & Greet",
+        "description": "Pre-show access with artists and limited signed poster.",
+        "price": 179,
+        "remaining": 12,
+        "perOrderLimit": 2
+      }
+    ]
   },
   {
     "id": "evt_005",
     "title": "Guitar Spotlight: Live in Mono",
-    "date": "2026-03-12T01:30:00Z",
-    "venue": "The Metro Club",
-    "city": "Boston, MA",
+    "description": "A stripped-back rock set centered on analog guitar tones, extended solos, and studio-to-stage arrangements.",
+    "startsAt": "2026-03-12T01:30:00Z",
+    "timezone": "America/New_York",
     "imageUrl": "https://images.unsplash.com/photo-1466584820433-9ad1cc6798f3",
-    "priceFrom": 55,
     "genres": ["Rock"],
-    "isFeatured": true
+    "isFeatured": true,
+    "venue": {
+      "name": "The Metro Club",
+      "city": "Boston, MA",
+      "address": "19 Lansdowne Street, Boston, MA 02215"
+    },
+    "ticketTiers": [
+      {
+        "id": "general",
+        "name": "General",
+        "description": "Standard club admission with standing access.",
+        "price": 55,
+        "remaining": 110,
+        "perOrderLimit": 8
+      },
+      {
+        "id": "vip",
+        "name": "VIP",
+        "description": "Early entry and side-stage viewing section.",
+        "price": 95,
+        "remaining": 22,
+        "perOrderLimit": 4
+      }
+    ]
   },
   {
     "id": "evt_006",
     "title": "Stadium Lights Festival",
-    "date": "2026-03-20T22:00:00Z",
-    "venue": "Starlight Amphitheater",
-    "city": "Newark, NJ",
+    "description": "A large-format festival night with crossover rock-pop acts, pyrotechnics, and a stadium-scale finale.",
+    "startsAt": "2026-03-20T22:00:00Z",
+    "doorsAt": "2026-03-20T21:00:00Z",
+    "timezone": "America/New_York",
     "imageUrl": "https://images.unsplash.com/photo-1760160741849-0809daa8e4c8",
-    "priceFrom": 99,
     "genres": ["Pop", "Rock"],
-    "isFeatured": true
+    "isFeatured": true,
+    "venue": {
+      "name": "Starlight Amphitheater",
+      "city": "Newark, NJ",
+      "address": "700 Riverfront Drive, Newark, NJ 07102"
+    },
+    "ticketTiers": [
+      {
+        "id": "general",
+        "name": "General",
+        "description": "General bowl seating and festival grounds access.",
+        "price": 99,
+        "remaining": 320,
+        "perOrderLimit": 8
+      },
+      {
+        "id": "vip",
+        "name": "VIP",
+        "description": "Premium seating, fast-lane entry, and VIP concourse access.",
+        "price": 169,
+        "remaining": 70,
+        "perOrderLimit": 6
+      },
+      {
+        "id": "meet-greet",
+        "name": "Meet & Greet",
+        "description": "Includes pre-show reception and limited artist meet-and-greet access.",
+        "price": 279,
+        "remaining": 18,
+        "perOrderLimit": 2
+      }
+    ]
   },
   {
     "id": "evt_007",
     "title": "Downtown Jazz Festival",
-    "date": "2026-03-28T23:00:00Z",
-    "venue": "Riverfront Hall",
-    "city": "Chicago, IL",
+    "description": "A late-evening jazz set with brass-forward arrangements, improvisation, and a classic downtown club vibe.",
+    "startsAt": "2026-03-28T23:00:00Z",
+    "timezone": "America/Chicago",
     "imageUrl": "https://images.unsplash.com/photo-1622136352909-642073a6be1f",
-    "priceFrom": 49,
-    "genres": ["Jazz"]
+    "genres": ["Jazz"],
+    "venue": {
+      "name": "Riverfront Hall",
+      "city": "Chicago, IL",
+      "address": "245 W Wacker Drive, Chicago, IL 60606"
+    },
+    "ticketTiers": [
+      {
+        "id": "general",
+        "name": "General",
+        "description": "Open seating for the full jazz program.",
+        "price": 49,
+        "remaining": 96,
+        "perOrderLimit": 8
+      }
+    ]
   },
   {
     "id": "evt_008",
     "title": "Latin Heat: Night of Salsa",
-    "date": "2026-04-03T01:00:00Z",
-    "venue": "Harbor Stage",
-    "city": "Miami, FL",
+    "description": "A high-tempo salsa showcase with live percussion, guest dancers, and an after-show social dance floor.",
+    "startsAt": "2026-04-03T01:00:00Z",
+    "doorsAt": "2026-04-03T00:00:00Z",
+    "timezone": "America/New_York",
     "imageUrl": "https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b",
-    "priceFrom": 59,
-    "genres": ["Latin"]
+    "genres": ["Latin"],
+    "venue": {
+      "name": "Harbor Stage",
+      "city": "Miami, FL",
+      "address": "12 Biscayne Promenade, Miami, FL 33132"
+    },
+    "ticketTiers": [
+      {
+        "id": "general",
+        "name": "General",
+        "description": "Dance floor access and general standing admission.",
+        "price": 59,
+        "remaining": 132,
+        "perOrderLimit": 8
+      },
+      {
+        "id": "vip",
+        "name": "VIP",
+        "description": "Priority access and reserved lounge seating.",
+        "price": 109,
+        "remaining": 26,
+        "perOrderLimit": 4
+      }
+    ]
   },
   {
     "id": "evt_009",
     "title": "Synthwave Dreams",
-    "date": "2026-04-05T02:00:00Z",
-    "venue": "Neon Warehouse",
-    "city": "Atlanta, GA",
+    "description": "A retro-futuristic electronic set with neon visuals, analog synth textures, and cinematic builds.",
+    "startsAt": "2026-04-05T02:00:00Z",
+    "timezone": "America/New_York",
     "imageUrl": "https://images.unsplash.com/photo-1768053917161-34fc3365c9b2",
-    "priceFrom": 45,
-    "genres": ["Electronic", "Pop"]
+    "genres": ["Electronic", "Pop"],
+    "venue": {
+      "name": "Neon Warehouse",
+      "city": "Atlanta, GA",
+      "address": "90 Edgewood Avenue SE, Atlanta, GA 30303"
+    },
+    "ticketTiers": [
+      {
+        "id": "general",
+        "name": "General",
+        "description": "General floor access for the full show.",
+        "price": 45,
+        "remaining": 0,
+        "perOrderLimit": 8
+      },
+      {
+        "id": "vip",
+        "name": "VIP",
+        "description": "Raised viewing platform and express entry.",
+        "price": 85,
+        "remaining": 14,
+        "perOrderLimit": 4
+      }
+    ]
   },
   {
     "id": "evt_010",
     "title": "Acoustic Stories: Unplugged",
-    "date": "2026-04-10T00:30:00Z",
-    "venue": "Uptown Theater",
-    "city": "Austin, TX",
+    "description": "An intimate unplugged session focused on storytelling, stripped-down arrangements, and audience connection.",
+    "startsAt": "2026-04-10T00:30:00Z",
+    "doorsAt": "2026-04-09T23:30:00Z",
+    "timezone": "America/Chicago",
     "imageUrl": "https://images.unsplash.com/photo-1466584820433-9ad1cc6798f3",
-    "priceFrom": 39,
     "genres": ["Indie"],
-    "isFeatured": true
+    "isFeatured": true,
+    "venue": {
+      "name": "Uptown Theater",
+      "city": "Austin, TX",
+      "address": "500 Red River Street, Austin, TX 78701"
+    },
+    "ticketTiers": [
+      {
+        "id": "general",
+        "name": "General",
+        "description": "Reserved floor seating for the acoustic set.",
+        "price": 39,
+        "remaining": 88,
+        "perOrderLimit": 8
+      }
+    ]
   },
   {
     "id": "evt_011",
     "title": "Metal Forge Night",
-    "date": "2026-04-12T23:30:00Z",
-    "venue": "Riverfront Hall",
-    "city": "Cleveland, OH",
+    "description": "A heavy metal lineup with back-to-back live sets, aggressive lighting, and a high-volume club atmosphere.",
+    "startsAt": "2026-04-12T23:30:00Z",
+    "timezone": "America/New_York",
     "imageUrl": "https://images.unsplash.com/photo-1604177052603-c2b4cff228db",
-    "priceFrom": 69,
     "genres": ["Metal", "Rock"],
-    "isFeatured": true
+    "isFeatured": true,
+    "venue": {
+      "name": "Riverfront Hall",
+      "city": "Cleveland, OH",
+      "address": "340 Rockside Avenue, Cleveland, OH 44114"
+    },
+    "ticketTiers": [
+      {
+        "id": "general",
+        "name": "General",
+        "description": "Standing-room access near the main stage.",
+        "price": 69,
+        "remaining": 104,
+        "perOrderLimit": 8
+      },
+      {
+        "id": "vip",
+        "name": "VIP",
+        "description": "Fast entry and premium balcony access.",
+        "price": 119,
+        "remaining": 20,
+        "perOrderLimit": 4
+      },
+      {
+        "id": "meet-greet",
+        "name": "Meet & Greet",
+        "description": "Backstage photo and signed tour item after soundcheck.",
+        "price": 199,
+        "remaining": 8,
+        "perOrderLimit": 2
+      }
+    ]
   },
   {
     "id": "evt_012",
     "title": "R&B Velvet Sessions",
-    "date": "2026-04-18T01:00:00Z",
-    "venue": "The Metro Club",
-    "city": "Charlotte, NC",
+    "description": "A smooth late-night R&B performance with live band arrangements and a lounge-inspired visual treatment.",
+    "startsAt": "2026-04-18T01:00:00Z",
+    "doorsAt": "2026-04-18T00:00:00Z",
+    "timezone": "America/New_York",
     "imageUrl": "https://images.unsplash.com/photo-1622136352909-642073a6be1f",
-    "priceFrom": 55,
-    "genres": ["R&B"]
+    "genres": ["R&B"],
+    "venue": {
+      "name": "The Metro Club",
+      "city": "Charlotte, NC",
+      "address": "77 Uptown Circle, Charlotte, NC 28202"
+    },
+    "ticketTiers": [
+      {
+        "id": "general",
+        "name": "General",
+        "description": "Standard admission with floor and bar access.",
+        "price": 55,
+        "remaining": 118,
+        "perOrderLimit": 8
+      },
+      {
+        "id": "vip",
+        "name": "VIP",
+        "description": "Reserved lounge section and complimentary welcome drink.",
+        "price": 105,
+        "remaining": 24,
+        "perOrderLimit": 4
+      }
+    ]
   },
   {
     "id": "evt_013",
     "title": "Country Road Live",
-    "date": "2026-04-24T00:00:00Z",
-    "venue": "Skyline Pavilion",
-    "city": "Nashville, TN",
+    "description": "A country night built around singalong hooks, steel guitar textures, and a warm outdoor crowd feel.",
+    "startsAt": "2026-04-24T00:00:00Z",
+    "timezone": "America/Chicago",
     "imageUrl": "https://images.unsplash.com/photo-1466584820433-9ad1cc6798f3",
-    "priceFrom": 59,
-    "genres": ["Country"]
+    "genres": ["Country"],
+    "venue": {
+      "name": "Skyline Pavilion",
+      "city": "Nashville, TN",
+      "address": "201 Broadway, Nashville, TN 37201"
+    },
+    "ticketTiers": [
+      {
+        "id": "general",
+        "name": "General",
+        "description": "Open seating with full access to the main performance area.",
+        "price": 59,
+        "remaining": 146,
+        "perOrderLimit": 8
+      }
+    ]
   },
   {
     "id": "evt_014",
     "title": "EDM Skyline Takeover",
-    "date": "2026-04-25T23:00:00Z",
-    "venue": "Harbor Stage",
-    "city": "San Diego, CA",
+    "description": "An outdoor EDM night with stacked DJ sets, skyline visuals, and a festival-style production setup.",
+    "startsAt": "2026-04-25T23:00:00Z",
+    "doorsAt": "2026-04-25T22:00:00Z",
+    "timezone": "America/Los_Angeles",
     "imageUrl": "https://images.unsplash.com/photo-1768053917161-34fc3365c9b2",
-    "priceFrom": 89,
     "genres": ["EDM"],
-    "isFeatured": true
+    "isFeatured": true,
+    "venue": {
+      "name": "Harbor Stage",
+      "city": "San Diego, CA",
+      "address": "600 Embarcadero North, San Diego, CA 92101"
+    },
+    "ticketTiers": [
+      {
+        "id": "general",
+        "name": "General",
+        "description": "Festival floor access and standard entry.",
+        "price": 89,
+        "remaining": 210,
+        "perOrderLimit": 8
+      },
+      {
+        "id": "vip",
+        "name": "VIP",
+        "description": "Fast-lane access and premium viewing deck.",
+        "price": 149,
+        "remaining": 38,
+        "perOrderLimit": 4
+      }
+    ]
   },
   {
     "id": "evt_015",
     "title": "Pop Icons Live",
-    "date": "2026-05-02T01:00:00Z",
-    "venue": "The Grand Arena",
-    "city": "Los Angeles, CA",
+    "description": "A chart-driven arena pop production with full visuals, choreography, and crowd singalong moments.",
+    "startsAt": "2026-05-02T01:00:00Z",
+    "timezone": "America/Los_Angeles",
     "imageUrl": "https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b",
-    "priceFrom": 129,
-    "genres": ["Pop"]
+    "genres": ["Pop"],
+    "venue": {
+      "name": "The Grand Arena",
+      "city": "Los Angeles, CA",
+      "address": "800 Figueroa Street, Los Angeles, CA 90015"
+    },
+    "ticketTiers": [
+      {
+        "id": "general",
+        "name": "General",
+        "description": "Standard arena seating.",
+        "price": 129,
+        "remaining": 0,
+        "perOrderLimit": 8
+      },
+      {
+        "id": "vip",
+        "name": "VIP",
+        "description": "Premium lower-bowl seating and VIP entry lane.",
+        "price": 199,
+        "remaining": 0,
+        "perOrderLimit": 4
+      },
+      {
+        "id": "meet-greet",
+        "name": "Meet & Greet",
+        "description": "Artist photo opportunity and commemorative premium package.",
+        "price": 329,
+        "remaining": 0,
+        "perOrderLimit": 2
+      }
+    ]
   },
   {
     "id": "evt_016",
     "title": "Indie Night: New Sounds",
-    "date": "2026-05-08T00:30:00Z",
-    "venue": "The Metro Club",
-    "city": "San Francisco, CA",
+    "description": "A discovery-focused indie lineup featuring emerging acts, atmospheric production, and intimate club energy.",
+    "startsAt": "2026-05-08T00:30:00Z",
+    "doorsAt": "2026-05-07T23:30:00Z",
+    "timezone": "America/Los_Angeles",
     "imageUrl": "https://images.unsplash.com/photo-1604177052603-c2b4cff228db",
-    "priceFrom": 45,
-    "genres": ["Indie"]
+    "genres": ["Indie"],
+    "venue": {
+      "name": "The Metro Club",
+      "city": "San Francisco, CA",
+      "address": "155 Mission Street, San Francisco, CA 94105"
+    },
+    "ticketTiers": [
+      {
+        "id": "general",
+        "name": "General",
+        "description": "General standing room with full show access.",
+        "price": 45,
+        "remaining": 102,
+        "perOrderLimit": 8
+      }
+    ]
   },
   {
     "id": "evt_017",
     "title": "Hip-Hop Arena: Main Event",
-    "date": "2026-05-16T01:00:00Z",
-    "venue": "The Grand Arena",
-    "city": "Houston, TX",
+    "description": "A headline hip-hop arena show built around major features, crowd anthems, and a full-scale performance setup.",
+    "startsAt": "2026-05-16T01:00:00Z",
+    "doorsAt": "2026-05-16T00:00:00Z",
+    "timezone": "America/Chicago",
     "imageUrl": "https://images.unsplash.com/photo-1524368535928-5b5e00ddc76b",
-    "priceFrom": 99,
     "genres": ["Hip-Hop"],
-    "isFeatured": true
+    "isFeatured": true,
+    "venue": {
+      "name": "The Grand Arena",
+      "city": "Houston, TX",
+      "address": "1515 Texas Avenue, Houston, TX 77002"
+    },
+    "ticketTiers": [
+      {
+        "id": "general",
+        "name": "General",
+        "description": "Arena seating and floor access by section.",
+        "price": 99,
+        "remaining": 260,
+        "perOrderLimit": 8
+      },
+      {
+        "id": "vip",
+        "name": "VIP",
+        "description": "Premium seating, expedited entry, and VIP merchandise item.",
+        "price": 159,
+        "remaining": 46,
+        "perOrderLimit": 4
+      },
+      {
+        "id": "meet-greet",
+        "name": "Meet & Greet",
+        "description": "Pre-show artist access with photo and collectible credential.",
+        "price": 249,
+        "remaining": 14,
+        "perOrderLimit": 2
+      }
+    ]
   },
   {
     "id": "evt_018",
     "title": "Electronic Bloom",
-    "date": "2026-05-22T02:00:00Z",
-    "venue": "Neon Warehouse",
-    "city": "Denver, CO",
+    "description": "A melodic electronic set with layered synth builds, immersive projection design, and a festival-club crossover feel.",
+    "startsAt": "2026-05-22T02:00:00Z",
+    "timezone": "America/Denver",
     "imageUrl": "https://images.unsplash.com/photo-1768053917161-34fc3365c9b2",
-    "priceFrom": 59,
-    "genres": ["Electronic"]
+    "genres": ["Electronic"],
+    "venue": {
+      "name": "Neon Warehouse",
+      "city": "Denver, CO",
+      "address": "310 Blake Street, Denver, CO 80205"
+    },
+    "ticketTiers": [
+      {
+        "id": "general",
+        "name": "General",
+        "description": "Standard warehouse admission.",
+        "price": 59,
+        "remaining": 134,
+        "perOrderLimit": 8
+      },
+      {
+        "id": "vip",
+        "name": "VIP",
+        "description": "Elevated platform access and priority queue.",
+        "price": 109,
+        "remaining": 28,
+        "perOrderLimit": 4
+      }
+    ]
   },
   {
     "id": "evt_019",
     "title": "Jazz After Dark",
-    "date": "2026-05-29T01:00:00Z",
-    "venue": "Uptown Theater",
-    "city": "New Orleans, LA",
+    "description": "A late-night jazz and R&B blend with intimate arrangements, moody lighting, and an after-hours lounge tone.",
+    "startsAt": "2026-05-29T01:00:00Z",
+    "doorsAt": "2026-05-29T00:00:00Z",
+    "timezone": "America/Chicago",
     "imageUrl": "https://images.unsplash.com/photo-1622136352909-642073a6be1f",
-    "priceFrom": 49,
-    "genres": ["Jazz", "R&B"]
+    "genres": ["Jazz", "R&B"],
+    "venue": {
+      "name": "Uptown Theater",
+      "city": "New Orleans, LA",
+      "address": "901 Canal Street, New Orleans, LA 70112"
+    },
+    "ticketTiers": [
+      {
+        "id": "general",
+        "name": "General",
+        "description": "Reserved seating with full access to the performance room.",
+        "price": 49,
+        "remaining": 92,
+        "perOrderLimit": 8
+      }
+    ]
   },
   {
     "id": "evt_020",
     "title": "Summer Rock Fest",
-    "date": "2026-06-06T22:00:00Z",
-    "venue": "Starlight Amphitheater",
-    "city": "Pittsburgh, PA",
+    "description": "A seasonal rock showcase with stacked lineups, outdoor staging, and a big-finish festival atmosphere.",
+    "startsAt": "2026-06-06T22:00:00Z",
+    "timezone": "America/New_York",
     "imageUrl": "https://images.unsplash.com/photo-1760160741849-0809daa8e4c8",
-    "priceFrom": 89,
     "genres": ["Rock"],
-    "isFeatured": true
+    "isFeatured": true,
+    "venue": {
+      "name": "Starlight Amphitheater",
+      "city": "Pittsburgh, PA",
+      "address": "410 Riverfront Parkway, Pittsburgh, PA 15222"
+    },
+    "ticketTiers": [
+      {
+        "id": "general",
+        "name": "General",
+        "description": "General entry to the amphitheater lawn and bowl.",
+        "price": 89,
+        "remaining": 276,
+        "perOrderLimit": 8
+      },
+      {
+        "id": "vip",
+        "name": "VIP",
+        "description": "Closer seating and express venue entry.",
+        "price": 149,
+        "remaining": 44,
+        "perOrderLimit": 4
+      }
+    ]
   }
 ]

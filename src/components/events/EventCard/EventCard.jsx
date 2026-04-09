@@ -1,10 +1,22 @@
 import { Link } from "react-router-dom";
 
+import {
+  getVenueName,
+  getVenueCity,
+  getEventPriceFrom,
+} from "../../../features/events/lib/eventSelectors.js";
 import { buildUnspashImageUrl } from "../../../utils/images.js";
 import styles from "./EventCard.module.css";
 
 export default function EventCard({ event, variant = "default" }) {
+  if (!event) return null;
+
   const showCity = variant !== "featured";
+  const eventVenue = getVenueName(event);
+  const eventCity = showCity ? getVenueCity(event) : null;
+  const locationText = showCity ? `${eventVenue} - ${eventCity}` : eventVenue;
+  const eventPriceFrom = getEventPriceFrom(event);
+  const isSoldOut = eventPriceFrom === null;
 
   const imgSrc = buildUnspashImageUrl(event.imageUrl, {
     width: 400,
@@ -22,7 +34,7 @@ export default function EventCard({ event, variant = "default" }) {
     month: "short",
     day: "numeric",
     year: "numeric",
-  }).format(new Date(event.date));
+  }).format(new Date(event.startsAt));
 
   return (
     <Link to={`/events/${event.id}`} className={cardClassName}>
@@ -58,18 +70,27 @@ export default function EventCard({ event, variant = "default" }) {
                 <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0" />
               </svg>
             </span>
-            <span className={styles.text}>
-              {event.venue}
-              {showCity && event.city && ` - ${event.city}`}
-            </span>
+            <span className={styles.text}>{locationText}</span>
           </div>
         </div>
         <div className={styles.cardFooter}>
-          <p className={styles.price}>
-            <span className={styles.priceValue}>${event.priceFrom}</span>
-            <span className={styles.priceSuffix}>/seat</span>
-          </p>
-          <span className="button button--secondary">Get Tickets</span>
+          <div className={styles.price}>
+            {isSoldOut ? (
+              <span className={styles.priceSoldOut}>Sold Out</span>
+            ) : (
+              <span className={styles.priceContent}>
+                <span className={styles.priceValue}>${eventPriceFrom}</span>
+                <span className={styles.priceSuffix}>/seat</span>
+              </span>
+            )}
+          </div>
+          {isSoldOut ? (
+            <span className={`button ${styles.soldOutButton}`}>
+              No Tickets Left
+            </span>
+          ) : (
+            <span className="button button--secondary">Get Tickets</span>
+          )}
         </div>
       </div>
     </Link>

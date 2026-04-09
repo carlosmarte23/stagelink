@@ -7,6 +7,12 @@ import {
   isEventInDateRange,
 } from "../../../utils/dates.js";
 
+import {
+  getVenueCity,
+  getVenueName,
+  getEventPriceFrom,
+} from "./eventSelectors.js";
+
 //Events
 export function getUpcomingEvents(events, now = new Date()) {
   const today = new Date(now);
@@ -14,10 +20,10 @@ export function getUpcomingEvents(events, now = new Date()) {
 
   return events
     .filter((event) => {
-      const eventDate = new Date(event.date);
+      const eventDate = new Date(event.startsAt);
       return eventDate > today;
     })
-    .sort((a, b) => new Date(a.date) - new Date(b.date));
+    .sort((a, b) => new Date(a.startsAt) - new Date(b.startsAt));
 }
 
 export function filterEvents(events, filters, now = new Date()) {
@@ -33,27 +39,27 @@ export function filterEvents(events, filters, now = new Date()) {
   // city
   if (filters.city.toLowerCase() !== "all") {
     filteredEvents = filteredEvents.filter(
-      (event) => event.city.toLowerCase() === filters.city,
+      (event) => getVenueCity(event).toLowerCase() === filters.city,
     );
   }
 
   // venue
   if (filters.venue.toLowerCase() !== "all") {
     filteredEvents = filteredEvents.filter(
-      (event) => event.venue.toLowerCase() === filters.venue,
+      (event) => getVenueName(event).toLowerCase() === filters.venue,
     );
   }
 
   // date range
   if (filters.dateRange.toLowerCase() === "any-date") {
-    filteredEvents = filteredEvents.filter((event) => event.date !== null);
+    filteredEvents = filteredEvents.filter((event) => event.startsAt !== null);
   } else
     switch (filters.dateRange.toLowerCase()) {
       case "this-weekend": {
         const { start, end } = getThisWeekendRange(now);
 
         filteredEvents = filteredEvents.filter((event) =>
-          isEventInDateRange(event.date, start, end),
+          isEventInDateRange(event.startsAt, start, end),
         );
         break;
       }
@@ -61,7 +67,7 @@ export function filterEvents(events, filters, now = new Date()) {
         const { start, end } = getThisWeekRange(now);
 
         filteredEvents = filteredEvents.filter((event) =>
-          isEventInDateRange(event.date, start, end),
+          isEventInDateRange(event.startsAt, start, end),
         );
         break;
       }
@@ -70,7 +76,7 @@ export function filterEvents(events, filters, now = new Date()) {
           const { start, end } = getNextSevenDays(now);
 
           filteredEvents = filteredEvents.filter((event) =>
-            isEventInDateRange(event.date, start, end),
+            isEventInDateRange(event.startsAt, start, end),
           );
         }
         break;
@@ -78,7 +84,7 @@ export function filterEvents(events, filters, now = new Date()) {
         {
           const { start, end } = getThisMonthRange(now);
           filteredEvents = filteredEvents.filter((event) =>
-            isEventInDateRange(event.date, start, end),
+            isEventInDateRange(event.startsAt, start, end),
           );
         }
         break;
@@ -86,26 +92,28 @@ export function filterEvents(events, filters, now = new Date()) {
         {
           const { start, end } = getNextThirtyDays(now);
           filteredEvents = filteredEvents.filter((event) =>
-            isEventInDateRange(event.date, start, end),
+            isEventInDateRange(event.startsAt, start, end),
           );
         }
         break;
       default: {
-        filteredEvents = filteredEvents.filter((event) => event.date !== null);
+        filteredEvents = filteredEvents.filter(
+          (event) => event.startsAt !== null,
+        );
       }
     }
   // price range
   filteredEvents = filteredEvents.filter(
     (event) =>
-      event.priceFrom >= filters.priceMin &&
-      event.priceFrom <= filters.priceMax,
+      getEventPriceFrom(event) >= filters.priceMin &&
+      getEventPriceFrom(event) <= filters.priceMax,
   );
 
   return filteredEvents;
 }
 
 function getEventTime(event) {
-  return new Date(event.date).getTime();
+  return new Date(event.startsAt).getTime();
 }
 
 export function sortEvents(events, sortOption) {
@@ -126,15 +134,31 @@ export function sortEvents(events, sortOption) {
       });
       return sortedEvents;
     case "price-low":
-      return sortedEvents.sort((a, b) => a.priceFrom - b.priceFrom);
+      return sortedEvents.sort(
+        (a, b) => getEventPriceFrom(a) - getEventPriceFrom(b),
+      );
     case "price-high":
-      return sortedEvents.sort((a, b) => b.priceFrom - a.priceFrom);
+      return sortedEvents.sort(
+        (a, b) => getEventPriceFrom(b) - getEventPriceFrom(a),
+      );
     default:
       return sortedEvents;
   }
 }
 
 // Filters Options
+function getOptionValue(event, type) {
+  switch (type) {
+    case "genres":
+      return event.genres;
+    case "venue":
+      return getVenueName(event);
+    case "city":
+      return getVenueCity(event);
+    default:
+      return event[type];
+  }
+}
 function enrichEventOptions(options, events, type, selectedValue) {
   const counts = {};
 
@@ -148,8 +172,11 @@ function enrichEventOptions(options, events, type, selectedValue) {
       return;
     }
 
-    const key = event[type]?.toLowerCase();
-    if (!key) return;
+    const value = getOptionValue(event, type);
+    if (!value) return;
+
+    const key = value.toLowerCase();
+
     counts[key] = (counts[key] ?? 0) + 1;
   });
 
@@ -193,7 +220,7 @@ export function getGenreOptions(events, filters, now = new Date()) {
 export function getVenueOptions(events, filters, now = new Date()) {
   const baseOptions = [
     { value: "all", label: "All" },
-    ...Array.from(new Set(events.flatMap((event) => event.venue)))
+    ...Array.from(new Set(events.flatMap((event) => getVenueName(event))))
       .sort()
       .map((venue) => ({ value: venue.toLowerCase(), label: venue })),
   ];
@@ -215,7 +242,7 @@ export function getVenueOptions(events, filters, now = new Date()) {
 export function getCityOptions(events, filters, now = new Date()) {
   const baseOptions = [
     { value: "all", label: "All" },
-    ...Array.from(new Set(events.flatMap((event) => event.city)))
+    ...Array.from(new Set(events.flatMap((event) => getVenueCity(event))))
       .sort()
       .map((city) => ({ value: city.toLowerCase(), label: city })),
   ];
