@@ -9,13 +9,13 @@ import { buildUnspashImageUrl } from "../../../utils/images.js";
 import styles from "./EventCard.module.css";
 
 export default function EventCard({ event, variant = "default" }) {
+  if (!event) return null;
+
   const showCity = variant !== "featured";
 
   const eventVenue = getVenueName(event);
   const eventCity = showCity ? getVenueCity(event) : null;
   const eventPriceFrom = getEventPriceFrom(event);
-
-  if (!event) return null;
 
   const imgSrc = buildUnspashImageUrl(event.imageUrl, {
     width: 400,

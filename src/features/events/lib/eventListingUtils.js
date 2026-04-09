@@ -113,7 +113,7 @@ export function filterEvents(events, filters, now = new Date()) {
 }
 
 function getEventTime(event) {
-  return new Date(event.date).getTime();
+  return new Date(event.startsAt).getTime();
 }
 
 export function sortEvents(events, sortOption) {
