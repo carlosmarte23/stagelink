@@ -95,15 +95,15 @@ export function isEventInDateRange(eventDate, start, end) {
   return value >= start && value <= end;
 }
 
-export function formatDateTimeParts(dateString, timezone) {
-  if (!dateString || !timezone) return null;
+export function formatDateTimeParts(dateString, timeZone) {
+  if (!dateString || !timeZone) return null;
 
   const dateValue = new Date(dateString);
 
   if (isNaN(dateValue.getTime())) return null;
 
   const fullDateFormatter = new Intl.DateTimeFormat("en-US", {
-    timezone,
+    timeZone,
     weekday: "long",
     month: "long",
     day: "numeric",
@@ -111,18 +111,21 @@ export function formatDateTimeParts(dateString, timezone) {
   });
 
   const shortDateFormatter = new Intl.DateTimeFormat("en-US", {
+    timeZone,
     month: "short",
     day: "numeric",
     year: "numeric",
   });
 
   const timeFormatter = new Intl.DateTimeFormat("en-US", {
+    timeZone,
     hour: "numeric",
     minute: "numeric",
     hour12: true,
   });
 
   const timeWithTimezoneFormatter = new Intl.DateTimeFormat("en-US", {
+    timeZone,
     hour: "numeric",
     minute: "numeric",
     hour12: true,
