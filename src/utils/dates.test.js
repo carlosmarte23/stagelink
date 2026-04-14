@@ -308,7 +308,7 @@ describe("isEventInDateRange", () => {
   });
 });
 
-describe.only("formatDateTimeParts", () => {
+describe("formatDateTimeParts", () => {
   const dateString = "2026-04-12T23:30:00Z";
   const timeZone = "America/New_York";
 
