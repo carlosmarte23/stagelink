@@ -3,6 +3,9 @@ import { render, screen, within } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { TicketPurchasePanel } from "./TicketPurchasePanel.jsx";
 
+import { formatCurrency } from "../../../utils/currency.js";
+import { SERVICE_FEE_AMOUNT } from "../../../features/events/config/ticketPurchaseConfig";
+
 const mockEvent = {
   id: "evt_test",
   title: "Test Event",
@@ -82,7 +85,7 @@ describe("TicketPurchasePanel", () => {
           within(tierItem).getByText(tier.description),
         ).toBeInTheDocument();
         expect(
-          within(tierItem).getByText(`$${tier.price}.00`),
+          within(tierItem).getByText(formatCurrency(tier.price)),
         ).toBeInTheDocument();
       });
     });
@@ -301,6 +304,94 @@ describe("TicketPurchasePanel", () => {
 
       await user.click(decreaseGeneralButton);
       expect(buyTicketsButton).toBeDisabled();
+    });
+  });
+
+  describe("pricing summary", () => {
+    let user;
+
+    beforeEach(() => {
+      user = userEvent.setup();
+      renderTicketPurchasePanel();
+    });
+
+    it("displays 0 for subtotal, service fee, and total when no tickets are selected", () => {
+      const subTotal = screen.getByRole("paragraph", { name: /subtotal/i });
+      const serviceFee = screen.getByRole("paragraph", {
+        name: /service fee/i,
+      });
+      const total = screen.getByRole("paragraph", { name: /pricing total/i });
+
+      expect(subTotal).toHaveTextContent("$0.00");
+      expect(serviceFee).toHaveTextContent("$0.00");
+      expect(total).toHaveTextContent("$0.00");
+    });
+
+    it("displays the calculated subtotal for the selected tickets", async () => {
+      const list = screen.getByRole("list", { name: /ticket tiers/i });
+
+      const increaseGeneralButton = within(list).getByRole("button", {
+        name: /increase quantity of general/i,
+      });
+
+      const generalPrice = mockEvent.ticketTiers.find(
+        (tier) => tier.name === "General",
+      ).price;
+
+      await user.click(increaseGeneralButton);
+
+      const subTotal = screen.getByRole("paragraph", { name: /subtotal/i });
+      expect(subTotal).toHaveTextContent(formatCurrency(generalPrice));
+
+      await user.click(increaseGeneralButton);
+
+      expect(subTotal).toHaveTextContent(formatCurrency(generalPrice * 2));
+    });
+
+    it("displays the fixed service fee when at least one ticket is selected", async () => {
+      const list = screen.getByRole("list", { name: /ticket tiers/i });
+
+      const increaseGeneralButton = within(list).getByRole("button", {
+        name: /increase quantity of general/i,
+      });
+
+      const feePrice = screen.getByRole("paragraph", {
+        name: /service fee/i,
+      });
+
+      expect(feePrice).toHaveTextContent(formatCurrency(0));
+
+      const serviceFee = SERVICE_FEE_AMOUNT;
+
+      await user.click(increaseGeneralButton);
+      expect(feePrice).toHaveTextContent(formatCurrency(serviceFee));
+    });
+
+    it("displays the calculated total for the selected tickets plus the service fee", async () => {
+      const list = screen.getByRole("list", { name: /ticket tiers/i });
+
+      const increaseGeneralButton = within(list).getByRole("button", {
+        name: /increase quantity of general/i,
+      });
+
+      const generalPrice = mockEvent.ticketTiers.find(
+        (tier) => tier.name === "General",
+      ).price;
+
+      const serviceFee = SERVICE_FEE_AMOUNT;
+
+      await user.click(increaseGeneralButton);
+
+      const total = screen.getByRole("paragraph", { name: /pricing total/i });
+      expect(total).toHaveTextContent(
+        formatCurrency(generalPrice + serviceFee),
+      );
+
+      await user.click(increaseGeneralButton);
+
+      expect(total).toHaveTextContent(
+        formatCurrency(generalPrice * 2 + serviceFee),
+      );
     });
   });
 });
