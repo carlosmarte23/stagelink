@@ -180,17 +180,6 @@
         }
       }
     }
-
-    .ticketsPanel {
-      width: 100%;
-      min-height: 400px; /*TODO: remove when content is added */
-      padding: 1rem 1.5rem;
-      display: flex;
-      justify-content: center;
-      background-color: var(--surface-2);
-      border: var(--border) 1px solid;
-      border-radius: var(--radius-xl);
-    }
   }
 }
 
@@ -262,10 +251,6 @@
             }
           }
         }
-      }
-
-      .ticketsPanel {
-        min-height: 800px; /* TODO: remove when content is added */
       }
     }
   }

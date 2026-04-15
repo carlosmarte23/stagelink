@@ -56,44 +56,45 @@ export function TicketPurchasePanel({ ticketTiers }) {
 
           return (
             <li key={tier.id} aria-disabled={isSoldOut} className={styles.tier}>
-              <div className={styles.tierData}>
-                <h3 className={styles.tierName}>{tier.name}</h3>
-                <p className={styles.tierDescription}>{tier.description}</p>
-                <span className={styles.tierPrice}>{`$${tier.price}.00`}</span>
-              </div>
+              <div className={styles.tierContent}>
+                <div className={styles.tierData}>
+                  <h3 className={styles.tierName}>{tier.name}</h3>
+                  <p className={styles.tierDescription}>{tier.description}</p>
+                  <span className={styles.tierPrice}>{`$${tier.price}.00`}</span>
+                </div>
 
+                <div className={styles.tierControls}>
+                  <button
+                    type="button"
+                    className={`${styles.quantityButton} ${styles.decreaseButton}`}
+                    disabled={isDecreaseDisabled}
+                    aria-label={`Decrease quantity of ${tier.name}`}
+                    aria-disabled={isDecreaseDisabled}
+                    onClick={() => reduceTicketQuantity(tier)}
+                  >
+                    -
+                  </button>
+                  <span
+                    aria-label={`${tier.name} quantity`}
+                    className={styles.tierQuantity}
+                  >
+                    {ticketTierQuantity[tier.id]}
+                  </span>
+                  <button
+                    type="button"
+                    disabled={isIncreaseDisabled}
+                    aria-label={`Increase quantity of ${tier.name}`}
+                    aria-disabled={isIncreaseDisabled}
+                    onClick={() => increaseTicketQuantity(tier)}
+                    className={`${styles.quantityButton} ${styles.increaseButton}`}
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
               {isSoldOut && (
                 <span className={styles.soldOutBadge}>Sold out</span>
               )}
-
-              <div className={styles.tierControls}>
-                <button
-                  type="button"
-                  className={`${styles.quantityButton} ${styles.decreaseButton}`}
-                  disabled={isDecreaseDisabled}
-                  aria-label={`Decrease quantity of ${tier.name}`}
-                  aria-disabled={isDecreaseDisabled}
-                  onClick={() => reduceTicketQuantity(tier)}
-                >
-                  -
-                </button>
-                <span
-                  aria-label={`${tier.name} quantity`}
-                  className={styles.tierQuantity}
-                >
-                  {ticketTierQuantity[tier.id]}
-                </span>
-                <button
-                  type="button"
-                  disabled={isIncreaseDisabled}
-                  aria-label={`Increase quantity of ${tier.name}`}
-                  aria-disabled={isIncreaseDisabled}
-                  onClick={() => increaseTicketQuantity(tier)}
-                  className={`${styles.quantityButton} ${styles.increaseButton}`}
-                >
-                  +
-                </button>
-              </div>
             </li>
           );
         })}
