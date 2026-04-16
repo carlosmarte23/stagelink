@@ -3,16 +3,22 @@ import { useState } from "react";
 import { getEffectiveTierLimit } from "../../../features/events/lib/eventSelectors";
 import { formatCurrency } from "../../../utils/currency.js";
 import { SERVICE_FEE_AMOUNT } from "../../../features/events/config/ticketPurchaseConfig";
+import {
+  saveCart,
+  getCart,
+  addEventTicketsToCart,
+} from "../../../features/cart/lib/cartStorage.js";
 
 import styles from "./TicketPurchasePanel.module.css";
 
-export function TicketPurchasePanel({ ticketTiers }) {
+export function TicketPurchasePanel({ eventId, ticketTiers }) {
   const initialState = ticketTiers.reduce((acc, tier) => {
     acc[tier.id] = 0;
     return acc;
   }, {});
 
   const [ticketTierQuantity, setTicketTierQuantity] = useState(initialState);
+  const [cartFeedBackMessage, setCartFeedBackMessage] = useState("");
 
   const totalTicketQuantity = Object.values(ticketTierQuantity).reduce(
     (acc, quantity) => acc + quantity,
@@ -26,6 +32,10 @@ export function TicketPurchasePanel({ ticketTiers }) {
       ...prev,
       [tierId]: quantity,
     }));
+
+    if (cartFeedBackMessage) {
+      setCartFeedBackMessage("");
+    }
   }
   function reduceTicketQuantity(tier) {
     const currentValue = ticketTierQuantity[tier.id];
@@ -42,12 +52,47 @@ export function TicketPurchasePanel({ ticketTiers }) {
     handleTicketTierChange(tier.id, currentValue + 1);
   }
 
-  const subTotalPrice = ticketTiers.reduce((acc, tier) => {
+  function handleBuyClick() {
+    const selectedTickets = Object.entries(ticketTierQuantity)
+      .filter(([_tierId, quantity]) => {
+        return quantity > 0;
+      })
+      .map(([tierId, quantity]) => {
+        const tier = ticketTiers.find((tier) => tier.id === tierId);
+        return {
+          tierId,
+          quantity,
+          unitPrice: tier.price,
+          lineTotal: tier.price * quantity,
+        };
+      });
+
+    const subtotal = selectedTickets.reduce((acc, tier) => {
+      return acc + tier.lineTotal;
+    }, 0);
+
+    const eventCartItem = {
+      eventId: eventId,
+      selectedTickets: selectedTickets,
+      subtotal: subtotal,
+      serviceFee: SERVICE_FEE_AMOUNT,
+      total: subtotal + serviceFee,
+      addedAt: new Date().toISOString(),
+    };
+    const currentCart = getCart();
+    const updatedCart = addEventTicketsToCart(currentCart, eventCartItem);
+    saveCart(updatedCart);
+
+    setCartFeedBackMessage("Tickets added to cart!");
+  }
+
+  const subtotalPrice = ticketTiers.reduce((acc, tier) => {
     const quantity = ticketTierQuantity[tier.id];
     return acc + tier.price * quantity;
   }, 0);
+
   const serviceFee = totalTicketQuantity === 0 ? 0 : SERVICE_FEE_AMOUNT;
-  const totalPrice = subTotalPrice + serviceFee;
+  const totalPrice = subtotalPrice + serviceFee;
 
   return (
     <aside
@@ -116,7 +161,7 @@ export function TicketPurchasePanel({ ticketTiers }) {
 
       <div className={styles.summary} aria-label={"Pricing summary"}>
         <p className={styles.summaryItem} aria-label={"Subtotal"}>
-          Subtotal: <span>{formatCurrency(subTotalPrice)}</span>
+          Subtotal: <span>{formatCurrency(subtotalPrice)}</span>
         </p>
         <p className={styles.summaryItem} aria-label={"Service fee"}>
           Fees: <span>{formatCurrency(serviceFee)}</span>
@@ -134,9 +179,11 @@ export function TicketPurchasePanel({ ticketTiers }) {
         disabled={isCtaDisabled}
         aria-disabled={isCtaDisabled}
         className={`button button--primary ${styles.ctaButton}`}
+        onClick={handleBuyClick}
       >
         Buy tickets
       </button>
+      {cartFeedBackMessage && <p role="status">{cartFeedBackMessage}</p>}
     </aside>
   );
 }

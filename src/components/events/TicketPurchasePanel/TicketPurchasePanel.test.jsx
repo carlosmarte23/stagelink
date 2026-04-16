@@ -5,6 +5,8 @@ import { TicketPurchasePanel } from "./TicketPurchasePanel.jsx";
 
 import { formatCurrency } from "../../../utils/currency.js";
 import { SERVICE_FEE_AMOUNT } from "../../../features/events/config/ticketPurchaseConfig";
+import { getCart } from "../../../features/cart/lib/cartStorage.js";
+import { CART_STORAGE_KEY } from "../../../features/cart/config/cartConfig.js";
 
 const mockEvent = {
   id: "evt_test",
@@ -49,7 +51,12 @@ const mockEvent = {
 };
 
 function renderTicketPurchasePanel() {
-  return render(<TicketPurchasePanel ticketTiers={mockEvent.ticketTiers} />);
+  return render(
+    <TicketPurchasePanel
+      eventId={mockEvent.id}
+      ticketTiers={mockEvent.ticketTiers}
+    />,
+  );
 }
 
 describe("TicketPurchasePanel", () => {
@@ -316,13 +323,13 @@ describe("TicketPurchasePanel", () => {
     });
 
     it("displays 0 for subtotal, service fee, and total when no tickets are selected", () => {
-      const subTotal = screen.getByRole("paragraph", { name: /subtotal/i });
+      const subtotal = screen.getByRole("paragraph", { name: /subtotal/i });
       const serviceFee = screen.getByRole("paragraph", {
         name: /service fee/i,
       });
       const total = screen.getByRole("paragraph", { name: /pricing total/i });
 
-      expect(subTotal).toHaveTextContent("$0.00");
+      expect(subtotal).toHaveTextContent("$0.00");
       expect(serviceFee).toHaveTextContent("$0.00");
       expect(total).toHaveTextContent("$0.00");
     });
@@ -340,12 +347,12 @@ describe("TicketPurchasePanel", () => {
 
       await user.click(increaseGeneralButton);
 
-      const subTotal = screen.getByRole("paragraph", { name: /subtotal/i });
-      expect(subTotal).toHaveTextContent(formatCurrency(generalPrice));
+      const subtotal = screen.getByRole("paragraph", { name: /subtotal/i });
+      expect(subtotal).toHaveTextContent(formatCurrency(generalPrice));
 
       await user.click(increaseGeneralButton);
 
-      expect(subTotal).toHaveTextContent(formatCurrency(generalPrice * 2));
+      expect(subtotal).toHaveTextContent(formatCurrency(generalPrice * 2));
     });
 
     it("displays the fixed service fee when at least one ticket is selected", async () => {
@@ -392,6 +399,154 @@ describe("TicketPurchasePanel", () => {
       expect(total).toHaveTextContent(
         formatCurrency(generalPrice * 2 + serviceFee),
       );
+    });
+  });
+
+  describe("add to cart", () => {
+    let user;
+
+    beforeEach(() => {
+      localStorage.removeItem(CART_STORAGE_KEY);
+      user = userEvent.setup();
+      renderTicketPurchasePanel();
+    });
+
+    it("saves the selected event tickets to cart when buy tickets is clicked", async () => {
+      const list = screen.getByRole("list", { name: /ticket tiers/i });
+
+      const increaseGeneralButton = within(list).getByRole("button", {
+        name: /increase quantity of general/i,
+      });
+      const buyTicketsButton = screen.getByRole("button", {
+        name: /buy tickets/i,
+      });
+
+      await user.click(increaseGeneralButton);
+      await user.click(buyTicketsButton);
+
+      const cart = getCart();
+
+      const generalTier = mockEvent.ticketTiers.find(
+        (tier) => tier.id === "general",
+      );
+      expect(cart).toHaveLength(1);
+      expect(cart[0]).toEqual({
+        eventId: mockEvent.id,
+        selectedTickets: [
+          {
+            tierId: generalTier.id,
+            quantity: 1,
+            unitPrice: generalTier.price,
+            lineTotal: generalTier.price,
+          },
+        ],
+        subtotal: generalTier.price,
+        serviceFee: SERVICE_FEE_AMOUNT,
+        total: generalTier.price + SERVICE_FEE_AMOUNT,
+        addedAt: expect.any(String),
+      });
+    });
+
+    it("builds the correct cart payload for multiple selected tiers", async () => {
+      const list = screen.getByRole("list", { name: /ticket tiers/i });
+
+      const increaseGeneralButton = within(list).getByRole("button", {
+        name: /increase quantity of general/i,
+      });
+      const increaseMeetGreetButton = within(list).getByRole("button", {
+        name: /increase quantity of meet & greet/i,
+      });
+      const buyTicketsButton = screen.getByRole("button", {
+        name: /buy tickets/i,
+      });
+
+      await user.click(increaseGeneralButton);
+      await user.click(increaseGeneralButton);
+      await user.click(increaseMeetGreetButton);
+      await user.click(buyTicketsButton);
+
+      const cart = getCart();
+
+      const generalTier = mockEvent.ticketTiers.find(
+        (tier) => tier.id === "general",
+      );
+      const meetGreetTier = mockEvent.ticketTiers.find(
+        (tier) => tier.id === "meet-greet",
+      );
+
+      const cartSubTotal = generalTier.price * 2 + meetGreetTier.price;
+      const cartTotal = cartSubTotal + SERVICE_FEE_AMOUNT;
+
+      expect(cart[0]).toEqual({
+        eventId: mockEvent.id,
+        selectedTickets: [
+          {
+            tierId: generalTier.id,
+            quantity: 2,
+            unitPrice: generalTier.price,
+            lineTotal: generalTier.price * 2,
+          },
+          {
+            tierId: meetGreetTier.id,
+            quantity: 1,
+            unitPrice: meetGreetTier.price,
+            lineTotal: meetGreetTier.price,
+          },
+        ],
+        subtotal: cartSubTotal,
+        serviceFee: SERVICE_FEE_AMOUNT,
+        total: cartTotal,
+        addedAt: expect.any(String),
+      });
+    });
+
+    it("replaces the existing cart selection when the same event is added again", async () => {
+      const list = screen.getByRole("list", { name: /ticket tiers/i });
+
+      const increaseGeneralButton = within(list).getByRole("button", {
+        name: /increase quantity of general/i,
+      });
+      const buyTicketsButton = screen.getByRole("button", {
+        name: /buy tickets/i,
+      });
+
+      await user.click(increaseGeneralButton);
+      await user.click(buyTicketsButton);
+
+      const generalPrice = mockEvent.ticketTiers.find(
+        (tier) => tier.id === "general",
+      ).price;
+
+      const cart = getCart();
+      expect(cart).toHaveLength(1);
+      expect(cart[0].selectedTickets[0].quantity).toBe(1);
+      expect(cart[0].subtotal).toBe(generalPrice);
+      expect(cart[0].total).toBe(generalPrice + SERVICE_FEE_AMOUNT);
+
+      await user.click(increaseGeneralButton);
+      await user.click(buyTicketsButton);
+
+      const updatedCart = getCart();
+      expect(updatedCart).toHaveLength(1);
+      expect(updatedCart[0].selectedTickets[0].quantity).toBe(2);
+      expect(updatedCart[0].subtotal).toBe(generalPrice * 2);
+      expect(updatedCart[0].total).toBe(generalPrice * 2 + SERVICE_FEE_AMOUNT);
+    });
+
+    it("shows confirmation feedback after adding tickets to cart", async () => {
+      const list = screen.getByRole("list", { name: /ticket tiers/i });
+
+      const increaseGeneralButton = within(list).getByRole("button", {
+        name: /increase quantity of general/i,
+      });
+      const buyTicketsButton = screen.getByRole("button", {
+        name: /buy tickets/i,
+      });
+
+      await user.click(increaseGeneralButton);
+      await user.click(buyTicketsButton);
+
+      expect(screen.getByText(/tickets added to cart/i)).toBeInTheDocument();
     });
   });
 });

@@ -133,7 +133,7 @@ export default function EventDetail() {
             </Link>
           </div>
         </div>
-        <TicketPurchasePanel ticketTiers={ticketTiers} />
+        <TicketPurchasePanel eventId={eventId} ticketTiers={ticketTiers} />
       </div>
     </div>
   );
