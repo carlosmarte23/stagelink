@@ -136,7 +136,7 @@ describe("cartStorage", () => {
     localStorage.setItem(CART_STORAGE_KEY, "not-valid-JSON");
     expect(getCart()).toEqual([]);
 
-    localStorage.setItem(CART_STORAGE_KEY, {});
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify({}));
     expect(getCart()).toEqual([]);
   });
 });
