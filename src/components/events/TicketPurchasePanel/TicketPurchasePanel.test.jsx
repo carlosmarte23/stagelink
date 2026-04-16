@@ -5,7 +5,7 @@ import { TicketPurchasePanel } from "./TicketPurchasePanel.jsx";
 
 import { formatCurrency } from "../../../utils/currency.js";
 import { SERVICE_FEE_AMOUNT } from "../../../features/events/config/ticketPurchaseConfig";
-import { getCart } from "../../../features/cart/lib/cartStorage.js";
+import { getCart, saveCart } from "../../../features/cart/lib/cartStorage.js";
 import { CART_STORAGE_KEY } from "../../../features/cart/config/cartConfig.js";
 
 const mockEvent = {
@@ -589,6 +589,128 @@ describe("TicketPurchasePanel", () => {
       await user.click(increaseGeneralButton);
 
       expect(buyTicketsButton).not.toBeDisabled();
+    });
+  });
+
+  describe("cart persistence", () => {
+    beforeEach(() => {
+      localStorage.removeItem(CART_STORAGE_KEY);
+    });
+
+    it("prefills ticket quantities from an existing cart selection for the event", () => {
+      const generalTier = mockEvent.ticketTiers.find(
+        (tier) => tier.id === "general",
+      );
+      const meetGreetTier = mockEvent.ticketTiers.find(
+        (tier) => tier.id === "meet-greet",
+      );
+
+      saveCart([
+        {
+          eventId: mockEvent.id,
+          selectedTickets: [
+            {
+              tierId: generalTier.id,
+              quantity: 2,
+              unitPrice: generalTier.price,
+              lineTotal: generalTier.price * 2,
+            },
+            {
+              tierId: meetGreetTier.id,
+              quantity: 1,
+              unitPrice: meetGreetTier.price,
+              lineTotal: meetGreetTier.price,
+            },
+          ],
+          subtotal: generalTier.price * 2 + meetGreetTier.price,
+          serviceFee: SERVICE_FEE_AMOUNT,
+          total:
+            generalTier.price * 2 + meetGreetTier.price + SERVICE_FEE_AMOUNT,
+          addedAt: "2026-04-15T18:30:00.000Z",
+        },
+      ]);
+
+      renderTicketPurchasePanel();
+
+      const list = screen.getByRole("list", { name: /ticket tiers/i });
+
+      expect(
+        within(list).getByLabelText(/general quantity/i),
+      ).toHaveTextContent("2");
+      expect(
+        within(list).getByLabelText(/meet & greet quantity/i),
+      ).toHaveTextContent("1");
+    });
+
+    it("does not prefill quantities from a different event cart item", () => {
+      const generalTier = mockEvent.ticketTiers.find(
+        (tier) => tier.id === "general",
+      );
+
+      saveCart([
+        {
+          eventId: "evt_other",
+          selectedTickets: [
+            {
+              tierId: generalTier.id,
+              quantity: 2,
+              unitPrice: generalTier.price,
+              lineTotal: generalTier.price * 2,
+            },
+          ],
+          subtotal: generalTier.price * 2,
+          serviceFee: SERVICE_FEE_AMOUNT,
+          total: generalTier.price * 2 + SERVICE_FEE_AMOUNT,
+          addedAt: "2026-04-15T18:30:00.000Z",
+        },
+      ]);
+
+      renderTicketPurchasePanel();
+
+      const list = screen.getByRole("list", { name: /ticket tiers/i });
+
+      expect(
+        within(list).getByLabelText(/general quantity/i),
+      ).toHaveTextContent("0");
+      expect(within(list).getByLabelText(/vip quantity/i)).toHaveTextContent(
+        "0",
+      );
+      expect(
+        within(list).getByLabelText(/meet & greet quantity/i),
+      ).toHaveTextContent("0");
+    });
+
+    it("keeps the buy tickets button disabled when the current event selection is already in cart", () => {
+      const eventCartItem = {
+        eventId: mockEvent.id,
+        selectedTickets: [
+          {
+            tierId: "general",
+            quantity: 1,
+            unitPrice: mockEvent.ticketTiers.find(
+              (tier) => tier.id === "general",
+            ).price,
+            lineTotal: mockEvent.ticketTiers.find(
+              (tier) => tier.id === "general",
+            ).price,
+          },
+        ],
+        subtotal: mockEvent.ticketTiers.find((tier) => tier.id === "general")
+          .price,
+        serviceFee: SERVICE_FEE_AMOUNT,
+        total:
+          mockEvent.ticketTiers.find((tier) => tier.id === "general").price +
+          SERVICE_FEE_AMOUNT,
+        addedAt: "2026-04-15T18:30:00.000Z",
+      };
+
+      saveCart([eventCartItem]);
+
+      renderTicketPurchasePanel();
+
+      const buyButton = screen.getByRole("button", { name: /buy tickets/i });
+
+      expect(buyButton).toBeDisabled();
     });
   });
 });

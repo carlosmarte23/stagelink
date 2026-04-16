@@ -7,17 +7,41 @@ import {
   saveCart,
   getCart,
   addEventTicketsToCart,
+  findCartItemByEventId,
 } from "../../../features/cart/lib/cartStorage.js";
 
 import styles from "./TicketPurchasePanel.module.css";
 
-export function TicketPurchasePanel({ eventId, ticketTiers }) {
-  const initialState = ticketTiers.reduce((acc, tier) => {
-    acc[tier.id] = 0;
+function getInitialTicketQuantities(ticketTiers, eventCartItem) {
+  return ticketTiers.reduce((acc, tier) => {
+    const savedTicket = eventCartItem?.selectedTickets.find(
+      (ticket) => ticket.tierId === tier.id,
+    );
+    const savedQuantity = savedTicket ? savedTicket.quantity : 0;
+    acc[tier.id] = Math.min(savedQuantity, getEffectiveTierLimit(tier));
+
     return acc;
   }, {});
+}
 
-  const [ticketTierQuantity, setTicketTierQuantity] = useState(initialState);
+function getInitialPanelState(eventId, ticketTiers) {
+  const eventCartItem = findCartItemByEventId(getCart(), eventId);
+
+  return {
+    quantities: getInitialTicketQuantities(ticketTiers, eventCartItem),
+    isSelectionAddedToCart: Boolean(eventCartItem),
+  };
+}
+
+export function TicketPurchasePanel({ eventId, ticketTiers }) {
+  const [initialPanelState] = useState(() =>
+    getInitialPanelState(eventId, ticketTiers),
+  );
+
+  const [ticketTierQuantity, setTicketTierQuantity] = useState(() => {
+    return initialPanelState.quantities;
+  });
+
   const [cartFeedBackMessage, setCartFeedBackMessage] = useState("");
 
   const totalTicketQuantity = Object.values(ticketTierQuantity).reduce(
@@ -25,7 +49,9 @@ export function TicketPurchasePanel({ eventId, ticketTiers }) {
     0,
   );
 
-  const [isSelectionAddedToCart, setIsSelectionAddedToCart] = useState(false);
+  const [isSelectionAddedToCart, setIsSelectionAddedToCart] = useState(
+    initialPanelState.isSelectionAddedToCart,
+  );
 
   const isCtaDisabled = totalTicketQuantity === 0 || isSelectionAddedToCart;
 
