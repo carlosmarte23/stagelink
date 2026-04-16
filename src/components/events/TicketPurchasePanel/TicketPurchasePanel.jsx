@@ -115,13 +115,16 @@ export function TicketPurchasePanel({ ticketTiers }) {
       </ul>
 
       <div className={styles.summary} aria-label={"Pricing summary"}>
-        <p className={styles.subTotal} aria-label={"Subtotal"}>
+        <p className={styles.summaryItem} aria-label={"Subtotal"}>
           Subtotal: <span>{formatCurrency(subTotalPrice)}</span>
         </p>
-        <p className={styles.serviceFee} aria-label={"Service fee"}>
-          Service fee: <span>{formatCurrency(serviceFee)}</span>
+        <p className={styles.summaryItem} aria-label={"Service fee"}>
+          Fees: <span>{formatCurrency(serviceFee)}</span>
         </p>
-        <p className={styles.total} aria-label={"Pricing Total"}>
+        <p
+          className={`${styles.summaryItem} ${styles.summaryTotal}`}
+          aria-label={"Pricing Total"}
+        >
           Total: <span>{formatCurrency(totalPrice)}</span>
         </p>
       </div>
