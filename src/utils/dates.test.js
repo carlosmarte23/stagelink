@@ -10,6 +10,7 @@ import {
   getThisWeekendRange,
   startOfDay,
   isEventInDateRange,
+  formatDateTimeParts,
 } from "./dates";
 
 function makeDate(
@@ -304,5 +305,39 @@ describe("isEventInDateRange", () => {
 
     eventDate = makeDate(2026, 3, 12, 23, 59, 59, 999);
     expect(isEventInDateRange(eventDate, range.start, range.end)).toBe(true);
+  });
+});
+
+describe("formatDateTimeParts", () => {
+  const dateString = "2026-04-12T23:30:00Z";
+  const timeZone = "America/New_York";
+
+  it("returns formatted date parts for a valid date and timezone", () => {
+    const result = formatDateTimeParts(dateString, timeZone);
+
+    expect(result).toEqual({
+      fullDate: "Sunday, April 12, 2026",
+      shortDate: "Apr 12, 2026",
+      time: "7:30 PM",
+      timeWithZone: "7:30 PM EDT",
+    });
+  });
+
+  it("returns null if dateString is null", () => {
+    const result = formatDateTimeParts(null, timeZone);
+
+    expect(result).toBe(null);
+  });
+
+  it("returns null if dateString is invalid", () => {
+    const result = formatDateTimeParts("not-a-date", timeZone);
+
+    expect(result).toBe(null);
+  });
+
+  it("returns null if timezone is null", () => {
+    const result = formatDateTimeParts(dateString, null);
+
+    expect(result).toBe(null);
   });
 });

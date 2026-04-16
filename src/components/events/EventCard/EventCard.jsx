@@ -4,6 +4,7 @@ import {
   getVenueName,
   getVenueCity,
   getEventPriceFrom,
+  getFormattedShowAt,
 } from "../../../features/events/lib/eventSelectors.js";
 import { buildUnspashImageUrl } from "../../../utils/images.js";
 import styles from "./EventCard.module.css";
@@ -30,11 +31,7 @@ export default function EventCard({ event, variant = "default" }) {
   ${variant === "suggested" ? styles.suggested : ""}
   ${isFeatured ? styles.featured : ""}`;
 
-  const formattedDate = new Intl.DateTimeFormat("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  }).format(new Date(event.startsAt));
+  const eventShortDate = getFormattedShowAt(event)?.shortDate;
 
   return (
     <Link to={`/events/${event.id}`} className={cardClassName}>
@@ -49,7 +46,7 @@ export default function EventCard({ event, variant = "default" }) {
               {event.genres.slice(0, 2).join(", ")}
             </p>
 
-            <time className={styles.date}>{formattedDate}</time>
+            <time className={styles.date}>{eventShortDate}</time>
           </div>
           <h3 className={styles.title}>{event.title}</h3>
           <div className={styles.location}>

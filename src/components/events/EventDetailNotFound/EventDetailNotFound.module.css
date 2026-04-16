@@ -1,0 +1,225 @@
+.page {
+  flex: 1;
+  overflow: hidden;
+  padding: 0 1.5rem;
+  background-color: var(--surface-1);
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: -13rem;
+    left: -13rem;
+    width: 30rem;
+    height: 30rem;
+    border-radius: var(--radius-full);
+    background: radial-gradient(
+      circle,
+      rgb(var(--purple) / 0.22) 0%,
+      rgb(var(--purple) / 0.14) 22%,
+      rgb(var(--purple) / 0.08) 42%,
+      rgb(var(--purple) / 0.03) 62%,
+      transparent 78%
+    );
+    filter: blur(8px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .backgroundLayer {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 0;
+
+    .backgroundIcon {
+      position: absolute;
+      width: 100%;
+      left: 50%;
+      top: 52%;
+      width: 115vw;
+      aspect-ratio: 1;
+      transform: translate(-50%, -55%);
+
+      opacity: 0.1;
+      color: var(--primary);
+      pointer-events: none;
+
+      & svg {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
+  .content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 3rem;
+
+    .hero {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      z-index: 1;
+
+      .centerIcon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 12rem;
+        height: 12rem;
+        border-radius: var(--radius-full);
+        background-color: rgb(var(--purple) / 0.08);
+        color: var(--primary);
+
+        & svg {
+          width: 50%;
+          height: 50%;
+        }
+      }
+
+      .code {
+        position: absolute;
+        bottom: -1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        line-height: 2rem;
+        font-weight: 900;
+        color: var(--text);
+        padding: 0.5rem 1.25rem;
+        border-radius: var(--radius-lg);
+        background-color: var(--surface-2);
+        border: 1px solid var(--border);
+        box-shadow: 0 5px 15px 2px rgb(var(--purple) / 0.2);
+      }
+    }
+
+    .title {
+      color: var(--text-strong);
+      text-align: center;
+      font-size: 2rem;
+      font-weight: 900;
+    }
+
+    .description {
+      color: var(--text-muted);
+      text-align: center;
+      font-size: 1rem;
+      line-height: 1.5;
+      text-wrap: pretty;
+      width: min(65ch, 100%);
+    }
+
+    .backButton {
+      font-size: 1.25rem;
+      line-height: unset;
+
+      .backIcon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 2rem;
+        height: 2rem;
+      }
+    }
+  }
+
+  .footer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-top: 2rem;
+
+    .footerButton {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      justify-content: flex-start;
+      width: 100%;
+      padding-block: 1.25rem;
+      background-color: #332839;
+
+      .footerIcon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 3rem;
+        height: 3rem;
+        border-radius: var(--radius-lg);
+        background-color: var(--surface-2);
+        color: var(--primary);
+      }
+
+      .text {
+        display: grid;
+        gap: 0.5rem;
+
+        .label {
+          color: var(--text-strong);
+          font-size: 1rem;
+        }
+
+        .caption {
+          color: var(--text-muted);
+          font-size: 0.75rem;
+          line-height: 0.75rem;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .page {
+    padding: 4rem 6rem;
+
+    .backgroundLayer {
+      .backgroundIcon {
+        height: 90%;
+        width: auto;
+        opacity: 0.05;
+      }
+    }
+
+    .content {
+      margin-block-start: 5rem;
+      .title {
+        font-size: 3rem;
+      }
+    }
+
+    .footer {
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      gap: 3rem;
+
+      .footerButton {
+        width: auto;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .page {
+    padding: 4rem 6rem;
+
+    .backgroundLayer {
+      .backgroundIcon {
+        height: 75%;
+        opacity: 0.05;
+      }
+    }
+  }
+}
