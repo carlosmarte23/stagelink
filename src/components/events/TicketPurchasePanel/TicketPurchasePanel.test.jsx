@@ -546,7 +546,49 @@ describe("TicketPurchasePanel", () => {
       await user.click(increaseGeneralButton);
       await user.click(buyTicketsButton);
 
-      expect(screen.getByText(/tickets added to cart/i)).toBeInTheDocument();
+      expect(screen.getByRole("status")).toHaveTextContent(
+        /tickets added to cart/i,
+      );
+    });
+
+    it("disables the buy tickets button after adding the current selection to cart", async () => {
+      const list = screen.getByRole("list", { name: /ticket tiers/i });
+
+      const increaseGeneralButton = within(list).getByRole("button", {
+        name: /increase quantity of general/i,
+      });
+      const buyTicketsButton = screen.getByRole("button", {
+        name: /buy tickets/i,
+      });
+
+      expect(buyTicketsButton).toBeDisabled();
+
+      await user.click(increaseGeneralButton);
+
+      expect(buyTicketsButton).not.toBeDisabled();
+      await user.click(buyTicketsButton);
+
+      expect(buyTicketsButton).toBeDisabled();
+    });
+
+    it("enables the buy tickets button again when the selected quantities change", async () => {
+      const list = screen.getByRole("list", { name: /ticket tiers/i });
+
+      const increaseGeneralButton = within(list).getByRole("button", {
+        name: /increase quantity of general/i,
+      });
+      const buyTicketsButton = screen.getByRole("button", {
+        name: /buy tickets/i,
+      });
+
+      await user.click(increaseGeneralButton);
+      await user.click(buyTicketsButton);
+
+      expect(buyTicketsButton).toBeDisabled();
+
+      await user.click(increaseGeneralButton);
+
+      expect(buyTicketsButton).not.toBeDisabled();
     });
   });
 });

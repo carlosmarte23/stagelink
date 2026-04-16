@@ -25,7 +25,9 @@ export function TicketPurchasePanel({ eventId, ticketTiers }) {
     0,
   );
 
-  const isCtaDisabled = totalTicketQuantity === 0;
+  const [isSelectionAddedToCart, setIsSelectionAddedToCart] = useState(false);
+
+  const isCtaDisabled = totalTicketQuantity === 0 || isSelectionAddedToCart;
 
   function handleTicketTierChange(tierId, quantity) {
     setTicketTierQuantity((prev) => ({
@@ -36,6 +38,8 @@ export function TicketPurchasePanel({ eventId, ticketTiers }) {
     if (cartFeedBackMessage) {
       setCartFeedBackMessage("");
     }
+
+    setIsSelectionAddedToCart(false);
   }
   function reduceTicketQuantity(tier) {
     const currentValue = ticketTierQuantity[tier.id];
@@ -84,6 +88,7 @@ export function TicketPurchasePanel({ eventId, ticketTiers }) {
     saveCart(updatedCart);
 
     setCartFeedBackMessage("Tickets added to cart!");
+    setIsSelectionAddedToCart(true);
   }
 
   const subtotalPrice = ticketTiers.reduce((acc, tier) => {
@@ -183,7 +188,11 @@ export function TicketPurchasePanel({ eventId, ticketTiers }) {
       >
         Buy tickets
       </button>
-      {cartFeedBackMessage && <p role="status">{cartFeedBackMessage}</p>}
+      {cartFeedBackMessage && (
+        <p role="status" className={styles.cartMessage}>
+          {cartFeedBackMessage}
+        </p>
+      )}
     </aside>
   );
 }
