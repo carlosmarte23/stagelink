@@ -2,11 +2,12 @@ import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 
-import { getEventById } from "../features/events/data/eventsRepository";
+import * as eventRepository from "../features/events/data/eventsRepository";
 import EventDetail from "./EventDetail.jsx";
 
 function renderEventDetailPage(eventId = "evt_001") {
   const fullPath = `/events/${eventId}`;
+
   return (
     <MemoryRouter initialEntries={[fullPath]}>
       <Routes>
@@ -17,11 +18,12 @@ function renderEventDetailPage(eventId = "evt_001") {
 }
 
 describe("EventDetail", () => {
+  const validId = "evt_001";
+
   it("renders the event correctly from route params", () => {
-    const validId = "evt_001";
     render(renderEventDetailPage(validId));
 
-    const event = getEventById("evt_001");
+    const event = eventRepository.getEventById("evt_001");
     expect(screen.getByText(event.title)).toBeInTheDocument();
     expect(screen.getByText(event.description)).toBeInTheDocument();
     expect(screen.getByText(event.venue.name)).toBeInTheDocument();

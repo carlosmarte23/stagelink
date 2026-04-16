@@ -11,7 +11,9 @@ import {
 import { buildUnspashImageUrl } from "../utils/images";
 
 import styles from "./EventDetail.module.css";
+
 import { EventDetailNotFound } from "../components/events/EventDetailNotFound/EventDetailNotFound.jsx";
+import { TicketPurchasePanel } from "../components/events/TicketPurchasePanel/TicketPurchasePanel.jsx";
 
 export default function EventDetail() {
   const { eventId } = useParams();
@@ -33,6 +35,7 @@ export default function EventDetail() {
   const venueAddress = getVenueAddress(event);
   const eventStartsAt = getFormattedShowAt(event);
   const eventDoorsAt = getFormattedDoorsAt(event);
+  const ticketTiers = event.ticketTiers;
 
   return (
     <div className={styles.page}>
@@ -130,10 +133,7 @@ export default function EventDetail() {
             </Link>
           </div>
         </div>
-
-        <aside className={styles.ticketsPanel}>
-          <h2>Select Your Tickets</h2>
-        </aside>
+        <TicketPurchasePanel eventId={eventId} ticketTiers={ticketTiers} />
       </div>
     </div>
   );
