@@ -1,35 +1,62 @@
 # StageLink Frontend Roadmap
 
-This roadmap covers ONLY the frontend implementation of StageLink, aligned with the Stitch design pack.
-It focuses on UI, routing, client-side state, accessibility basics, and a realistic user flow using mock data.
+This roadmap covers the frontend implementation of StageLink, aligned with the Stitch design pack.
 
-Backend APIs, database design, authentication server, and real payments are intentionally out of scope here and will be planned separately.
+The scope includes UI, routing, client-side state, local persistence, accessibility basics, and a realistic ticketing flow using mock data. Backend APIs, database design, authentication services, and real payments are outside this roadmap and will be planned separately.
 
 ## Frontend Goals
 
-- Build a complete, navigable UI that matches the Stitch screens
-- Use mock data to simulate a real product experience
-- Persist cart and tickets locally (localStorage) for realism
-- Keep codebase clean and scalable (pages/components separation, small PRs, reusable UI)
+- Build a complete, navigable ticketing SPA that matches the Stitch screens
+- Use canonical mock data to simulate a realistic product catalog
+- Persist cart, orders, and tickets locally through `localStorage`
+- Keep feature work organized through page/component separation and milestone documents
+- Protect shared logic and core user flows with deterministic tests
 
-## Routes (Frontend)
+## Current Implementation Status
+
+Completed
+
+- Vite + React + React Router SPA foundation
+- Public app layout with header, main content, footer, and scroll restoration
+- Theme tokens, global styles, typography, and base layout styles
+- Home UI with hero, featured events, newsletter form, and event navigation
+- Events UI with filters, sorting, pagination, empty state, and responsive behavior
+- Canonical event data contract with repository/selectors
+- Event Detail UI with event lookup, responsive detail layout, ticket tiers, sold-out handling, and add-to-cart behavior
+- Local cart storage helpers with tests
+- Testing foundation with Vitest, React Testing Library, jest-dom, user-event, and jsdom
+- Unit, component, and page-level tests for event logic, date helpers, pagination, newsletter, Home, Events, Event Detail, Ticket Purchase Panel, and cart storage
+
+In progress
+
+- Checkout design definition and `/cart` milestone planning
+
+Planned
+
+- Checkout implementation
+- My Tickets UI
+- Auth UI
+- Admin UI
+- Final frontend polish pass
+
+## Routes
 
 Public
 
-- `/` Home (Landing)
-- `/events` Events (Explore)
+- `/` Home
+- `/events` Events
 - `/events/:eventId` Event Detail
-- `/cart` Checkout flow (can be multi-step inside the route)
+- `/cart` Checkout
 - `/my-tickets` My Tickets
 - `*` NotFound
 
-Auth (UI only)
+Auth UI
 
 - `/login`
 - `/register`
 - `/forgot-password`
 
-Admin (UI only)
+Admin UI
 
 - `/admin`
 - `/admin/users`
@@ -40,94 +67,134 @@ Admin (UI only)
 - `/admin/prices`
 - `/admin/orders`
 
-## Data & Persistence (Frontend)
+## Data & Persistence
 
-Mock data (local files)
+Mock data
 
-- Events, Venues, Concerts, Price tiers
-- Orders/Tickets (generated client-side)
+- Events
+- Venues embedded in the event contract
+- Ticket tiers embedded in each event
+- Orders and tickets generated client-side during checkout
 
-localStorage
+Local persistence
 
 - Cart items
 - Orders
 - Tickets
-- Optional: “fake session” (if you want logged-in UI states)
+- Future fake session state for auth UI
 
 ## Milestones
 
-0. Foundation (done)
+### 0. Foundation (done)
 
 - Vite + React + Router
-- AppLayout shell (header/main/footer)
+- AppLayout shell
 - Base pages and NotFound
-- Global reset
+- Global reset and layout styles
 
-1. Theme tokens (done)
+Milestone document
 
-- CSS variables (colors, surfaces, radii, typography)
-- Global background/text styles
+- [Testing Foundations](./milestones/TESTING_FOUNDATIONS.md)
+
+### 1. Theme Tokens (done)
+
+- CSS variables for colors, surfaces, radii, and typography
+- Global background and text styles
 - Spline Sans loaded
+- Shared button and layout primitives
 
-2. Home UI (Landing)
+### 2. Home UI (done)
 
 - Hero banner with CTA
-- Featured events preview (cards from mock data)
-- CTA navigates to `/events`
+- Featured events preview from canonical mock data
+- Newsletter form validation and feedback
+- CTA navigation to `/events`
+- Event card navigation to `/events/:eventId`
 
-3. Events UI (Explore)
+Milestone document
 
-- Filters sidebar (UI + basic filtering)
-- Events grid (cards from mock data)
-- Pagination UI
-- Empty and loading states
+- [Home UI](./milestones/MILESTONE_HOME_UI.md)
 
-4. Event Detail UI
+### 3. Events UI (done)
+
+- Filters panel
+- Events grid
+- Sorting controls
+- Client-side pagination
+- Empty state
+- Responsive mobile filter behavior
+
+Milestone document
+
+- [Events UI](./milestones/MILESTONE_EVENTS_UI.md)
+
+### 4. Event Detail UI (done)
 
 - Event header/media section
-- Ticket tiers and quantity controls
-- “Sold out” state
-- Add to cart behavior
+- Event summary, date, doors, and venue details
+- Variable ticket tiers
+- Sold-out tier state
+- Quantity controls with per-tier limits
+- Local add-to-cart persistence
 
-5. Checkout UI (Cart)
+Milestone document
 
-- Review step (items + totals)
-- Payment step (fake payment form)
-- Confirmation step (order summary + QR placeholder)
-- Persist orders/tickets, clear cart
+- [Event Detail UI](./milestones/MILESTONE_EVENT_DETAIL_UI.md)
 
-6. My Tickets UI
+### 5. Checkout UI (design-first next)
 
-- Tabs (Upcoming / Past)
-- Search + sorting UI
-- Ticket cards and actions (UI + minimal behavior)
+- New Stitch design for a premium single-page checkout
+- Multi-event cart review built around a visual progress timeline
+- Event-grouped cart rows with every purchased tier visible under its event
+- Centered step panel for Review, Details, Pay, and Done
+- Inline cart totals with subtotal, fees, facility charge, and total
+- Shared per-ticket service fee model for Event Detail and Checkout
+- Facility charge applied once per checkout order
+- Fake buyer/payment details for frontend-only checkout
+- Local confirmation handoff to My Tickets
 
-7. Auth UI (Login/Register/Forgot)
+Milestone document
 
-- Forms and validation
-- Fake session state (optional)
-- Header reflects auth state (optional)
+- [Cart / Checkout UI](./milestones/MILESTONE_CART_CHECKOUT_UI.md)
 
-8. Admin UI (UI-first)
+### 6. My Tickets UI (planned)
+
+- Tabs for upcoming and past tickets
+- Search and sorting controls
+- Ticket cards
+- QR placeholder display
+- Empty states
+
+### 7. Auth UI (planned)
+
+- Login form
+- Register form
+- Forgot password form
+- Optional fake session state
+- Header state for signed-in and signed-out UI
+
+### 8. Admin UI (planned)
 
 - Admin layout with sidebar
-- Dashboard cards (mock data)
-- Orders & Tickets management table (mock)
-- Basic CRUD screens (UI only): users/roles/venues/concerts/events/prices
+- Dashboard cards from mock data
+- Orders and tickets management table
+- UI-only CRUD screens for users, roles, venues, concerts, events, and prices
 
-9. Polish
+### 9. Polish (planned)
 
-- Accessibility pass (focus-visible, labels, keyboard)
+- Accessibility pass
 - Responsive refinements
 - Consistent empty/loading states
-- README screenshots + short demo instructions
+- README screenshots and demo instructions
+- Final regression testing for the MVP frontend flow
 
-## Non-Goals (Frontend Roadmap)
+## Non-Goals
 
 - Real backend integration
 - Real authentication security
-- Stripe live payments
-- Webhooks/emails/refunds
-- Database constraints and conflict rules (venue/time overlap)
+- Live Stripe payments
+- Webhooks, emails, and refunds
+- Database constraints and conflict rules
+- Production-grade inventory locking
 
-These belong to a separate Backend roadmap.
+These concerns belong to the backend and systems roadmap.
