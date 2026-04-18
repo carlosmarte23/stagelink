@@ -4,7 +4,7 @@ import { userEvent } from "@testing-library/user-event";
 import { TicketPurchasePanel } from "./TicketPurchasePanel.jsx";
 
 import { formatCurrency } from "../../../utils/currency.js";
-import { SERVICE_FEE_AMOUNT } from "../../../features/events/config/ticketPurchaseConfig";
+import { SERVICE_FEE_PER_TICKET } from "../../../features/checkout/config/checkoutConfig.js";
 import { getCart, saveCart } from "../../../features/cart/lib/cartStorage.js";
 import { CART_STORAGE_KEY } from "../../../features/cart/config/cartConfig.js";
 
@@ -49,6 +49,10 @@ const mockEvent = {
     },
   ],
 };
+
+function calculateExpectedServiceFee(ticketQuantity) {
+  return ticketQuantity * SERVICE_FEE_PER_TICKET;
+}
 
 function renderTicketPurchasePanel() {
   return render(
@@ -355,7 +359,7 @@ describe("TicketPurchasePanel", () => {
       expect(subtotal).toHaveTextContent(formatCurrency(generalPrice * 2));
     });
 
-    it("displays the fixed service fee when at least one ticket is selected", async () => {
+    it("displays the service fee per ticket when at least one ticket is selected", async () => {
       const list = screen.getByRole("list", { name: /ticket tiers/i });
 
       const increaseGeneralButton = within(list).getByRole("button", {
@@ -368,9 +372,8 @@ describe("TicketPurchasePanel", () => {
 
       expect(feePrice).toHaveTextContent(formatCurrency(0));
 
-      const serviceFee = SERVICE_FEE_AMOUNT;
-
       await user.click(increaseGeneralButton);
+      const serviceFee = calculateExpectedServiceFee(1);
       expect(feePrice).toHaveTextContent(formatCurrency(serviceFee));
     });
 
@@ -385,9 +388,8 @@ describe("TicketPurchasePanel", () => {
         (tier) => tier.name === "General",
       ).price;
 
-      const serviceFee = SERVICE_FEE_AMOUNT;
-
       await user.click(increaseGeneralButton);
+      let serviceFee = calculateExpectedServiceFee(1);
 
       const total = screen.getByRole("paragraph", { name: /pricing total/i });
       expect(total).toHaveTextContent(
@@ -395,6 +397,7 @@ describe("TicketPurchasePanel", () => {
       );
 
       await user.click(increaseGeneralButton);
+      serviceFee = calculateExpectedServiceFee(2);
 
       expect(total).toHaveTextContent(
         formatCurrency(generalPrice * 2 + serviceFee),
@@ -429,6 +432,7 @@ describe("TicketPurchasePanel", () => {
       const generalTier = mockEvent.ticketTiers.find(
         (tier) => tier.id === "general",
       );
+      const expectedServiceFee = calculateExpectedServiceFee(1);
       expect(cart).toHaveLength(1);
       expect(cart[0]).toEqual({
         eventId: mockEvent.id,
@@ -441,8 +445,8 @@ describe("TicketPurchasePanel", () => {
           },
         ],
         subtotal: generalTier.price,
-        serviceFee: SERVICE_FEE_AMOUNT,
-        total: generalTier.price + SERVICE_FEE_AMOUNT,
+        serviceFee: expectedServiceFee,
+        total: generalTier.price + expectedServiceFee,
         addedAt: expect.any(String),
       });
     });
@@ -465,6 +469,8 @@ describe("TicketPurchasePanel", () => {
       await user.click(increaseMeetGreetButton);
       await user.click(buyTicketsButton);
 
+      const expectedServiceFee = calculateExpectedServiceFee(3);
+
       const cart = getCart();
 
       const generalTier = mockEvent.ticketTiers.find(
@@ -475,7 +481,7 @@ describe("TicketPurchasePanel", () => {
       );
 
       const cartSubTotal = generalTier.price * 2 + meetGreetTier.price;
-      const cartTotal = cartSubTotal + SERVICE_FEE_AMOUNT;
+      const cartTotal = cartSubTotal + expectedServiceFee;
 
       expect(cart[0]).toEqual({
         eventId: mockEvent.id,
@@ -494,7 +500,7 @@ describe("TicketPurchasePanel", () => {
           },
         ],
         subtotal: cartSubTotal,
-        serviceFee: SERVICE_FEE_AMOUNT,
+        serviceFee: expectedServiceFee,
         total: cartTotal,
         addedAt: expect.any(String),
       });
@@ -512,6 +518,7 @@ describe("TicketPurchasePanel", () => {
 
       await user.click(increaseGeneralButton);
       await user.click(buyTicketsButton);
+      let expectedServiceFee = calculateExpectedServiceFee(1);
 
       const generalPrice = mockEvent.ticketTiers.find(
         (tier) => tier.id === "general",
@@ -521,16 +528,20 @@ describe("TicketPurchasePanel", () => {
       expect(cart).toHaveLength(1);
       expect(cart[0].selectedTickets[0].quantity).toBe(1);
       expect(cart[0].subtotal).toBe(generalPrice);
-      expect(cart[0].total).toBe(generalPrice + SERVICE_FEE_AMOUNT);
+      expect(cart[0].serviceFee).toBe(expectedServiceFee);
+      expect(cart[0].total).toBe(generalPrice + expectedServiceFee);
 
       await user.click(increaseGeneralButton);
       await user.click(buyTicketsButton);
+
+      expectedServiceFee = calculateExpectedServiceFee(2);
 
       const updatedCart = getCart();
       expect(updatedCart).toHaveLength(1);
       expect(updatedCart[0].selectedTickets[0].quantity).toBe(2);
       expect(updatedCart[0].subtotal).toBe(generalPrice * 2);
-      expect(updatedCart[0].total).toBe(generalPrice * 2 + SERVICE_FEE_AMOUNT);
+      expect(updatedCart[0].serviceFee).toBe(expectedServiceFee);
+      expect(updatedCart[0].total).toBe(generalPrice * 2 + expectedServiceFee);
     });
 
     it("shows confirmation feedback after adding tickets to cart", async () => {
@@ -605,6 +616,8 @@ describe("TicketPurchasePanel", () => {
         (tier) => tier.id === "meet-greet",
       );
 
+      const expectedServiceFee = calculateExpectedServiceFee(3);
+
       saveCart([
         {
           eventId: mockEvent.id,
@@ -623,9 +636,9 @@ describe("TicketPurchasePanel", () => {
             },
           ],
           subtotal: generalTier.price * 2 + meetGreetTier.price,
-          serviceFee: SERVICE_FEE_AMOUNT,
+          serviceFee: expectedServiceFee,
           total:
-            generalTier.price * 2 + meetGreetTier.price + SERVICE_FEE_AMOUNT,
+            generalTier.price * 2 + meetGreetTier.price + expectedServiceFee,
           addedAt: "2026-04-15T18:30:00.000Z",
         },
       ]);
@@ -647,6 +660,8 @@ describe("TicketPurchasePanel", () => {
         (tier) => tier.id === "general",
       );
 
+      const expectedServiceFee = calculateExpectedServiceFee(2);
+
       saveCart([
         {
           eventId: "evt_other",
@@ -659,8 +674,8 @@ describe("TicketPurchasePanel", () => {
             },
           ],
           subtotal: generalTier.price * 2,
-          serviceFee: SERVICE_FEE_AMOUNT,
-          total: generalTier.price * 2 + SERVICE_FEE_AMOUNT,
+          serviceFee: expectedServiceFee,
+          total: generalTier.price * 2 + expectedServiceFee,
           addedAt: "2026-04-15T18:30:00.000Z",
         },
       ]);
@@ -681,6 +696,8 @@ describe("TicketPurchasePanel", () => {
     });
 
     it("keeps the buy tickets button disabled when the current event selection is already in cart", () => {
+      const expectedServiceFee = calculateExpectedServiceFee(1);
+
       const eventCartItem = {
         eventId: mockEvent.id,
         selectedTickets: [
@@ -697,10 +714,10 @@ describe("TicketPurchasePanel", () => {
         ],
         subtotal: mockEvent.ticketTiers.find((tier) => tier.id === "general")
           .price,
-        serviceFee: SERVICE_FEE_AMOUNT,
+        serviceFee: expectedServiceFee,
         total:
           mockEvent.ticketTiers.find((tier) => tier.id === "general").price +
-          SERVICE_FEE_AMOUNT,
+          expectedServiceFee,
         addedAt: "2026-04-15T18:30:00.000Z",
       };
 
