@@ -1,8 +1,35 @@
+import CheckoutReview from "../components/checkout/CheckoutReview/CheckoutReview";
+import CheckoutTimeline from "../components/checkout/CheckoutTimeline/CheckoutTimeline";
+
+import {
+  CHECKOUT_STEP_ITEMS,
+  CHECKOUT_STEPS,
+} from "../features/checkout/config/checkoutStepsConfig";
+import { getCheckoutStepMeta } from "../features/checkout/lib/checkoutSteps";
+
+import styles from "./Cart.module.css";
+
 export default function Cart() {
+  const activeStep = CHECKOUT_STEPS.REVIEW;
+
+  const stepMeta = getCheckoutStepMeta(activeStep);
+
   return (
-    <>
-      <h1>Cart</h1>
-      <p>MVP in progress</p>
-    </>
+    <section className={styles.page} aria-labelledby="checkout-title">
+      <header className={styles.header}>
+        <h1 id="checkout-title" className={styles.title}>
+          Checkout
+        </h1>
+        <p className={styles.description}>{stepMeta.description}</p>
+      </header>
+
+      <CheckoutTimeline
+        checkoutSteps={CHECKOUT_STEP_ITEMS}
+        activeStep={activeStep}
+      />
+      <div className={styles.contentContainer}>
+        <CheckoutReview />
+      </div>
+    </section>
   );
 }

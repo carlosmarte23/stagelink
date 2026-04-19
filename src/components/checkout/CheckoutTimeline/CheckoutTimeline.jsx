@@ -1,0 +1,53 @@
+import { CHECKOUT_STEP_STATUS } from "../../../features/checkout/config/checkoutStepsConfig.js";
+import { getCheckoutStepStatus } from "../../../features/checkout/lib/checkoutSteps.js";
+
+import styles from "./CheckoutTimeline.module.css";
+
+export default function CheckoutTimeline({ checkoutSteps, activeStep }) {
+  const isCurrent = (step) => step.id === activeStep;
+
+  return (
+    <nav aria-label="Checkout progress" className={styles.timeline}>
+      <ol
+        className={styles.steps}
+        style={{ "--checkout-step-count": checkoutSteps.length }}
+      >
+        {checkoutSteps.map((step, index) => {
+          const stepStatus = getCheckoutStepStatus(step.id, activeStep);
+
+          return (
+            <li
+              key={step.id}
+              data-status={stepStatus}
+              aria-current={isCurrent(step) ? "step" : undefined}
+              className={styles.step}
+            >
+              <div className={styles.icon} aria-hidden="true">
+                {stepStatus === CHECKOUT_STEP_STATUS.COMPLETE ? (
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    viewBox="0 0 24 24"
+                  >
+                    <path fill="none" stroke="none" d="M0 0h24v24H0z" />
+                    <path d="m5 12 5 5L20 7" />
+                  </svg>
+                ) : (
+                  index + 1
+                )}
+              </div>
+
+              <span className={styles.label}>{step.label}</span>
+            </li>
+          );
+        })}
+      </ol>
+    </nav>
+  );
+}
