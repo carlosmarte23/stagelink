@@ -87,17 +87,3 @@ function isValidEventCartItem(eventCartItem) {
 
   return true;
 }
-
-// Event cart item:
-// - `eventId`
-// - `selectedTickets`
-// - `subtotal`
-// - `serviceFee`
-// - `total`
-// - `addedAt`
-
-// Selected ticket []:
-// - `tierId`
-// - `quantity`
-// - `unitPrice`
-// - `lineTotal`
