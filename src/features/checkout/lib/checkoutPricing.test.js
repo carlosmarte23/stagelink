@@ -6,6 +6,7 @@ import {
   calculateServiceFees,
   calculateFacilityCharge,
   calculateCheckoutTotals,
+  calculateEventSubtotal,
 } from "./checkoutPricing";
 
 import {
@@ -146,5 +147,52 @@ describe("checkoutPricing", () => {
       facilityCharge: 0,
       total: 0,
     });
+  });
+
+  it("returns a calculated event subtotal", () => {
+    const cartEventItem = {
+      eventId: "evt_020",
+      eventData: {
+        title: "Summer Rock Fest",
+        startsAt: "2026-06-06T22:00:00Z",
+        timezone: "America/New_York",
+        imageUrl:
+          "https://images.unsplash.com/photo-1760160741849-0809daa8e4c8",
+        genres: ["Rock"],
+        venue: {
+          name: "Starlight Amphitheater",
+          city: "Pittsburgh, PA",
+        },
+      },
+      selectedTickets: [
+        {
+          tierId: "general",
+          quantity: 1,
+          unitPrice: 89,
+          lineTotal: 89,
+          tierData: {
+            name: "General",
+            price: 89,
+            remaining: 276,
+            perOrderLimit: 8,
+          },
+        },
+        {
+          tierId: "vip",
+          quantity: 1,
+          unitPrice: 149,
+          lineTotal: 149,
+          tierData: {
+            name: "VIP",
+            price: 149,
+            remaining: 44,
+            perOrderLimit: 4,
+          },
+        },
+      ],
+      addedAt: "2026-04-19T02:32:37.766Z",
+    };
+
+    expect(calculateEventSubtotal(cartEventItem)).toEqual(238);
   });
 });

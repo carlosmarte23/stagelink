@@ -41,3 +41,9 @@ export function calculateCheckoutTotals(cartItems) {
       calculatedSubtotal + calculatedServiceFees + calculatedFacilityCharge,
   };
 }
+
+export function calculateEventSubtotal(cartItem) {
+  return cartItem.selectedTickets
+    .map((tickets) => tickets.quantity * tickets.unitPrice)
+    .reduce((acc, ticketSubtotal) => acc + ticketSubtotal, 0);
+}
