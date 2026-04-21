@@ -49,14 +49,13 @@ export default function Cart() {
         checkoutSteps={CHECKOUT_STEP_ITEMS}
         activeStep={activeStep}
       />
-      <div className={styles.contentContainer}>
-        <CheckoutReview
-          cartItems={checkoutCartItems}
-          onIncreaseTicket={handleIncreaseTicket}
-          onDecreaseTicket={handleDecreaseTicket}
-          onRemoveTicket={handleRemoveTicket}
-        />
-      </div>
+
+      <CheckoutReview
+        cartItems={checkoutCartItems}
+        onIncreaseTicket={handleIncreaseTicket}
+        onDecreaseTicket={handleDecreaseTicket}
+        onRemoveTicket={handleRemoveTicket}
+      />
     </section>
   );
 }
