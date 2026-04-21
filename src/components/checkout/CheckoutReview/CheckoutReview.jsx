@@ -206,11 +206,11 @@ const CheckoutEventCard = ({
   );
 };
 
-const CheckoutCartSummary = ({ checkoutTotals }) => {
+const CheckoutCartSummary = ({ checkoutTotals, onNextButtonClick }) => {
   const { ticketsQuantity, subtotal, serviceFees, facilityCharge, total } =
     checkoutTotals;
   return (
-    <footer className={styles.footer}>
+    <div className={styles.reviewFooter}>
       <div className={styles.footerHeader}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -260,6 +260,7 @@ const CheckoutCartSummary = ({ checkoutTotals }) => {
       <button
         type="button"
         className={`button button--primary ${styles.nextButton}`}
+        onClick={onNextButtonClick}
       >
         Next: Enter Your Details
         <svg
@@ -279,7 +280,7 @@ const CheckoutCartSummary = ({ checkoutTotals }) => {
           <path d="M15 8l4 4" />
         </svg>
       </button>
-    </footer>
+    </div>
   );
 };
 
@@ -289,24 +290,18 @@ const CheckoutCart = ({
   onDecreaseTicket,
   onRemoveTicket,
 }) => {
-  const checkoutTotals = calculateCheckoutTotals(cartItems);
-
   return (
-    <div>
-      <ol className={styles.checkoutEventList}>
-        {cartItems.map((cartItem) => (
-          <CheckoutEventCard
-            cartItem={cartItem}
-            key={cartItem.eventId}
-            onIncreaseTicket={onIncreaseTicket}
-            onDecreaseTicket={onDecreaseTicket}
-            onRemoveTicket={onRemoveTicket}
-          />
-        ))}
-      </ol>
-
-      <CheckoutCartSummary checkoutTotals={checkoutTotals} />
-    </div>
+    <ol className={styles.checkoutEventList}>
+      {cartItems.map((cartItem) => (
+        <CheckoutEventCard
+          cartItem={cartItem}
+          key={cartItem.eventId}
+          onIncreaseTicket={onIncreaseTicket}
+          onDecreaseTicket={onDecreaseTicket}
+          onRemoveTicket={onRemoveTicket}
+        />
+      ))}
+    </ol>
   );
 };
 
@@ -315,27 +310,43 @@ export default function CheckoutReview({
   onIncreaseTicket,
   onDecreaseTicket,
   onRemoveTicket,
+  onNextButtonClick,
 }) {
   const isCartEmpty = cartItems.length === 0;
+  const checkoutTotals = calculateCheckoutTotals(cartItems);
 
   return (
     <section
       className={styles.checkoutContainer}
       aria-labelledby="checkout-review-title"
     >
-      <h2 id="checkout-review-title" className={styles.title}>
-        Your Cart
-      </h2>
-
       {isCartEmpty ? (
-        <EmptyCart />
+        <div className={styles.reviewCard}>
+          <h2 id="checkout-review-title" className={styles.title}>
+            Your Cart
+          </h2>
+          <EmptyCart />
+        </div>
       ) : (
-        <CheckoutCart
-          cartItems={cartItems}
-          onIncreaseTicket={onIncreaseTicket}
-          onDecreaseTicket={onDecreaseTicket}
-          onRemoveTicket={onRemoveTicket}
-        />
+        <div className={styles.reviewLayout}>
+          <div className={styles.reviewCard}>
+            <h2 id="checkout-review-title" className={styles.title}>
+              Your Cart
+            </h2>
+
+            <CheckoutCart
+              cartItems={cartItems}
+              onIncreaseTicket={onIncreaseTicket}
+              onDecreaseTicket={onDecreaseTicket}
+              onRemoveTicket={onRemoveTicket}
+            />
+          </div>
+
+          <CheckoutCartSummary
+            checkoutTotals={checkoutTotals}
+            onNextButtonClick={onNextButtonClick}
+          />
+        </div>
       )}
     </section>
   );

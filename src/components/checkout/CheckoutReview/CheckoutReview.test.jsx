@@ -2,8 +2,6 @@ import { render, screen, within } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { describe, expect, it } from "vitest";
 
-import { FACILITY_FEE_PER_ORDER } from "../../../features/checkout/config/checkoutConfig";
-
 import CheckoutReview from "./CheckoutReview.jsx";
 
 const mockCartItems = [
@@ -227,13 +225,19 @@ describe("CheckoutReview", () => {
     renderCheckoutReview();
 
     expect(
-      screen.getByLabelText(/quantity of general tickets for country road live/i),
+      screen.getByLabelText(
+        /quantity of general tickets for country road live/i,
+      ),
     ).toHaveTextContent("2");
     expect(
-      screen.getByLabelText(/quantity of general tickets for indie night: new sounds/i),
+      screen.getByLabelText(
+        /quantity of general tickets for indie night: new sounds/i,
+      ),
     ).toHaveTextContent("1");
     expect(
-      screen.getByLabelText(/quantity of general tickets for summer rock fest/i),
+      screen.getByLabelText(
+        /quantity of general tickets for summer rock fest/i,
+      ),
     ).toHaveTextContent("1");
     expect(
       screen.getByLabelText(/quantity of vip tickets for summer rock fest/i),
@@ -290,17 +294,23 @@ describe("CheckoutReview", () => {
   it("renders checkout totals calculated from the selected tickets", () => {
     renderCheckoutReview();
 
-    expect(
-      screen.getByText(/subtotal \(5 tickets\):\s*\$401\.00/i),
-    ).toBeInTheDocument();
-
-    expect(screen.getByText(/service fees:\s*\$25\.00/i)).toBeInTheDocument();
+    const summary = screen
+      .getByRole("heading", { name: /order summary/i })
+      .closest("div").parentElement;
 
     expect(
-      screen.getByText(`Facility Fees: $${FACILITY_FEE_PER_ORDER.toFixed(2)}`),
+      within(summary).getByText(/subtotal \(5 tickets\):/i),
     ).toBeInTheDocument();
+    expect(within(summary).getByText("$401.00")).toBeInTheDocument();
 
-    expect(screen.getByText(/total:\s*\$441\.00/i)).toBeInTheDocument();
+    expect(within(summary).getByText(/service fees:/i)).toBeInTheDocument();
+    expect(within(summary).getByText("$25.00")).toBeInTheDocument();
+
+    expect(within(summary).getByText(/facility fees:/i)).toBeInTheDocument();
+    expect(within(summary).getByText("$15.00")).toBeInTheDocument();
+
+    expect(within(summary).getByText(/total:/i)).toBeInTheDocument();
+    expect(within(summary).getByText("$441.00")).toBeInTheDocument();
   });
 
   it("does not trust persisted cart totals", () => {
@@ -313,8 +323,12 @@ describe("CheckoutReview", () => {
 
     renderCheckoutReview(cartItemsWithStaleTotals);
 
+    const summary = screen
+      .getByRole("heading", { name: /order summary/i })
+      .closest("div").parentElement;
+
     expect(screen.queryByText(/^\$999\.00$/i)).not.toBeInTheDocument();
-    expect(screen.getByText(/total:\s*\$441\.00/i)).toBeInTheDocument();
+    expect(within(summary).getByText("$441.00")).toBeInTheDocument();
   });
 
   it("renders an empty cart state when there are no cart items", () => {

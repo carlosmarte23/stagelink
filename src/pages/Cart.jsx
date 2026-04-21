@@ -36,6 +36,11 @@ export default function Cart() {
     decreaseCartTicketQuantity(eventId, tierId);
     setCheckoutCartItems(() => getCheckoutCart());
   }
+
+  function handleNextStepClick() {
+    // TODO: Advance to the details step in the next checkout stage.
+  }
+
   return (
     <section className={styles.page} aria-labelledby="checkout-title">
       <header className={styles.header}>
@@ -49,13 +54,15 @@ export default function Cart() {
         checkoutSteps={CHECKOUT_STEP_ITEMS}
         activeStep={activeStep}
       />
-
-      <CheckoutReview
-        cartItems={checkoutCartItems}
-        onIncreaseTicket={handleIncreaseTicket}
-        onDecreaseTicket={handleDecreaseTicket}
-        onRemoveTicket={handleRemoveTicket}
-      />
+      <div className={styles.stepContainer}>
+        <CheckoutReview
+          cartItems={checkoutCartItems}
+          onIncreaseTicket={handleIncreaseTicket}
+          onDecreaseTicket={handleDecreaseTicket}
+          onRemoveTicket={handleRemoveTicket}
+          onNextButtonClick={handleNextStepClick}
+        />
+      </div>
     </section>
   );
 }

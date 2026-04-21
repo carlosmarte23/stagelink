@@ -1,293 +1,415 @@
 .checkoutContainer {
   margin-bottom: 2rem;
-  display: grid;
-  gap: 1rem;
-  background-color: var(--surface-1);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-xl);
-  padding: 2rem 1.5rem;
-  background-color: var(--surface-2);
 
-  .title {
-    position: relative;
-    width: fit-content;
-    margin: 0;
-    font-size: 1.825rem;
-    font-weight: 700;
-    line-height: 1.25;
-    color: var(--text-strong);
-    margin-bottom: 0.5rem;
-  }
+  .reviewLayout {
+    .reviewCard,
+    .reviewFooter {
+      background-color: var(--surface-2);
+      border: 1px solid var(--border);
+      padding: 2rem 1.5rem;
+    }
 
-  .checkoutEventList {
-    display: grid;
-    gap: 1.5rem;
-
-    .checkoutEvent {
+    .reviewCard {
+      border-bottom: 3px solid var(--border);
       display: grid;
       gap: 1rem;
-      padding-bottom: 1rem;
-      border-bottom: 4px solid var(--border);
 
-      .checkoutEventHeader {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        gap: 1rem;
-        border-bottom: 1px solid var(--border);
-        padding-bottom: 1rem;
-
-        .eventImage {
-          flex-shrink: 0;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 5rem;
-          height: 5rem;
-          border-radius: var(--radius-lg);
-          background-color: var(--surface-2);
-          object-fit: cover;
-
-          & img {
-            width: 100%;
-            height: 100%;
-            border-radius: var(--radius-lg);
-          }
-        }
-
-        .eventInfo {
-          display: flex;
-          flex-direction: column;
-          gap: 0.25rem;
-
-          .eventGenres {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            gap: 0.25rem;
-
-            .eventGenreBadge {
-              display: inline-flex;
-              align-items: center;
-              padding: 0.2rem 0.55rem;
-              border-radius: 999px;
-              background: rgb(var(--purple) / 0.16);
-              color: rgb(var(--purple) / 0.95);
-              font-size: 0.75rem;
-              font-weight: 700;
-              line-height: 1;
-              border: 1px solid rgb(var(--purple) / 0.28);
-            }
-          }
-
-          .eventTitle {
-            margin: 0;
-            font-size: 1.25rem;
-            color: var(--text-strong);
-            line-height: 1.25;
-          }
-
-          .eventDate,
-          .eventVenue {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            gap: 0.25rem;
-            margin: 0;
-            color: var(--text-muted);
-            font-size: 0.875rem;
-            line-height: 1.25;
-          }
-        }
+      .title {
+        position: relative;
+        width: fit-content;
+        margin: 0;
+        font-size: 1.825rem;
+        font-weight: 700;
+        line-height: 1.25;
+        color: var(--text-strong);
       }
 
-      .ticketList {
+      .checkoutEventList {
         display: grid;
         gap: 1.5rem;
+        border-block-end: 0;
+        border-radius: var(--radius-xl) var(--radius-xl) 0 0;
 
-        .ticketListItem {
-          display: flex;
-          flex-direction: column;
+        .checkoutEvent {
+          display: grid;
           gap: 1rem;
+          padding-bottom: 1rem;
+          border-bottom: 4px solid var(--border);
 
-          .ticketInfo {
-            display: flex;
-            flex-direction: column;
-
-            gap: 0.15rem;
-            align-self: flex-start;
-            .ticketName {
-              margin: 0;
-              font-size: 1rem;
-              font-weight: 700;
-              color: var(--text-strong);
-              line-height: 1.25;
-            }
-            .ticketPrice {
-              margin: 0;
-              color: var(--text-muted);
-              font-size: 0.875rem;
-              line-height: 1.25;
-            }
+          &:last-of-type {
+            border-bottom: 0;
           }
 
-          .ticketControls {
-            display: grid;
-            grid-template-columns: 2fr 1fr auto;
+          .checkoutEventHeader {
+            display: flex;
+            flex-direction: row;
             align-items: center;
-            gap: 0.5rem;
+            gap: 1rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1rem;
 
-            .buttonControls {
-              background-color: var(--surface-1);
-              border-radius: var(--radius-lg);
-              display: inline-flex;
+            .eventImage {
+              flex-shrink: 0;
+              display: flex;
               align-items: center;
-              justify-content: space-between;
-              width: fit-content;
-              align-self: flex-start;
-              gap: 1.5rem;
-              padding: 0rem 0.5rem;
+              justify-content: center;
+              width: 5rem;
+              height: 5rem;
+              border-radius: var(--radius-lg);
+              background-color: var(--surface-2);
+              object-fit: cover;
 
-              & button {
-                appearance: none;
-                border: none;
+              & img {
+                width: 100%;
+                height: 100%;
                 border-radius: var(--radius-lg);
-                padding: 0.75rem;
-                background-color: inherit;
-                color: var(--text-strong);
-                font-size: 0.875rem;
-                line-height: 1.25rem;
-                width: 2rem;
-                cursor: pointer;
               }
             }
 
-            .ticketSubtotal {
+            .eventInfo {
+              display: flex;
+              flex-direction: column;
+              gap: 0.25rem;
+
+              .eventGenres {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: 0.25rem;
+
+                .eventGenreBadge {
+                  display: inline-flex;
+                  align-items: center;
+                  padding: 0.2rem 0.55rem;
+                  border-radius: 999px;
+                  background: rgb(var(--purple) / 0.16);
+                  color: rgb(var(--purple) / 0.95);
+                  font-size: 0.75rem;
+                  font-weight: 700;
+                  line-height: 1;
+                  border: 1px solid rgb(var(--purple) / 0.28);
+                }
+              }
+
+              .eventTitle {
+                margin: 0;
+                font-size: 1.25rem;
+                color: var(--text-strong);
+                line-height: 1.25;
+              }
+
+              .eventDate,
+              .eventVenue {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: 0.25rem;
+                margin: 0;
+                color: var(--text-muted);
+                font-size: 0.875rem;
+                line-height: 1.25;
+              }
+            }
+          }
+
+          .ticketList {
+            display: grid;
+            gap: 1.5rem;
+
+            .ticketListItem {
+              display: flex;
+              flex-direction: column;
+              gap: 1rem;
+
+              .ticketInfo {
+                display: flex;
+                flex-direction: column;
+
+                gap: 0.15rem;
+                align-self: flex-start;
+                .ticketName {
+                  margin: 0;
+                  font-size: 1rem;
+                  font-weight: 700;
+                  color: var(--text-strong);
+                  line-height: 1.25;
+                }
+                .ticketPrice {
+                  margin: 0;
+                  color: var(--text-muted);
+                  font-size: 0.875rem;
+                  line-height: 1.25;
+                }
+              }
+
+              .ticketControls {
+                display: grid;
+                grid-template-columns: 2fr auto auto;
+                align-items: center;
+                gap: 0.5rem;
+
+                .buttonControls {
+                  background-color: var(--surface-1);
+                  border-radius: var(--radius-lg);
+                  display: inline-flex;
+                  align-items: center;
+                  justify-content: space-between;
+                  width: fit-content;
+                  align-self: flex-start;
+                  gap: 1.5rem;
+                  padding: 0rem 0.5rem;
+
+                  & button {
+                    appearance: none;
+                    border: none;
+                    border-radius: var(--radius-lg);
+                    padding: 0.75rem;
+                    background-color: inherit;
+                    color: var(--text-strong);
+                    font-size: 0.875rem;
+                    line-height: 1.25rem;
+                    width: 2rem;
+                    cursor: pointer;
+                  }
+                }
+
+                .ticketSubtotal {
+                  margin: 0;
+                  color: var(--text-strong);
+                  font-size: 1rem;
+                  line-height: 1.25;
+                  font-weight: 700;
+                  justify-self: center;
+                }
+
+                .removeButton {
+                  appearance: none;
+                  border: none;
+                  display: inline-flex;
+                  align-items: center;
+                  justify-content: center;
+                  min-inline-size: 2.875rem;
+                  min-block-size: 2.875rem;
+                  justify-self: flex-end;
+                  border-radius: var(--radius-lg);
+                  padding: 0.45rem;
+                  background-color: inherit;
+                  color: var(--text-muted);
+                  line-height: 1.25rem;
+                  cursor: pointer;
+
+                  svg {
+                    inline-size: 1.5rem;
+                    block-size: 1.5rem;
+                  }
+
+                  &:hover,
+                  &:focus-visible {
+                    color: var(--error);
+                  }
+                }
+              }
+            }
+          }
+
+          .eventSubtotal {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--surface-3);
+            border-radius: var(--radius-lg);
+            padding: 1rem;
+
+            .label {
               margin: 0;
-              color: var(--text-strong);
+              color: var(--text);
               font-size: 1rem;
               line-height: 1.25;
-              font-weight: 700;
-              justify-self: center;
             }
 
-            .removeButton {
-              appearance: none;
-              border: none;
-              width: fit-content;
-              justify-self: flex-end;
-              border-radius: var(--radius-lg);
-              padding: 0.75rem;
-              background-color: inherit;
-              color: var(--text-muted);
-              font-size: 0.875rem;
-              line-height: 1.25rem;
-              cursor: pointer;
+            .value {
+              margin: 0;
+              color: var(--text-strong);
+              font-size: 1.25rem;
+              line-height: 1.25;
+              font-weight: 700;
             }
           }
         }
       }
+    }
 
-      .eventSubtotal {
+    .reviewFooter {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.75rem;
+      border-block-start: 0;
+      border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+
+      .footerHeader {
         display: flex;
         flex-direction: row;
         align-items: center;
-        justify-content: space-between;
-        background-color: var(--surface-3);
-        border-radius: var(--radius-lg);
-        padding: 1rem;
+        gap: 0.5rem;
 
-        .label {
-          margin: 0;
-          color: var(--text);
-          font-size: 1rem;
-          line-height: 1.25;
+        .footerIcon {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 2rem;
+          height: 2rem;
+          border-radius: var(--radius-lg);
+          background-color: var(--surface-2);
+          color: var(--primary);
         }
 
-        .value {
+        .footerTitle {
           margin: 0;
           color: var(--text-strong);
-          font-size: 1.25rem;
-          line-height: 1.25;
-          font-weight: 700;
-        }
-      }
-    }
-  }
-
-  .footer {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.75rem;
-    margin-top: 2rem;
-
-    .footerHeader {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      gap: 0.5rem;
-
-      .footerIcon {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 2rem;
-        height: 2rem;
-        border-radius: var(--radius-lg);
-        background-color: var(--surface-2);
-        color: var(--primary);
-      }
-
-      .footerTitle {
-        margin: 0;
-        color: var(--text-strong);
-        font-size: 1.5rem;
-        font-weight: 700;
-        line-height: 1.25rem;
-      }
-    }
-
-    .entry {
-      display: flex;
-      width: 100%;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      gap: 0.5rem;
-
-      &:last-of-type {
-        border-top: 1px solid var(--border);
-        padding-top: 0.75rem;
-
-        .entryValue {
           font-size: 1.5rem;
           font-weight: 700;
           line-height: 1.25rem;
         }
       }
 
-      .entryLabel {
-        margin: 0;
-        color: var(--text-muted);
-        font-size: 1rem;
-        line-height: 1.25rem;
+      .entry {
+        display: flex;
+        width: 100%;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+        align-items: baseline;
+
+        &:last-of-type {
+          border-top: 1px solid var(--border);
+          padding-top: 0.75rem;
+
+          .entryValue {
+            font-size: 1.5rem;
+            font-weight: 700;
+            line-height: 1.25rem;
+          }
+        }
+
+        .entryLabel {
+          margin: 0;
+          color: var(--text-muted);
+          font-size: 1rem;
+          line-height: 1.25rem;
+          white-space: nowrap;
+        }
+
+        .entryValue {
+          margin: 0;
+          color: var(--text-strong);
+          font-size: 1rem;
+          font-weight: 700;
+          line-height: 1.25rem;
+          white-space: nowrap;
+        }
       }
 
-      .entryValue {
-        margin: 0;
-        color: var(--text-strong);
-        font-size: 1rem;
+      .nextButton {
+        width: 100%;
+        margin-top: 1rem;
+        font-size: 1.125rem;
         font-weight: 700;
-        line-height: 1.25rem;
       }
     }
+  }
+}
 
-    .nextButton {
-      width: 100%;
-      margin-top: 1rem;
-      font-size: 1.125rem;
-      font-weight: 700;
+@media screen and (min-width: 768px) {
+  .checkoutContainer {
+    .reviewLayout {
+      .reviewCard {
+        .title {
+          font-size: 2rem;
+        }
+        .checkoutEventList {
+          .checkoutEvent {
+            .checkoutEventHeader {
+              .eventInfo {
+                .eventTitle {
+                  font-size: 1.5rem;
+                }
+
+                .eventDate,
+                .eventVenue {
+                  font-size: 1rem;
+                }
+              }
+            }
+
+            .ticketList {
+              .ticketListItem {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+
+                .ticketInfo {
+                  gap: 0.5rem;
+                  .ticketName {
+                    font-size: 1.125rem;
+                  }
+                  .ticketPrice {
+                    font-size: 1rem;
+                  }
+                }
+
+                .ticketControls {
+                  .buttonControls {
+                    gap: 1.5rem;
+                    font-size: 1.25rem;
+                    margin-inline-end: 2.5rem;
+                  }
+
+                  .ticketSubtotal {
+                    font-size: 1.25rem;
+                  }
+
+                  .removeButton {
+                    min-inline-size: 3.25rem;
+                    min-block-size: 3.25rem;
+
+                    svg {
+                      inline-size: 2rem;
+                      block-size: 2rem;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .checkoutContainer {
+    .reviewLayout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      align-items: flex-start;
+
+      .reviewCard,
+      .reviewFooter {
+        width: 100%;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-xl);
+      }
+
+      .reviewFooter {
+        position: sticky;
+        top: 5rem;
+      }
     }
   }
 }
