@@ -1,4 +1,5 @@
 import { render, screen, within } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
 import { describe, expect, it } from "vitest";
 
 import { FACILITY_FEE_PER_ORDER } from "../../../features/checkout/config/checkoutConfig";
@@ -8,8 +9,7 @@ import CheckoutReview from "./CheckoutReview.jsx";
 const mockCartItems = [
   {
     eventId: "evt_013",
-    event: {
-      id: "evt_013",
+    eventData: {
       title: "Country Road Live",
       startsAt: "2026-04-24T00:00:00Z",
       timezone: "America/Chicago",
@@ -26,8 +26,7 @@ const mockCartItems = [
         quantity: 2,
         unitPrice: 59,
         lineTotal: 118,
-        tier: {
-          id: "general",
+        tierData: {
           name: "General",
           price: 59,
           remaining: 146,
@@ -35,11 +34,11 @@ const mockCartItems = [
         },
       },
     ],
+    addedAt: "2026-04-19T02:32:10.806Z",
   },
   {
     eventId: "evt_016",
-    event: {
-      id: "evt_016",
+    eventData: {
       title: "Indie Night: New Sounds",
       startsAt: "2026-05-08T00:30:00Z",
       timezone: "America/Los_Angeles",
@@ -56,8 +55,7 @@ const mockCartItems = [
         quantity: 1,
         unitPrice: 45,
         lineTotal: 45,
-        tier: {
-          id: "general",
+        tierData: {
           name: "General",
           price: 45,
           remaining: 102,
@@ -65,11 +63,11 @@ const mockCartItems = [
         },
       },
     ],
+    addedAt: "2026-04-19T02:32:24.025Z",
   },
   {
     eventId: "evt_020",
-    event: {
-      id: "evt_020",
+    eventData: {
       title: "Summer Rock Fest",
       startsAt: "2026-06-06T22:00:00Z",
       timezone: "America/New_York",
@@ -86,8 +84,7 @@ const mockCartItems = [
         quantity: 1,
         unitPrice: 89,
         lineTotal: 89,
-        tier: {
-          id: "general",
+        tierData: {
           name: "General",
           price: 89,
           remaining: 276,
@@ -99,8 +96,7 @@ const mockCartItems = [
         quantity: 1,
         unitPrice: 149,
         lineTotal: 149,
-        tier: {
-          id: "vip",
+        tierData: {
           name: "VIP",
           price: 149,
           remaining: 44,
@@ -108,17 +104,30 @@ const mockCartItems = [
         },
       },
     ],
+    addedAt: "2026-04-19T02:32:37.766Z",
   },
 ];
 
+function renderCheckoutReview(cartItems = mockCartItems) {
+  render(
+    <MemoryRouter>
+      <CheckoutReview cartItems={cartItems} />
+    </MemoryRouter>,
+  );
+}
+
 function renderReview() {
-  render(<CheckoutReview cartItems={mockCartItems} />);
+  renderCheckoutReview();
 
   return screen.getByRole("region", { name: /your cart/i });
 }
 
 function getEventItem(eventName) {
   return screen.getByText(eventName).closest("li");
+}
+
+function getTicketItem(eventItem, tierName) {
+  return within(eventItem).getByText(tierName).closest("li");
 }
 
 describe("CheckoutReview", () => {
@@ -135,7 +144,7 @@ describe("CheckoutReview", () => {
   });
 
   it("renders event details for each cart item", () => {
-    render(<CheckoutReview cartItems={mockCartItems} />);
+    renderCheckoutReview();
 
     expect(screen.getByText(/country road live/i)).toBeInTheDocument();
     expect(screen.getByText(/skyline pavilion/i)).toBeInTheDocument();
@@ -151,7 +160,7 @@ describe("CheckoutReview", () => {
   });
 
   it("renders event media and genre metadata from the enriched event shape", () => {
-    render(<CheckoutReview cartItems={mockCartItems} />);
+    renderCheckoutReview();
 
     expect(
       screen.getByRole("img", { name: /country road live/i }),
@@ -169,60 +178,70 @@ describe("CheckoutReview", () => {
   });
 
   it("renders selected ticket tiers for each event", () => {
-    render(<CheckoutReview cartItems={mockCartItems} />);
+    renderCheckoutReview();
 
     expect(screen.getAllByText(/^general$/i)).toHaveLength(3);
     expect(screen.getByText(/^vip$/i)).toBeInTheDocument();
-
-    expect(screen.getByText(/2 tickets/i)).toBeInTheDocument();
-    expect(screen.getAllByText(/1 ticket/i)).toHaveLength(3);
   });
 
   it("renders unit prices and line totals from selected tickets", () => {
-    render(<CheckoutReview cartItems={mockCartItems} />);
+    renderCheckoutReview();
 
     const countryRoadItem = getEventItem(/country road live/i);
     const indieNightItem = getEventItem(/indie night: new sounds/i);
     const summerRockItem = getEventItem(/summer rock fest/i);
+    const countryGeneralTicket = getTicketItem(countryRoadItem, /^general$/i);
+    const indieGeneralTicket = getTicketItem(indieNightItem, /^general$/i);
+    const summerGeneralTicket = getTicketItem(summerRockItem, /^general$/i);
+    const summerVipTicket = getTicketItem(summerRockItem, /^vip$/i);
 
     expect(
-      within(countryRoadItem).getByText(/^\$59\.00 each$/i),
+      within(countryGeneralTicket).getByText(/^\$59\.00 each$/i),
     ).toBeInTheDocument();
     expect(
-      within(countryRoadItem).getByText(/^\$118\.00$/i),
+      within(countryGeneralTicket).getByText(/^\$118\.00$/i),
     ).toBeInTheDocument();
 
     expect(
-      within(indieNightItem).getByText(/^\$45\.00 each$/i),
+      within(indieGeneralTicket).getByText(/^\$45\.00 each$/i),
     ).toBeInTheDocument();
-    expect(within(indieNightItem).getByText(/^\$45\.00$/i)).toBeInTheDocument();
+    expect(
+      within(indieGeneralTicket).getByText(/^\$45\.00$/i),
+    ).toBeInTheDocument();
 
     expect(
-      within(summerRockItem).getByText(/^\$89\.00 each$/i),
-    ).toBeInTheDocument();
-    expect(within(summerRockItem).getByText(/^\$89\.00$/i)).toBeInTheDocument();
-    expect(
-      within(summerRockItem).getByText(/^\$149\.00 each$/i),
+      within(summerGeneralTicket).getByText(/^\$89\.00 each$/i),
     ).toBeInTheDocument();
     expect(
-      within(summerRockItem).getByText(/^\$149\.00$/i),
+      within(summerGeneralTicket).getByText(/^\$89\.00$/i),
+    ).toBeInTheDocument();
+    expect(
+      within(summerVipTicket).getByText(/^\$149\.00 each$/i),
+    ).toBeInTheDocument();
+    expect(
+      within(summerVipTicket).getByText(/^\$149\.00$/i),
     ).toBeInTheDocument();
   });
 
   it("renders the correct ticket quantity for each event", () => {
-    render(<CheckoutReview cartItems={mockCartItems} />);
+    renderCheckoutReview();
 
-    const countryRoadItem = getEventItem(/country road live/i);
-    const indieNightItem = getEventItem(/indie night: new sounds/i);
-    const summerRockItem = getEventItem(/summer rock fest/i);
-
-    expect(within(countryRoadItem).getByText(/2 tickets/i)).toBeInTheDocument();
-    expect(within(indieNightItem).getByText(/1 ticket/i)).toBeInTheDocument();
-    expect(within(summerRockItem).getAllByText(/1 ticket/i)).toHaveLength(2);
+    expect(
+      screen.getByLabelText(/quantity of general tickets for country road live/i),
+    ).toHaveTextContent("2");
+    expect(
+      screen.getByLabelText(/quantity of general tickets for indie night: new sounds/i),
+    ).toHaveTextContent("1");
+    expect(
+      screen.getByLabelText(/quantity of general tickets for summer rock fest/i),
+    ).toHaveTextContent("1");
+    expect(
+      screen.getByLabelText(/quantity of vip tickets for summer rock fest/i),
+    ).toHaveTextContent("1");
   });
 
   it("renders quantity controls for every selected ticket tier", () => {
-    render(<CheckoutReview cartItems={mockCartItems} />);
+    renderCheckoutReview();
 
     expect(
       screen.getByRole("button", {
@@ -269,21 +288,19 @@ describe("CheckoutReview", () => {
   });
 
   it("renders checkout totals calculated from the selected tickets", () => {
-    render(<CheckoutReview cartItems={mockCartItems} />);
+    renderCheckoutReview();
 
-    expect(screen.getByText(/subtotal \(5 tickets\)/i)).toBeInTheDocument();
-    expect(screen.getByText(/^\$401\.00$/i)).toBeInTheDocument();
-
-    expect(screen.getByText(/service fees/i)).toBeInTheDocument();
-    expect(screen.getByText(/^\$25\.00$/i)).toBeInTheDocument();
-
-    expect(screen.getByText(/facility charge/i)).toBeInTheDocument();
     expect(
-      screen.getByText(`$${FACILITY_FEE_PER_ORDER.toFixed(2)}`),
+      screen.getByText(/subtotal \(5 tickets\):\s*\$401\.00/i),
     ).toBeInTheDocument();
 
-    expect(screen.getByText(/^total$/i)).toBeInTheDocument();
-    expect(screen.getByText(/^\$441\.00$/i)).toBeInTheDocument();
+    expect(screen.getByText(/service fees:\s*\$25\.00/i)).toBeInTheDocument();
+
+    expect(
+      screen.getByText(`Facility Fees: $${FACILITY_FEE_PER_ORDER.toFixed(2)}`),
+    ).toBeInTheDocument();
+
+    expect(screen.getByText(/total:\s*\$441\.00/i)).toBeInTheDocument();
   });
 
   it("does not trust persisted cart totals", () => {
@@ -294,14 +311,14 @@ describe("CheckoutReview", () => {
       total: 999,
     }));
 
-    render(<CheckoutReview cartItems={cartItemsWithStaleTotals} />);
+    renderCheckoutReview(cartItemsWithStaleTotals);
 
     expect(screen.queryByText(/^\$999\.00$/i)).not.toBeInTheDocument();
-    expect(screen.getByText(/^\$441\.00$/i)).toBeInTheDocument();
+    expect(screen.getByText(/total:\s*\$441\.00/i)).toBeInTheDocument();
   });
 
   it("renders an empty cart state when there are no cart items", () => {
-    render(<CheckoutReview cartItems={[]} />);
+    renderCheckoutReview([]);
 
     expect(screen.getByText(/your cart is empty/i)).toBeInTheDocument();
     expect(
