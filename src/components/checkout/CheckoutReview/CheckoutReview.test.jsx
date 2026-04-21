@@ -334,7 +334,9 @@ describe("CheckoutReview", () => {
   it("renders an empty cart state when there are no cart items", () => {
     renderCheckoutReview([]);
 
-    expect(screen.getByText(/your cart is empty/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/add some tickets to your cart to view them here/i),
+    ).toBeInTheDocument();
     expect(
       screen.getByRole("link", { name: /browse events/i }),
     ).toHaveAttribute("href", "/events");

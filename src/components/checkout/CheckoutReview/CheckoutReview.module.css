@@ -10,9 +10,17 @@
     }
 
     .reviewCard {
-      border-bottom: 3px solid var(--border);
       display: grid;
       gap: 1rem;
+
+      &[data-cart-state="filled"] {
+        border-bottom-width: 4px;
+      }
+
+      &[data-cart-state="empty"] {
+        border-bottom-width: 1px;
+        border-radius: var(--radius-lg);
+      }
 
       .title {
         position: relative;
@@ -115,6 +123,7 @@
           .ticketList {
             display: grid;
             gap: 1.5rem;
+            margin: 1rem 0;
 
             .ticketListItem {
               display: flex;
@@ -179,7 +188,10 @@
                   font-size: 1rem;
                   line-height: 1.25;
                   font-weight: 700;
-                  justify-self: center;
+                  inline-size: 7ch;
+                  justify-self: end;
+                  text-align: end;
+                  font-variant-numeric: tabular-nums;
                 }
 
                 .removeButton {
@@ -319,6 +331,61 @@
         font-weight: 700;
       }
     }
+
+    .emptyCart {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      padding: 1.5rem;
+      margin: 0 auto;
+      width: 100%;
+      max-width: 28rem;
+
+      border: 0;
+      background-color: transparent;
+
+      .emptyCartIcon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 8rem;
+        height: 8rem;
+        border-radius: var(--radius-full);
+        background-color: var(--primary);
+        color: rgb(var(--purple) / 0.9);
+        border: 1px solid var(--primary);
+        background-color: rgb(var(--purple) / 0.15);
+
+        svg {
+          inline-size: 4rem;
+          block-size: 4rem;
+        }
+      }
+
+      .title {
+        margin: 0;
+        color: var(--text-strong);
+        font-size: 1.5rem;
+        font-weight: 700;
+        line-height: 1.25rem;
+      }
+
+      .description {
+        margin: 0;
+        color: var(--text-muted);
+        font-size: 1rem;
+        line-height: 1.25rem;
+        text-align: center;
+        text-wrap: pretty;
+      }
+
+      .emptyCta {
+        width: 100%;
+        margin-top: 2rem;
+      }
+    }
   }
 }
 
@@ -329,9 +396,20 @@
         .title {
           font-size: 2rem;
         }
+
+        &[data-cart-state="empty"] {
+          max-width: 42rem;
+          margin-inline: auto;
+        }
+
         .checkoutEventList {
           .checkoutEvent {
             .checkoutEventHeader {
+              .eventImage {
+                width: 7rem;
+                height: 7rem;
+              }
+
               .eventInfo {
                 .eventTitle {
                   font-size: 1.5rem;
@@ -346,11 +424,9 @@
 
             .ticketList {
               .ticketListItem {
-                display: flex;
                 flex-direction: row;
-                align-items: center;
+                width: 100%;
                 justify-content: space-between;
-
                 .ticketInfo {
                   gap: 0.5rem;
                   .ticketName {
@@ -365,7 +441,6 @@
                   .buttonControls {
                     gap: 1.5rem;
                     font-size: 1.25rem;
-                    margin-inline-end: 2.5rem;
                   }
 
                   .ticketSubtotal {
@@ -391,7 +466,7 @@
   }
 }
 
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: 1100px) {
   .checkoutContainer {
     .reviewLayout {
       display: grid;
@@ -399,11 +474,54 @@
       gap: 1rem;
       align-items: flex-start;
 
+      &[data-cart-state="empty"] {
+        grid-template-columns: 1fr;
+        margin-top: 1rem;
+      }
+
       .reviewCard,
       .reviewFooter {
         width: 100%;
         border: 1px solid var(--border);
         border-radius: var(--radius-xl);
+      }
+
+      .reviewCard {
+        &[data-cart-state="filled"] {
+          border-bottom-width: 1px;
+        }
+
+        &[data-cart-state="empty"] {
+          max-width: 46rem;
+        }
+
+        .checkoutEventList {
+          .checkoutEvent {
+            .ticketList {
+              .ticketListItem {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+
+                .ticketControls {
+                  grid-template-columns: 8.5rem 7ch 3rem;
+                  column-gap: 1.25rem;
+                  justify-content: end;
+
+                  .buttonControls {
+                    justify-self: end;
+                  }
+
+                  .ticketSubtotal,
+                  .removeButton {
+                    justify-self: end;
+                  }
+                }
+              }
+            }
+          }
+        }
       }
 
       .reviewFooter {

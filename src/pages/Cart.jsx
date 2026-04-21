@@ -22,6 +22,8 @@ export default function Cart() {
 
   const [checkoutCartItems, setCheckoutCartItems] = useState(getCheckoutCart());
 
+  const isCartEmpty = checkoutCartItems.length === 0;
+
   function handleRemoveTicket(eventId, tierId) {
     removeCartTicketTier(eventId, tierId);
     setCheckoutCartItems(() => getCheckoutCart());
@@ -50,10 +52,13 @@ export default function Cart() {
         <p className={styles.description}>{stepMeta.description}</p>
       </header>
 
-      <CheckoutTimeline
-        checkoutSteps={CHECKOUT_STEP_ITEMS}
-        activeStep={activeStep}
-      />
+      {!isCartEmpty && (
+        <CheckoutTimeline
+          checkoutSteps={CHECKOUT_STEP_ITEMS}
+          activeStep={activeStep}
+        />
+      )}
+
       <div className={styles.stepContainer}>
         <CheckoutReview
           cartItems={checkoutCartItems}
