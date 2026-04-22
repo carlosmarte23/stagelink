@@ -1,4 +1,5 @@
 import { CART_STORAGE_KEY } from "../config/cartConfig.js";
+import { calculateCheckoutTotals } from "../../../features/checkout/lib/checkoutPricing.js";
 
 export function getCart() {
   const cart = localStorage.getItem(CART_STORAGE_KEY);
@@ -88,16 +89,115 @@ function isValidEventCartItem(eventCartItem) {
   return true;
 }
 
-// Event cart item:
-// - `eventId`
-// - `selectedTickets`
-// - `subtotal`
-// - `serviceFee`
-// - `total`
-// - `addedAt`
+export function increaseCartTicketQuantity(
+  eventId,
+  tierId,
+  effectiveTierLimit,
+) {
+  return updateCartTicketQuantity(eventId, tierId, 1, effectiveTierLimit);
+}
 
-// Selected ticket []:
-// - `tierId`
-// - `quantity`
-// - `unitPrice`
-// - `lineTotal`
+export function decreaseCartTicketQuantity(eventId, tierId) {
+  return updateCartTicketQuantity(eventId, tierId, -1);
+}
+
+function updateCartTicketQuantity(
+  eventId,
+  tierId,
+  quantity,
+  effectiveTierLimit,
+) {
+  const cart = getCart();
+  const event = findCartItemByEventId(getCart(), eventId);
+
+  if (!event) return cart;
+
+  const hasSelectedTier = event.selectedTickets.some(
+    (ticket) => ticket.tierId === tierId,
+  );
+
+  if (!hasSelectedTier) return cart;
+
+  const updatedTicketTiers = event.selectedTickets.map((ticket) => {
+    if (ticket.tierId !== tierId) return ticket;
+
+    const nextQuantity = ticket.quantity + quantity;
+
+    if (
+      nextQuantity <= 0 ||
+      (effectiveTierLimit && nextQuantity > effectiveTierLimit)
+    ) {
+      return ticket;
+    }
+
+    return {
+      ...ticket,
+      quantity: ticket.quantity + quantity,
+      lineTotal: ticket.unitPrice * (ticket.quantity + quantity),
+    };
+  });
+
+  let updatedEvent = {
+    ...event,
+    selectedTickets: updatedTicketTiers,
+  };
+
+  const { subtotal, serviceFees } = calculateCheckoutTotals([updatedEvent]);
+
+  updatedEvent = {
+    ...updatedEvent,
+    subtotal,
+    serviceFee: serviceFees,
+    total: subtotal + serviceFees,
+  };
+
+  const updatedCart = addEventTicketsToCart(cart, updatedEvent);
+  saveCart(updatedCart);
+
+  return updatedCart;
+}
+
+export function removeCartTicketTier(eventId, tierId) {
+  const cart = getCart();
+  const event = findCartItemByEventId(getCart(), eventId);
+
+  if (!event) return cart;
+
+  const hasSelectedTier = event.selectedTickets.some(
+    (ticket) => ticket.tierId === tierId,
+  );
+
+  if (!hasSelectedTier) return cart;
+
+  const updatedTicketTiers = event.selectedTickets.filter(
+    (ticket) => ticket.tierId !== tierId,
+  );
+
+  if (updatedTicketTiers.length === 0) {
+    const updatedCart = cart.filter((cartItem) => cartItem.eventId !== eventId);
+
+    saveCart(updatedCart);
+
+    return updatedCart;
+  }
+
+  let updatedEvent = {
+    ...event,
+    selectedTickets: updatedTicketTiers,
+  };
+
+  const { subtotal, serviceFees } = calculateCheckoutTotals([updatedEvent]);
+
+  updatedEvent = {
+    ...updatedEvent,
+    subtotal,
+    serviceFee: serviceFees,
+    total: subtotal + serviceFees,
+  };
+
+  const updatedCart = addEventTicketsToCart(cart, updatedEvent);
+
+  saveCart(updatedCart);
+
+  return updatedCart;
+}

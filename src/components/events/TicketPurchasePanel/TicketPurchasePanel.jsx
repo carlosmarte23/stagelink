@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { getEffectiveTierLimit } from "../../../features/events/lib/eventSelectors";
 import { formatCurrency } from "../../../utils/currency.js";
-import { SERVICE_FEE_AMOUNT } from "../../../features/events/config/ticketPurchaseConfig";
+import { SERVICE_FEE_PER_TICKET } from "../../../features/checkout/config/checkoutConfig.js";
 import {
   saveCart,
   getCart,
@@ -105,7 +105,7 @@ export function TicketPurchasePanel({ eventId, ticketTiers }) {
       eventId: eventId,
       selectedTickets: selectedTickets,
       subtotal: subtotal,
-      serviceFee: SERVICE_FEE_AMOUNT,
+      serviceFee: serviceFee,
       total: subtotal + serviceFee,
       addedAt: new Date().toISOString(),
     };
@@ -122,7 +122,7 @@ export function TicketPurchasePanel({ eventId, ticketTiers }) {
     return acc + tier.price * quantity;
   }, 0);
 
-  const serviceFee = totalTicketQuantity === 0 ? 0 : SERVICE_FEE_AMOUNT;
+  const serviceFee = totalTicketQuantity * SERVICE_FEE_PER_TICKET;
   const totalPrice = subtotalPrice + serviceFee;
 
   return (

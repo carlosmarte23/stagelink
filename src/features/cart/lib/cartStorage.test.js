@@ -1,7 +1,15 @@
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { getCart, addEventTicketsToCart, saveCart } from "./cartStorage.js";
+import {
+  getCart,
+  addEventTicketsToCart,
+  saveCart,
+  increaseCartTicketQuantity,
+  decreaseCartTicketQuantity,
+  removeCartTicketTier,
+} from "./cartStorage.js";
 import { CART_STORAGE_KEY } from "../config/cartConfig.js";
+import { SERVICE_FEE_PER_TICKET } from "../../checkout/config/checkoutConfig.js";
 
 const mockEventCartItem = {
   eventId: "evt_001",
@@ -138,5 +146,198 @@ describe("cartStorage", () => {
 
     localStorage.setItem(CART_STORAGE_KEY, JSON.stringify({}));
     expect(getCart()).toEqual([]);
+  });
+
+  describe("updates the cart from checkout", () => {
+    it("increases the selected tier quantity and recalculates the stored cart item", () => {
+      saveCart([mockEventCartItem]);
+
+      const updatedCart = increaseCartTicketQuantity("evt_001", "general");
+      const subtotal = 466;
+      const serviceFee = SERVICE_FEE_PER_TICKET * 4;
+
+      expect(updatedCart).toEqual([
+        {
+          ...mockEventCartItem,
+          selectedTickets: [
+            {
+              tierId: "general",
+              quantity: 3,
+              unitPrice: 79,
+              lineTotal: 237,
+            },
+            {
+              tierId: "meet-greet",
+              quantity: 1,
+              unitPrice: 229,
+              lineTotal: 229,
+            },
+          ],
+          subtotal,
+          serviceFee,
+          total: subtotal + serviceFee,
+        },
+      ]);
+      expect(getCart()).toEqual(updatedCart);
+    });
+
+    it("decreases the selected tier quantity and recalculates the stored cart item", () => {
+      saveCart([mockEventCartItem]);
+
+      const updatedCart = decreaseCartTicketQuantity("evt_001", "general");
+      const subtotal = 308;
+      const serviceFee = SERVICE_FEE_PER_TICKET * 2;
+
+      expect(updatedCart).toEqual([
+        {
+          ...mockEventCartItem,
+          selectedTickets: [
+            {
+              tierId: "general",
+              quantity: 1,
+              unitPrice: 79,
+              lineTotal: 79,
+            },
+            {
+              tierId: "meet-greet",
+              quantity: 1,
+              unitPrice: 229,
+              lineTotal: 229,
+            },
+          ],
+          subtotal,
+          serviceFee,
+          total: subtotal + serviceFee,
+        },
+      ]);
+      expect(getCart()).toEqual(updatedCart);
+    });
+
+    it("does not decrease a selected tier below one ticket", () => {
+      saveCart([anotherEventCartItem]);
+
+      const updatedCart = decreaseCartTicketQuantity("evt_002", "vip");
+
+      expect(updatedCart).toEqual([
+        {
+          ...anotherEventCartItem,
+          selectedTickets: [
+            {
+              tierId: "vip",
+              quantity: 1,
+              unitPrice: 99,
+              lineTotal: 99,
+            },
+          ],
+          subtotal: 99,
+          serviceFee: 5,
+          total: 104,
+        },
+      ]);
+      expect(getCart()).toEqual(updatedCart);
+    });
+
+    it("removes the selected tier and recalculates the event when other tiers remain", () => {
+      saveCart([mockEventCartItem]);
+
+      const updatedCart = removeCartTicketTier("evt_001", "general");
+      const subtotal = 229;
+      const serviceFee = SERVICE_FEE_PER_TICKET * 1;
+
+      expect(updatedCart).toEqual([
+        {
+          ...mockEventCartItem,
+          selectedTickets: [
+            {
+              tierId: "meet-greet",
+              quantity: 1,
+              unitPrice: 229,
+              lineTotal: 229,
+            },
+          ],
+          subtotal,
+          serviceFee,
+          total: subtotal + serviceFee,
+        },
+      ]);
+
+      expect(getCart()).toEqual(updatedCart);
+    });
+
+    it("removes the event when the user removes its last selected tier", () => {
+      saveCart([anotherEventCartItem]);
+
+      const updatedCart = removeCartTicketTier("evt_002", "vip");
+
+      expect(updatedCart).toEqual([]);
+      expect(getCart()).toEqual([]);
+    });
+
+    it("does not modify other events or tiers when updating one selected tier", () => {
+      saveCart([mockEventCartItem, anotherEventCartItem]);
+      const updatedCart = increaseCartTicketQuantity("evt_001", "general");
+
+      expect(updatedCart).toEqual([
+        {
+          ...mockEventCartItem,
+          selectedTickets: [
+            {
+              tierId: "general",
+              quantity: 3,
+              unitPrice: 79,
+              lineTotal: 237,
+            },
+            {
+              tierId: "meet-greet",
+              quantity: 1,
+              unitPrice: 229,
+              lineTotal: 229,
+            },
+          ],
+          subtotal: 466,
+          serviceFee: 20,
+          total: 486,
+        },
+        {
+          eventId: "evt_002",
+          selectedTickets: [
+            {
+              tierId: "vip",
+              quantity: 1,
+              unitPrice: 99,
+              lineTotal: 99,
+            },
+          ],
+          subtotal: 99,
+          serviceFee: 5,
+          total: 104,
+          addedAt: "2026-04-15T18:35:00.000Z",
+        },
+      ]);
+
+      expect(getCart()).toEqual(updatedCart);
+    });
+
+    it("leaves the cart unchanged when the event or tier does not exist", () => {
+      saveCart([mockEventCartItem, anotherEventCartItem]);
+      const updatedCartForMissingEvent = increaseCartTicketQuantity(
+        "evt_003",
+        "general",
+      );
+      const updatedCartForMissingTier = removeCartTicketTier(
+        "evt_001",
+        "missing-tier",
+      );
+
+      expect(updatedCartForMissingEvent).toEqual([
+        mockEventCartItem,
+        anotherEventCartItem,
+      ]);
+      expect(updatedCartForMissingTier).toEqual([
+        mockEventCartItem,
+        anotherEventCartItem,
+      ]);
+      expect(getCart()).toEqual([mockEventCartItem, anotherEventCartItem]);
+    });
   });
 });

@@ -10,7 +10,7 @@ export default function PublicHeader() {
 
   const navItems = [
     { to: "/events", label: "Events" },
-    { to: "/my-tickets", label: "My Tickets" },
+    { to: "/cart", label: "Cart" },
   ];
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);

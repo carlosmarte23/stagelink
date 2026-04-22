@@ -1,0 +1,119 @@
+.timeline {
+  --timeline-icon-size: 3rem;
+  --timeline-line-offset: 2rem;
+
+  width: 100%;
+  padding: 1.5rem 0 2rem;
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(var(--checkout-step-count), minmax(0, 1fr));
+    width: min(100%, 42rem);
+    margin: 0 auto;
+    padding: 0;
+    list-style: none;
+  }
+
+  .step {
+    position: relative;
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.625rem;
+
+    &:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      z-index: 0;
+      top: calc(var(--timeline-icon-size) / 2);
+      right: calc(-50% + var(--timeline-line-offset));
+      left: calc(50% + var(--timeline-line-offset));
+      height: 2px;
+      border-radius: var(--radius-full);
+      background: var(--border);
+      transform: translateY(-50%);
+    }
+
+    &[data-status="complete"] {
+      &::after {
+        background: rgb(var(--purple) / 0.55);
+      }
+
+      .icon {
+        border-color: rgb(var(--purple) / 0.65);
+        background-color: rgb(var(--purple) / 0.12);
+        color: var(--primary);
+      }
+    }
+
+    &[data-status="active"] {
+      .icon {
+        border-color: rgb(var(--purple) / 0.85);
+        background: var(--primary);
+        color: var(--text-strong);
+        transform: translateY(-2px);
+        box-shadow:
+          0 0 0 7px rgb(var(--purple) / 0.1),
+          0 0 20px rgb(var(--purple) / 0.36);
+      }
+
+      .label {
+        color: var(--text-strong);
+        text-shadow: 0 0 14px rgb(var(--purple) / 0.32);
+      }
+    }
+  }
+
+  .icon {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    width: var(--timeline-icon-size);
+    height: var(--timeline-icon-size);
+    place-items: center;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-full);
+    background-color: var(--surface-2);
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    font-weight: 700;
+    line-height: 1;
+    transition:
+      background-color 160ms ease,
+      border-color 160ms ease,
+      color 160ms ease,
+      box-shadow 160ms ease,
+      transform 160ms ease;
+  }
+
+  .label {
+    max-width: 7rem;
+    overflow-wrap: anywhere;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.075rem;
+    line-height: 1.2;
+    text-transform: uppercase;
+    transition:
+      color 160ms ease,
+      text-shadow 160ms ease;
+  }
+}
+
+@media (max-width: 38rem) {
+  .timeline {
+    --timeline-icon-size: 2.5rem;
+    --timeline-line-offset: 1.75rem;
+
+    padding-block: 1.25rem 1.75rem;
+
+    .label {
+      max-width: 5rem;
+      font-size: 0.68rem;
+      letter-spacing: 0.05rem;
+    }
+  }
+}

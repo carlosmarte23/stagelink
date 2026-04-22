@@ -1,0 +1,533 @@
+.checkoutContainer {
+  margin-bottom: 2rem;
+
+  .reviewLayout {
+    .reviewCard,
+    .reviewFooter {
+      background-color: var(--surface-2);
+      border: 1px solid var(--border);
+      padding: 2rem 1.5rem;
+    }
+
+    .reviewCard {
+      display: grid;
+      gap: 1rem;
+
+      &[data-cart-state="filled"] {
+        border-bottom-width: 4px;
+      }
+
+      &[data-cart-state="empty"] {
+        border-bottom-width: 1px;
+        border-radius: var(--radius-lg);
+      }
+
+      .title {
+        position: relative;
+        width: fit-content;
+        margin: 0;
+        font-size: 1.825rem;
+        font-weight: 700;
+        line-height: 1.25;
+        color: var(--text-strong);
+      }
+
+      .checkoutEventList {
+        display: grid;
+        gap: 1.5rem;
+        border-block-end: 0;
+        border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+
+        .checkoutEvent {
+          display: grid;
+          gap: 1rem;
+          padding-bottom: 1rem;
+          border-bottom: 4px solid var(--border);
+
+          &:last-of-type {
+            border-bottom: 0;
+          }
+
+          .checkoutEventHeader {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 1rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1rem;
+
+            .eventImage {
+              flex-shrink: 0;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              width: 5rem;
+              height: 5rem;
+              border-radius: var(--radius-lg);
+              background-color: var(--surface-2);
+              object-fit: cover;
+
+              & img {
+                width: 100%;
+                height: 100%;
+                border-radius: var(--radius-lg);
+              }
+            }
+
+            .eventInfo {
+              display: flex;
+              flex-direction: column;
+              gap: 0.25rem;
+
+              .eventGenres {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: 0.25rem;
+
+                .eventGenreBadge {
+                  display: inline-flex;
+                  align-items: center;
+                  padding: 0.2rem 0.55rem;
+                  border-radius: 999px;
+                  background: rgb(var(--purple) / 0.16);
+                  color: rgb(var(--purple) / 0.95);
+                  font-size: 0.75rem;
+                  font-weight: 700;
+                  line-height: 1;
+                  border: 1px solid rgb(var(--purple) / 0.28);
+                }
+              }
+
+              .eventTitle {
+                margin: 0;
+                font-size: 1.25rem;
+                color: var(--text-strong);
+                line-height: 1.25;
+              }
+
+              .eventDate,
+              .eventVenue {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: 0.25rem;
+                margin: 0;
+                color: var(--text-muted);
+                font-size: 0.875rem;
+                line-height: 1.25;
+              }
+            }
+          }
+
+          .ticketList {
+            display: grid;
+            gap: 1.5rem;
+            margin: 1rem 0;
+
+            .ticketListItem {
+              display: flex;
+              flex-direction: column;
+              gap: 1rem;
+
+              .ticketInfo {
+                display: flex;
+                flex-direction: column;
+
+                gap: 0.15rem;
+                align-self: flex-start;
+                .ticketName {
+                  margin: 0;
+                  font-size: 1rem;
+                  font-weight: 700;
+                  color: var(--text-strong);
+                  line-height: 1.25;
+                }
+                .ticketPrice {
+                  margin: 0;
+                  color: var(--text-muted);
+                  font-size: 0.875rem;
+                  line-height: 1.25;
+                }
+              }
+
+              .ticketControls {
+                display: grid;
+                grid-template-columns: 2fr auto auto;
+                align-items: center;
+                gap: 0.5rem;
+
+                .buttonControls {
+                  background-color: var(--surface-1);
+                  border-radius: var(--radius-lg);
+                  display: inline-flex;
+                  align-items: center;
+                  justify-content: space-between;
+                  width: fit-content;
+                  align-self: flex-start;
+                  gap: 1.5rem;
+                  padding: 0rem 0.5rem;
+
+                  & button {
+                    appearance: none;
+                    border: none;
+                    border-radius: var(--radius-lg);
+                    padding: 0.75rem;
+                    background-color: inherit;
+                    color: var(--text-strong);
+                    font-size: 0.875rem;
+                    line-height: 1.25rem;
+                    width: 2rem;
+                    cursor: pointer;
+                  }
+                }
+
+                .ticketSubtotal {
+                  margin: 0;
+                  color: var(--text-strong);
+                  font-size: 1rem;
+                  line-height: 1.25;
+                  font-weight: 700;
+                  inline-size: 7ch;
+                  justify-self: end;
+                  text-align: end;
+                  font-variant-numeric: tabular-nums;
+                }
+
+                .removeButton {
+                  appearance: none;
+                  border: none;
+                  display: inline-flex;
+                  align-items: center;
+                  justify-content: center;
+                  min-inline-size: 2.875rem;
+                  min-block-size: 2.875rem;
+                  justify-self: flex-end;
+                  border-radius: var(--radius-lg);
+                  padding: 0.45rem;
+                  background-color: inherit;
+                  color: var(--text-muted);
+                  line-height: 1.25rem;
+                  cursor: pointer;
+
+                  svg {
+                    inline-size: 1.5rem;
+                    block-size: 1.5rem;
+                  }
+
+                  &:hover,
+                  &:focus-visible {
+                    color: var(--error);
+                  }
+                }
+              }
+            }
+          }
+
+          .eventSubtotal {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--surface-3);
+            border-radius: var(--radius-lg);
+            padding: 1rem;
+
+            .label {
+              margin: 0;
+              color: var(--text);
+              font-size: 1rem;
+              line-height: 1.25;
+            }
+
+            .value {
+              margin: 0;
+              color: var(--text-strong);
+              font-size: 1.25rem;
+              line-height: 1.25;
+              font-weight: 700;
+            }
+          }
+        }
+      }
+    }
+
+    .reviewFooter {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.75rem;
+      border-block-start: 0;
+      border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+
+      .footerHeader {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.5rem;
+
+        .footerIcon {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 2rem;
+          height: 2rem;
+          border-radius: var(--radius-lg);
+          background-color: var(--surface-2);
+          color: var(--primary);
+        }
+
+        .footerTitle {
+          margin: 0;
+          color: var(--text-strong);
+          font-size: 1.5rem;
+          font-weight: 700;
+          line-height: 1.25rem;
+        }
+      }
+
+      .entry {
+        display: flex;
+        width: 100%;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+        align-items: baseline;
+
+        &:last-of-type {
+          border-top: 1px solid var(--border);
+          padding-top: 0.75rem;
+
+          .entryValue {
+            font-size: 1.5rem;
+            font-weight: 700;
+            line-height: 1.25rem;
+          }
+        }
+
+        .entryLabel {
+          margin: 0;
+          color: var(--text-muted);
+          font-size: 1rem;
+          line-height: 1.25rem;
+          white-space: nowrap;
+        }
+
+        .entryValue {
+          margin: 0;
+          color: var(--text-strong);
+          font-size: 1rem;
+          font-weight: 700;
+          line-height: 1.25rem;
+          white-space: nowrap;
+        }
+      }
+
+      .nextButton {
+        width: 100%;
+        margin-top: 1rem;
+        font-size: 1.125rem;
+        font-weight: 700;
+      }
+    }
+
+    .emptyCart {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      padding: 1.5rem;
+      margin: 0 auto;
+      width: 100%;
+      max-width: 28rem;
+
+      border: 0;
+      background-color: transparent;
+
+      .emptyCartIcon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 8rem;
+        height: 8rem;
+        border-radius: var(--radius-full);
+        background-color: var(--primary);
+        color: rgb(var(--purple) / 0.9);
+        border: 1px solid var(--primary);
+        background-color: rgb(var(--purple) / 0.15);
+
+        svg {
+          inline-size: 4rem;
+          block-size: 4rem;
+        }
+      }
+
+      .title {
+        margin: 0;
+        color: var(--text-strong);
+        font-size: 1.5rem;
+        font-weight: 700;
+        line-height: 1.25rem;
+      }
+
+      .description {
+        margin: 0;
+        color: var(--text-muted);
+        font-size: 1rem;
+        line-height: 1.25rem;
+        text-align: center;
+        text-wrap: pretty;
+      }
+
+      .emptyCta {
+        width: 100%;
+        margin-top: 2rem;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .checkoutContainer {
+    .reviewLayout {
+      .reviewCard {
+        .title {
+          font-size: 2rem;
+        }
+
+        &[data-cart-state="empty"] {
+          max-width: 42rem;
+          margin-inline: auto;
+        }
+
+        .checkoutEventList {
+          .checkoutEvent {
+            .checkoutEventHeader {
+              .eventImage {
+                width: 7rem;
+                height: 7rem;
+              }
+
+              .eventInfo {
+                .eventTitle {
+                  font-size: 1.5rem;
+                }
+
+                .eventDate,
+                .eventVenue {
+                  font-size: 1rem;
+                }
+              }
+            }
+
+            .ticketList {
+              .ticketListItem {
+                flex-direction: row;
+                width: 100%;
+                justify-content: space-between;
+                .ticketInfo {
+                  gap: 0.5rem;
+                  .ticketName {
+                    font-size: 1.125rem;
+                  }
+                  .ticketPrice {
+                    font-size: 1rem;
+                  }
+                }
+
+                .ticketControls {
+                  .buttonControls {
+                    gap: 1.5rem;
+                    font-size: 1.25rem;
+                  }
+
+                  .ticketSubtotal {
+                    font-size: 1.25rem;
+                  }
+
+                  .removeButton {
+                    min-inline-size: 3.25rem;
+                    min-block-size: 3.25rem;
+
+                    svg {
+                      inline-size: 2rem;
+                      block-size: 2rem;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1100px) {
+  .checkoutContainer {
+    .reviewLayout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      align-items: flex-start;
+
+      &[data-cart-state="empty"] {
+        grid-template-columns: 1fr;
+        margin-top: 1rem;
+      }
+
+      .reviewCard,
+      .reviewFooter {
+        width: 100%;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-xl);
+      }
+
+      .reviewCard {
+        &[data-cart-state="filled"] {
+          border-bottom-width: 1px;
+        }
+
+        &[data-cart-state="empty"] {
+          max-width: 46rem;
+        }
+
+        .checkoutEventList {
+          .checkoutEvent {
+            .ticketList {
+              .ticketListItem {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+
+                .ticketControls {
+                  grid-template-columns: 8.5rem 7ch 3rem;
+                  column-gap: 1.25rem;
+                  justify-content: end;
+
+                  .buttonControls {
+                    justify-self: end;
+                  }
+
+                  .ticketSubtotal,
+                  .removeButton {
+                    justify-self: end;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .reviewFooter {
+        position: sticky;
+        top: 5rem;
+      }
+    }
+  }
+}
