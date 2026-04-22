@@ -24,16 +24,18 @@ Completed
 - Canonical event data contract with repository/selectors
 - Event Detail UI with event lookup, responsive detail layout, ticket tiers, sold-out handling, and add-to-cart behavior
 - Local cart storage helpers with tests
+- Checkout Review step with multi-event cart contents, selected tier rows, quantity/removal actions, shared fee model, and recalculated totals
 - Testing foundation with Vitest, React Testing Library, jest-dom, user-event, and jsdom
 - Unit, component, and page-level tests for event logic, date helpers, pagination, newsletter, Home, Events, Event Detail, Ticket Purchase Panel, and cart storage
 
 In progress
 
-- Checkout design definition and `/cart` milestone planning
+- Checkout Details step with guest/contact data collection and step-state progression
 
 Planned
 
-- Checkout implementation
+- Checkout Pay step with frontend-only payment validation
+- Checkout Done step with simulated backend payload, local order/ticket persistence, and cart clearing
 - My Tickets UI
 - Auth UI
 - Admin UI
@@ -141,7 +143,7 @@ Milestone document
 
 - [Event Detail UI](./milestones/MILESTONE_EVENT_DETAIL_UI.md)
 
-### 5. Checkout UI (design-first next)
+### 5. Checkout UI (in progress)
 
 - New Stitch design for a premium single-page checkout
 - Multi-event cart review built around a visual progress timeline
@@ -150,7 +152,10 @@ Milestone document
 - Inline cart totals with subtotal, fees, facility charge, and total
 - Shared per-ticket service fee model for Event Detail and Checkout
 - Facility charge applied once per checkout order
-- Fake buyer/payment details for frontend-only checkout
+- Dedicated checkout state by concern: cart contents, buyer details, and payment details
+- Buyer details collected before payment with required field validation
+- Fake payment details stored only as safe simulated data
+- Backend-like checkout payload assembled at confirmation time, not as a mutable object throughout the flow
 - Local confirmation handoff to My Tickets
 
 Milestone document
