@@ -137,9 +137,13 @@ describe("CheckoutDetails", () => {
 
     expect(onContinue).not.toHaveBeenCalled();
 
-    expect(screen.getByText(/full name is required/i)).toBeInTheDocument();
-    expect(screen.getByText(/email is required/i)).toBeInTheDocument();
-    expect(screen.getByText(/phone number is required/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/please enter your full name/i),
+    ).toBeInTheDocument();
+    expect(screen.getByText(/please enter your email/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/please enter your phone number/i),
+    ).toBeInTheDocument();
   });
 
   it("does not continue when email format is invalid", async () => {
@@ -162,5 +166,21 @@ describe("CheckoutDetails", () => {
     );
 
     expect(onContinue).not.toHaveBeenCalled();
+  });
+
+  it("clears the errors when a field is updated", async () => {
+    const user = userEvent.setup();
+    const onContinue = vi.fn();
+
+    renderCheckoutDetails({ onContinue });
+
+    await user.type(
+      screen.getByLabelText(/primary contact name/i),
+      "Carlos Marte",
+    );
+
+    expect(
+      screen.queryByText(/please enter your full name/i),
+    ).not.toBeInTheDocument();
   });
 });
