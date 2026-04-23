@@ -12,6 +12,7 @@
     .reviewCard {
       display: grid;
       gap: 1rem;
+      border-radius: var(--radius-lg) var(--radius-lg) 0 0;
 
       &[data-cart-state="filled"] {
         border-bottom-width: 4px;
