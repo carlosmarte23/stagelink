@@ -118,20 +118,35 @@ Checkout data should be collected by step and assembled into a backend-like payl
   - `fullName`
   - `email`
   - `phone`
-  - `wantsUpdates`
 - Pay fills a dedicated `paymentDetails` state object with safe simulated data only:
   - payment method
   - card last four digits when the card option is used
   - save-card preference as UI-only data unless scoped later
-- Done assembles the final backend-like checkout payload from the current cart, recalculated totals, `buyerDetails`, `paymentDetails`, and confirmation metadata
+- Done assembles the final confirmed order payload from the current cart, recalculated totals, `buyerDetails`, `paymentDetails`, and confirmation metadata
+
+### Confirmed order payload direction
+
+- The final payload should behave like a confirmed order snapshot, not a lightweight request body
+- Cart items should keep canonical selection identifiers such as `eventId`, `tierId`, and `quantity`
+- The confirmed order can also store pricing snapshot fields such as `unitPrice`, `lineTotal`, and checkout totals so the final purchase can be reconstructed later
+- The final order payload should add order metadata needed for persistence and confirmation flows:
+  - `orderId`
+  - `status`
+  - `createdAt` or `confirmedAt`
+- If My Tickets needs to be reconstructed without depending on the live event repository, the confirmed order should also include the minimum event/tier snapshot needed for display:
+  - event title
+  - event start date/time
+  - venue name and city
+  - ticket tier name
+  - optional image if the final My Tickets presentation depends on it
 
 ### Payload rules
 
-- Do not keep one mutable `checkoutPayload` object throughout the flow
+- Do not keep one mutable `checkoutPayload` object as the source of truth throughout the flow
 - Do not persist buyer details to `localStorage` in Stage 3 unless explicitly scoped later
 - Do not store raw card number, expiry, or CVC in the final payload
-- The simulated backend payload is created when the checkout is confirmed
-- The local order and ticket records are derived from the final confirmation payload
+- The confirmed order payload is created when the checkout is confirmed
+- Local orders and local tickets are derived from the final confirmed order payload
 
 ## Current Foundations
 
@@ -208,7 +223,6 @@ Includes
 - Full name field
 - Email field
 - Phone field
-- Optional updates checkbox
 - Total amount due
 - Back navigation to Review
 - Primary CTA to Pay
@@ -263,13 +277,13 @@ Includes
 - Local order/ticket persistence
 - Purchased cart cleared after success
 - Timeline complete through Done
-- Final backend-like checkout payload assembled from cart, totals, `buyerDetails`, `paymentDetails`, and confirmation metadata
+- Final confirmed order payload assembled from cart, totals, `buyerDetails`, `paymentDetails`, and confirmation metadata
 - Simulated checkout submission before rendering the confirmation state
 
 Acceptance check
 
 - A completed checkout creates local order/ticket records and displays a clear confirmation
-- The confirmation payload contains the information a backend order endpoint would need, without unsafe payment fields
+- The confirmed order payload contains the information needed to reconstruct local orders and My Tickets without unsafe payment fields
 
 ### Stage 6: Responsive Polish + Regression
 
@@ -304,10 +318,10 @@ Required test cases for implementation stages
 - Removing a tier updates storage and totals
 - Removing an event updates storage and totals
 - Details step blocks progression when required guest data is invalid
-- Valid Details step submit stores `buyerDetails` without creating the final checkout payload
+- Valid Details step submit stores `buyerDetails` without creating the final confirmed order payload
 - Pay step blocks completion when fake payment fields are invalid
 - Pay step stores safe simulated `paymentDetails` only
-- Done step assembles the final backend-like checkout payload
+- Done step assembles the final confirmed order payload
 - Successful checkout persists a local order
 - Successful checkout generates one ticket record per purchased ticket
 - Successful checkout clears the purchased cart

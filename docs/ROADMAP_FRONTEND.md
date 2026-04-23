@@ -155,7 +155,8 @@ Milestone document
 - Dedicated checkout state by concern: cart contents, buyer details, and payment details
 - Buyer details collected before payment with required field validation
 - Fake payment details stored only as safe simulated data
-- Backend-like checkout payload assembled at confirmation time, not as a mutable object throughout the flow
+- Confirmed order payload assembled at confirmation time, not as a mutable object throughout the flow
+- Confirmed orders store the minimum pricing and event/tier snapshot data needed to reconstruct local orders and My Tickets
 - Local confirmation handoff to My Tickets
 
 Milestone document
