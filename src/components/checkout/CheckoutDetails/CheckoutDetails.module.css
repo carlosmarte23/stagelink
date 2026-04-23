@@ -1,0 +1,142 @@
+.detailsContainer {
+  .detailsCard {
+    display: grid;
+    gap: 1rem;
+    background-color: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 2rem 1.5rem;
+
+    .title {
+      position: relative;
+      width: fit-content;
+      margin: 0;
+      font-size: 1.825rem;
+      font-weight: 700;
+      line-height: 1.25;
+      color: var(--text-strong);
+    }
+
+    .form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+
+      .formGroupFull {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        width: 100%;
+
+        .label {
+          color: var(--text);
+          font-size: 0.875rem;
+          line-height: 1.25;
+        }
+
+        .input {
+          width: 100%;
+          padding: 0.75rem 1rem;
+          margin: 0;
+          border: 1px solid var(--border);
+          border-radius: var(--radius-lg);
+          background-color: var(--surface-1);
+          color: var(--text);
+          font-size: 0.875rem;
+          line-height: 1.25;
+
+          &[aria-invalid="true"] {
+            border-color: var(--error);
+          }
+        }
+
+        .error {
+          margin: 0;
+          color: var(--error);
+          font-size: 0.875rem;
+          line-height: 1.25;
+          font-weight: 700;
+        }
+      }
+
+      .fieldGrid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1rem;
+
+        .formGroupFull {
+          width: 100%;
+        }
+      }
+
+      .detailsCardFooter {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        .summary {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+          border-top: 2px solid var(--border);
+          padding-block-start: 2rem;
+
+          .summaryLabel {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            line-height: 1.25;
+          }
+
+          .amountDue {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text);
+            font-size: 1.75rem;
+            line-height: 1.25;
+            font-weight: 700;
+          }
+        }
+
+        .formGroupActions {
+          display: flex;
+          flex-direction: column;
+          gap: 0.5rem;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .detailsContainer {
+    .detailsCard {
+      max-width: 800px;
+      margin: 0 auto;
+
+      .form {
+        margin-top: 1.5rem;
+        gap: 2rem;
+
+        .formGroupFull {
+          gap: 1rem;
+        }
+
+        .fieldGrid {
+          grid-template-columns: 1fr 1fr;
+          gap: 1rem;
+        }
+
+        .detailsCardFooter {
+          .formGroupActions {
+            flex-direction: row;
+            justify-content: center;
+            gap: 1rem;
+            margin-block: 2rem 0.5rem;
+          }
+        }
+      }
+    }
+  }
+}

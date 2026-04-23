@@ -88,7 +88,9 @@ export default function CheckoutDetails({
 
         <form className={styles.form} onSubmit={handleSubmit} noValidate>
           <div className={styles.formGroupFull}>
-            <label htmlFor="fullName">Primary Contact Name</label>
+            <label htmlFor="fullName" className={styles.label}>
+              Primary Contact Name
+            </label>
             <input
               id="fullName"
               name="fullName"
@@ -100,6 +102,7 @@ export default function CheckoutDetails({
               }
               aria-invalid={errors.fullName ? "true" : "false"}
               aria-describedby={errors.fullName ? "fullName-error" : undefined}
+              className={styles.input}
             />
             {errors.fullName && (
               <p id="fullName-error" className={styles.error}>
@@ -110,7 +113,9 @@ export default function CheckoutDetails({
 
           <div className={styles.fieldGrid}>
             <div className={styles.formGroupFull}>
-              <label htmlFor="email">Email Address</label>
+              <label htmlFor="email" className={styles.label}>
+                Email Address
+              </label>
               <input
                 id="email"
                 name="email"
@@ -122,6 +127,7 @@ export default function CheckoutDetails({
                 }
                 aria-invalid={errors.email ? "true" : "false"}
                 aria-describedby={errors.email ? "email-error" : undefined}
+                className={styles.input}
               />
               {errors.email && (
                 <p id="email-error" className={styles.error}>
@@ -131,7 +137,9 @@ export default function CheckoutDetails({
             </div>
 
             <div className={styles.formGroupFull}>
-              <label htmlFor="phone">Phone Number</label>
+              <label htmlFor="phone" className={styles.label}>
+                Phone Number
+              </label>
               <input
                 id="phone"
                 name="phone"
@@ -143,6 +151,7 @@ export default function CheckoutDetails({
                 }
                 aria-invalid={errors.phone ? "true" : "false"}
                 aria-describedby={errors.phone ? "phone-error" : undefined}
+                className={styles.input}
               />
               {errors.phone && (
                 <p id="phone-error" className={styles.error}>
@@ -154,11 +163,9 @@ export default function CheckoutDetails({
 
           <div className={styles.detailsCardFooter}>
             <div className={styles.summary}>
-              <p>
-                Total Amount Due:
-                <span className={styles.amountDue}>
-                  {formatCurrency(totalAmountDue)}
-                </span>
+              <p className={styles.summaryLabel}>Total Amount Due:</p>
+              <p className={styles.amountDue}>
+                {formatCurrency(totalAmountDue)}
               </p>
             </div>
             <div className={styles.formGroupActions}>
@@ -167,13 +174,45 @@ export default function CheckoutDetails({
                 className={`button ${styles.buttonPrevious}`}
                 onClick={onBack}
               >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M5 12l14 0" />
+                  <path d="M5 12l4 4" />
+                  <path d="M5 12l4 -4" />
+                </svg>
                 Previous: Review Tickets
               </button>
               <button
                 type="submit"
                 className={`button button--primary ${styles.buttonNext}`}
               >
-                Next: Choose Payment Method
+                Next: Choose Payment Method{" "}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M5 12l14 0" />
+                  <path d="M15 16l4 -4" />
+                  <path d="M15 8l4 4" />
+                </svg>
               </button>
             </div>
           </div>
