@@ -230,7 +230,7 @@ const CheckoutEventCard = ({
   );
 };
 
-const CheckoutCartSummary = ({ checkoutTotals, onNextButtonClick }) => {
+const CheckoutCartSummary = ({ checkoutTotals, onContinue }) => {
   const { ticketsQuantity, subtotal, serviceFees, facilityCharge, total } =
     checkoutTotals;
   return (
@@ -284,7 +284,7 @@ const CheckoutCartSummary = ({ checkoutTotals, onNextButtonClick }) => {
       <button
         type="button"
         className={`button button--primary ${styles.nextButton}`}
-        onClick={onNextButtonClick}
+        onClick={onContinue}
       >
         Next: Enter Your Details
         <svg
@@ -334,7 +334,7 @@ export default function CheckoutReview({
   onIncreaseTicket,
   onDecreaseTicket,
   onRemoveTicket,
-  onNextButtonClick,
+  onContinue,
 }) {
   const isCartEmpty = cartItems.length === 0;
   const cartState = isCartEmpty ? "empty" : "filled";
@@ -366,7 +366,7 @@ export default function CheckoutReview({
 
             <CheckoutCartSummary
               checkoutTotals={checkoutTotals}
-              onNextButtonClick={onNextButtonClick}
+              onContinue={onContinue}
             />
           </>
         )}
