@@ -4,11 +4,15 @@ import CheckoutDetails from "../components/checkout/CheckoutDetails/CheckoutDeta
 import CheckoutTimeline from "../components/checkout/CheckoutTimeline/CheckoutTimeline";
 
 import {
-  CHECKOUT_STEP_ITEMS,
   CHECKOUT_STEPS,
+  CHECKOUT_STEP_ITEMS,
 } from "../features/checkout/config/checkoutStepsConfig";
 import { getCheckoutStepMeta } from "../features/checkout/lib/checkoutSteps";
 import { getCheckoutCart } from "../features/checkout/lib/checkoutCart";
+import {
+  getNextCheckoutStep,
+  getPreviousCheckoutStep,
+} from "../features/checkout/lib/checkoutFlow.js";
 import {
   increaseCartTicketQuantity,
   decreaseCartTicketQuantity,
@@ -48,23 +52,13 @@ export default function Cart() {
     setCheckoutCartItems(() => getCheckoutCart());
   }
 
-  const currentStepIndex = CHECKOUT_STEP_ITEMS.findIndex(
-    (step) => step.id === currentStep,
-  );
-
   function goToNextStep() {
-    if (currentStepIndex < CHECKOUT_STEP_ITEMS.length - 1) {
-      setActiveStep(CHECKOUT_STEP_ITEMS[currentStepIndex + 1].id);
-    }
-
+    setActiveStep((currentStep) => getNextCheckoutStep(currentStep));
     window.scroll({ top: 0, left: 0, behavior: "smooth" });
   }
 
   function goToPreviousStep() {
-    if (currentStepIndex > 0) {
-      setActiveStep(CHECKOUT_STEP_ITEMS[currentStepIndex - 1].id);
-    }
-
+    setActiveStep((currentStep) => getPreviousCheckoutStep(currentStep));
     window.scroll({ top: 0, left: 0, behavior: "smooth" });
   }
 
