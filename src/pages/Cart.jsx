@@ -14,7 +14,7 @@ import {
   decreaseCartTicketQuantity,
   removeCartTicketTier,
 } from "../features/cart/lib/cartStorage.js";
-import { calculateCheckoutTotals } from "../features/checkout/lib/checkoutPricing.js";
+import { calculateCheckoutTotals } from "../features/pricing/lib/ticketPricing.js";
 
 import styles from "./Cart.module.css";
 

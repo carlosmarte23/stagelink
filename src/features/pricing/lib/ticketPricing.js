@@ -1,7 +1,7 @@
 import {
   SERVICE_FEE_PER_TICKET,
   FACILITY_FEE_PER_ORDER,
-} from "../config/checkoutConfig";
+} from "../config/pricingConfig.js";
 
 export function calculateTicketQuantity(selectedTickets) {
   return selectedTickets

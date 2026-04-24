@@ -7,12 +7,12 @@ import {
   calculateFacilityCharge,
   calculateCheckoutTotals,
   calculateEventSubtotal,
-} from "./checkoutPricing";
+} from "./ticketPricing.js";
 
 import {
   SERVICE_FEE_PER_TICKET,
   FACILITY_FEE_PER_ORDER,
-} from "../config/checkoutConfig";
+} from "../config/pricingConfig.js";
 
 const selectedTestTickets = [
   {
@@ -28,7 +28,7 @@ const selectedTestTickets = [
     lineTotal: 80,
   },
 ];
-describe("checkoutPricing", () => {
+describe("ticketPricing", () => {
   it("returns a calculated ticket quantity", () => {
     expect(calculateTicketQuantity(selectedTestTickets)).toBe(3);
   });
