@@ -4,7 +4,7 @@ import { userEvent } from "@testing-library/user-event";
 import { TicketPurchasePanel } from "./TicketPurchasePanel.jsx";
 
 import { formatCurrency } from "../../../utils/currency.js";
-import { SERVICE_FEE_PER_TICKET } from "../../../features/checkout/config/checkoutConfig.js";
+import { SERVICE_FEE_PER_TICKET } from "../../../features/pricing/config/pricingConfig.js";
 import { getCart, saveCart } from "../../../features/cart/lib/cartStorage.js";
 import { CART_STORAGE_KEY } from "../../../features/cart/config/cartConfig.js";
 

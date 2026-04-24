@@ -9,7 +9,7 @@ import {
   removeCartTicketTier,
 } from "./cartStorage.js";
 import { CART_STORAGE_KEY } from "../config/cartConfig.js";
-import { SERVICE_FEE_PER_TICKET } from "../../checkout/config/checkoutConfig.js";
+import { SERVICE_FEE_PER_TICKET } from "../../pricing/config/pricingConfig.js";
 
 const mockEventCartItem = {
   eventId: "evt_001",

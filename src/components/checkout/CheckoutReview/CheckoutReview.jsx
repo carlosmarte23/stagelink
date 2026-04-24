@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import {
   calculateCheckoutTotals,
   calculateEventSubtotal,
-} from "../../../features/checkout/lib/checkoutPricing.js";
+} from "../../../features/pricing/lib/ticketPricing.js";
 import { getEffectiveTierLimit } from "../../../features/events/lib/eventSelectors.js";
 
 import { formatCurrency } from "../../../utils/currency.js";

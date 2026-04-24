@@ -1,5 +1,5 @@
 import { CART_STORAGE_KEY } from "../config/cartConfig.js";
-import { calculateCheckoutTotals } from "../../../features/checkout/lib/checkoutPricing.js";
+import { calculateCheckoutTotals } from "../../../features/pricing/lib/ticketPricing.js";
 
 export function getCart() {
   const cart = localStorage.getItem(CART_STORAGE_KEY);
