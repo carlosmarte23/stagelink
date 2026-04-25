@@ -1,4 +1,4 @@
-export function buildUnspashImageUrl(
+export function buildUnsplashImageUrl(
   baseUrl,
   { width = 800, quality = 75 } = {},
 ) {

@@ -17,7 +17,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/my-tickets" element={<MyTickets />} />
-        <Route path="/events/" element={<EventListings />} />
+        <Route path="/events" element={<EventListings />} />
         <Route path="/events/:eventId" element={<EventDetail />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

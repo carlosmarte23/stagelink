@@ -8,7 +8,7 @@ import {
   getFormattedDoorsAt,
 } from "../features/events/lib/eventSelectors";
 
-import { buildUnspashImageUrl } from "../utils/images";
+import { buildUnsplashImageUrl } from "../utils/images";
 
 import styles from "./EventDetail.module.css";
 
@@ -21,12 +21,12 @@ export default function EventDetail() {
 
   if (!event) return <EventDetailNotFound />;
 
-  const mobileHeroImg = buildUnspashImageUrl(event.imageUrl, {
+  const mobileHeroImg = buildUnsplashImageUrl(event.imageUrl, {
     width: 600,
     quality: 70,
   });
 
-  const desktopHeroImg = buildUnspashImageUrl(event.imageUrl, {
+  const desktopHeroImg = buildUnsplashImageUrl(event.imageUrl, {
     width: 900,
     quality: 75,
   });
