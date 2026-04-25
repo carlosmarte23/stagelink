@@ -60,7 +60,7 @@ describe("checkoutCart", () => {
         eventId: "evt_013",
         eventData: {
           title: "Country Road Live",
-          startsAt: "2026-04-24T00:00:00Z",
+          startsAt: "2026-08-24T00:00:00Z",
           timezone: "America/Chicago",
           imageUrl:
             "https://images.unsplash.com/photo-1466584820433-9ad1cc6798f3",
@@ -90,7 +90,7 @@ describe("checkoutCart", () => {
         eventId: "evt_020",
         eventData: {
           title: "Summer Rock Fest",
-          startsAt: "2026-06-06T22:00:00Z",
+          startsAt: "2026-10-06T22:00:00Z",
           timezone: "America/New_York",
           imageUrl:
             "https://images.unsplash.com/photo-1760160741849-0809daa8e4c8",
