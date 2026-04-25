@@ -1,4 +1,4 @@
-import { buildUnspashImageUrl } from "../../../utils/images.js";
+import { buildUnsplashImageUrl } from "../../../utils/images.js";
 import { formatCurrency } from "../../../utils/currency.js";
 import { formatDateTimeParts } from "../../../utils/dates.js";
 import { calculateEventSubtotal } from "../../../features/pricing/lib/ticketPricing.js";
@@ -15,7 +15,7 @@ export default function CheckoutEventCard({
 }) {
   const { eventId } = cartItem;
   const { eventData, selectedTickets } = cartItem;
-  const imageUrl = buildUnspashImageUrl(eventData.imageUrl, {
+  const imageUrl = buildUnsplashImageUrl(eventData.imageUrl, {
     width: 400,
     quality: 50,
   });

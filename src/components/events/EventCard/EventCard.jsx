@@ -6,7 +6,7 @@ import {
   getEventPriceFrom,
   getFormattedShowAt,
 } from "../../../features/events/lib/eventSelectors.js";
-import { buildUnspashImageUrl } from "../../../utils/images.js";
+import { buildUnsplashImageUrl } from "../../../utils/images.js";
 import styles from "./EventCard.module.css";
 
 export default function EventCard({ event, variant = "default" }) {
@@ -19,7 +19,7 @@ export default function EventCard({ event, variant = "default" }) {
   const eventPriceFrom = getEventPriceFrom(event);
   const isSoldOut = eventPriceFrom === null;
 
-  const imgSrc = buildUnspashImageUrl(event.imageUrl, {
+  const imgSrc = buildUnsplashImageUrl(event.imageUrl, {
     width: 400,
     quality: 70,
   });
