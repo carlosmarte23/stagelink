@@ -211,11 +211,6 @@
                   line-height: 1.25rem;
                   cursor: pointer;
 
-                  svg {
-                    inline-size: 1.5rem;
-                    block-size: 1.5rem;
-                  }
-
                   &:hover,
                   &:focus-visible {
                     color: var(--error);
@@ -348,20 +343,21 @@
       background-color: transparent;
 
       .emptyCartIcon {
-        display: flex;
-        align-items: center;
-        justify-content: center;
         width: 8rem;
         height: 8rem;
-        border-radius: var(--radius-full);
-        background-color: var(--primary);
-        color: rgb(var(--purple) / 0.9);
-        border: 1px solid var(--primary);
-        background-color: rgb(var(--purple) / 0.15);
+        display: grid;
+        place-items: center;
+        margin-inline: auto;
+        border: 1px solid rgba(178, 31, 255, 0.75);
+        border-radius: 999px;
+        color: #b21fff;
+        background: rgba(178, 31, 255, 0.1);
 
         svg {
-          inline-size: 4rem;
-          block-size: 4rem;
+          opacity: 0.8;
+          width: 4.8rem;
+          height: 4.8rem;
+          stroke-width: 1.6;
         }
       }
 
@@ -451,11 +447,9 @@
                   .removeButton {
                     min-inline-size: 3.25rem;
                     min-block-size: 3.25rem;
-
-                    svg {
-                      inline-size: 2rem;
-                      block-size: 2rem;
-                    }
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
                   }
                 }
               }

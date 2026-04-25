@@ -1,3 +1,4 @@
+import { Check } from "lucide-react";
 import { CHECKOUT_STEP_STATUS } from "../../../features/checkout/config/checkoutStepsConfig.js";
 import { getCheckoutStepStatus } from "../../../features/checkout/lib/checkoutSteps.js";
 
@@ -24,20 +25,7 @@ export default function CheckoutTimeline({ checkoutSteps, activeStep }) {
             >
               <div className={styles.icon} aria-hidden="true">
                 {stepStatus === CHECKOUT_STEP_STATUS.COMPLETE ? (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                  >
-                    <path fill="none" stroke="none" d="M0 0h24v24H0z" />
-                    <path d="m5 12 5 5L20 7" />
-                  </svg>
+                  <Check />
                 ) : (
                   index + 1
                 )}

@@ -34,9 +34,9 @@
 
     .backgroundIcon {
       position: absolute;
-      width: 100%;
+      max-width: 100%;
       left: 50%;
-      top: 52%;
+      top: 50%;
       width: 115vw;
       aspect-ratio: 1;
       transform: translate(-50%, -55%);
@@ -67,23 +67,8 @@
       flex-direction: column;
       align-items: center;
       gap: 0.75rem;
+      margin-top: 5dvh;
       z-index: 1;
-
-      .centerIcon {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 12rem;
-        height: 12rem;
-        border-radius: var(--radius-full);
-        background-color: rgb(var(--purple) / 0.08);
-        color: var(--primary);
-
-        & svg {
-          width: 50%;
-          height: 50%;
-        }
-      }
 
       .code {
         position: absolute;
@@ -185,7 +170,7 @@
 
     .backgroundLayer {
       .backgroundIcon {
-        height: 90%;
+        height: 70%;
         width: auto;
         opacity: 0.05;
       }
@@ -219,6 +204,12 @@
       .backgroundIcon {
         height: 75%;
         opacity: 0.05;
+      }
+    }
+
+    .content {
+      .hero {
+        margin-top: 0;
       }
     }
   }

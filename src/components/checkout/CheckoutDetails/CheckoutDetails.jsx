@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 
 import { formatCurrency } from "../../../utils/currency.js";
 import { validateBuyerDetails } from "../../../features/checkout/lib/checkoutDetailsValidation.js";
@@ -145,45 +146,14 @@ export default function CheckoutDetails({
                 className={`button ${styles.buttonPrevious}`}
                 onClick={onBack}
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M5 12l14 0" />
-                  <path d="M5 12l4 4" />
-                  <path d="M5 12l4 -4" />
-                </svg>
+                <ArrowLeft aria-hidden="true" />
                 Previous: Review Tickets
               </button>
               <button
                 type="submit"
                 className={`button button--primary ${styles.buttonNext}`}
               >
-                Next: Choose Payment Method{" "}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="3"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                  <path d="M5 12l14 0" />
-                  <path d="M15 16l4 -4" />
-                  <path d="M15 8l4 4" />
-                </svg>
+                Next: Choose Payment Method <ArrowRight aria-hidden="true" />
               </button>
             </div>
           </div>
