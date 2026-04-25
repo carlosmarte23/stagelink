@@ -52,11 +52,7 @@ export default function PublicHeader() {
             </NavLink>
           ))}
         </nav>
-        <div className={styles.actions}>
-          <Link to="/login" className={`${styles.cta} button `}>
-            Login
-          </Link>
-        </div>
+
         <div className={styles.menuToggle}>
           <button
             type="button"
@@ -88,11 +84,6 @@ export default function PublicHeader() {
             </NavLink>
           ))}
         </nav>
-        <div className={styles.mobileActions}>
-          <Link to="/login" className={`button ${styles.cta}`}>
-            Login
-          </Link>
-        </div>
       </div>
     </header>
   );
