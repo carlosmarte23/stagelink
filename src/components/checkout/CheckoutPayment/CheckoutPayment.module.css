@@ -1,0 +1,259 @@
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.paymentContainer {
+  .paymentCard {
+    display: grid;
+    gap: 1rem;
+    background-color: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 2rem 1.5rem;
+
+    .title {
+      position: relative;
+      width: fit-content;
+      margin: 0;
+      font-size: 1.825rem;
+      font-weight: 700;
+      line-height: 1.25;
+      color: var(--text-strong);
+    }
+
+    .form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+
+      .formField {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        width: 100%;
+
+        .inputWithIcon {
+          position: relative;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          width: 100%;
+
+          .inputIcon {
+            position: absolute;
+            top: 50%;
+            right: 1rem;
+            transform: translateY(-50%);
+            color: var(--primary);
+          }
+        }
+
+        .label {
+          color: var(--text);
+          font-size: 0.875rem;
+          line-height: 1.25;
+        }
+
+        .input {
+          width: 100%;
+          padding: 0.75rem 1rem;
+          margin: 0;
+          border: 1px solid var(--border);
+          border-radius: var(--radius-lg);
+          background-color: var(--surface-1);
+          color: var(--text);
+          font-size: 0.875rem;
+          line-height: 1.25;
+
+          &:focus-visible {
+            outline: 0.125rem solid var(--focus-ring);
+          }
+
+          &::placeholder {
+            color: var(--text-muted);
+          }
+
+          &[aria-invalid="true"] {
+            border-color: var(--error);
+          }
+        }
+
+        .checkboxField {
+          position: relative;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          cursor: pointer;
+          margin-top: 1rem;
+          border-top: 1px solid var(--border);
+          padding-top: 2rem;
+
+          .checkboxInput {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            margin: -1px;
+            overflow: hidden;
+            border: 0;
+            padding: 0;
+            clip: rect(0 0 0 0);
+            clip-path: inset(50%);
+            white-space: nowrap;
+
+            &:checked + .checkboxLabel::before {
+              border-color: var(--primary);
+              background-color: var(--primary);
+            }
+
+            &:checked + .checkboxLabel::after {
+              opacity: 1;
+            }
+
+            &:focus-visible + .checkboxLabel::before {
+              outline: 0.125rem solid var(--focus-ring);
+              outline-offset: 0.125rem;
+            }
+          }
+
+          .checkboxLabel {
+            position: relative;
+            min-height: 1.25rem;
+            padding-left: 1.75rem;
+            color: var(--text);
+            font-size: 0.875rem;
+            line-height: 1.25;
+          }
+
+          .checkboxLabel::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 1.25rem;
+            height: 1.25rem;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-full);
+            background-color: var(--surface-3);
+            transform: translateY(-50%);
+          }
+
+          .checkboxLabel::after {
+            content: "";
+            position: absolute;
+            left: 0.43rem;
+            top: 50%;
+            width: 0.32rem;
+            height: 0.62rem;
+            border: solid var(--text-strong);
+            border-width: 0 0.125rem 0.125rem 0;
+            opacity: 0;
+            transform: translateY(-58%) rotate(45deg);
+          }
+        }
+
+        .error {
+          color: var(--error);
+          font-size: 0.875rem;
+          line-height: 1.25;
+        }
+      }
+
+      .summary {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        border-top: 2px solid var(--border);
+        padding-block-start: 2rem;
+
+        .summaryLabel {
+          color: var(--text-muted);
+          font-size: 0.875rem;
+          line-height: 1.25;
+        }
+
+        .amountDue {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          gap: 0.5rem;
+          color: var(--text);
+          font-size: 1.75rem;
+          line-height: 1.25;
+          font-weight: 700;
+        }
+      }
+
+      .formGroupActions {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+
+        .buttonNext {
+          .spinner {
+            display: inline-block;
+            flex: 0 0 auto;
+            width: 1rem;
+            height: 1rem;
+            border: 2px solid currentColor;
+            border-right-color: transparent;
+            border-radius: 999px;
+            animation: spin 0.7s linear infinite;
+          }
+        }
+      }
+
+      .encryption {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        color: var(--text-muted);
+        font-size: 0.875rem;
+        line-height: 1.25;
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 750px) {
+  .paymentContainer {
+    .paymentCard {
+      max-width: 800px;
+      margin: 0 auto;
+
+      .form {
+        margin-top: 1.5rem;
+        gap: 2rem;
+
+        .formField {
+          .checkboxField {
+            margin-top: 0;
+
+            .checkboxLabel {
+              font-size: 1rem;
+            }
+          }
+        }
+
+        .summary {
+          text-align: right;
+          gap: 0;
+          .amountDue {
+            justify-content: flex-end;
+          }
+        }
+
+        .formGroupActions {
+          flex-direction: row;
+          justify-content: center;
+          gap: 1rem;
+          margin-block: 2rem 0.5rem;
+        }
+      }
+    }
+  }
+}

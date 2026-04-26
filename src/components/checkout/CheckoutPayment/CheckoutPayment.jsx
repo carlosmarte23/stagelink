@@ -19,6 +19,7 @@ export default function CheckoutPayment({
     securityCode: "",
     saveCard: false,
   }));
+  const [isAuthorizing, setIsAuthorizing] = useState(false);
 
   const [errors, setErrors] = useState({});
 
@@ -77,14 +78,16 @@ export default function CheckoutPayment({
     setErrors(errors);
     if (Object.keys(errors).length > 0) return;
 
+    setIsAuthorizing(true);
     const result = await authorizePayment(validatedValues);
 
     if (!result.ok) {
+      setIsAuthorizing(false);
       setErrors({ form: result.error });
       return;
     }
 
-    await onContinue(result.paymentDetails);
+    onContinue(result.paymentDetails);
   }
 
   return (
@@ -99,7 +102,9 @@ export default function CheckoutPayment({
 
         <form noValidate onSubmit={handleSubmit} className={styles.form}>
           <div className={styles.formField}>
-            <label htmlFor="cardNumber">Card Number</label>
+            <label htmlFor="cardNumber" className={styles.label}>
+              Card Number
+            </label>
             <div className={styles.inputWithIcon}>
               <input
                 type="text"
@@ -113,20 +118,23 @@ export default function CheckoutPayment({
                 maxLength={19}
                 value={formPaymentDetails.cardNumber}
                 onChange={handleCardNumberChange}
+                className={styles.input}
               />
               <span aria-hidden="true" className={styles.inputIcon}>
                 <CreditCard />
               </span>
-              {errors.cardNumber && (
-                <p id="cardNumber-error" className={styles.error}>
-                  {errors.cardNumber}
-                </p>
-              )}
             </div>
+            {errors.cardNumber && (
+              <p id="cardNumber-error" className={styles.error}>
+                {errors.cardNumber}
+              </p>
+            )}
           </div>
 
           <div className={styles.formField}>
-            <label htmlFor="expirationDate">Expiry (MM/YY)</label>
+            <label htmlFor="expirationDate" className={styles.label}>
+              Expiry (MM/YY)
+            </label>
             <input
               type="text"
               id="expirationDate"
@@ -141,6 +149,7 @@ export default function CheckoutPayment({
               }
               value={formPaymentDetails.expirationDate}
               onChange={handleExpirationDateChange}
+              className={styles.input}
             />
             {errors.expirationDate && (
               <p id="expirationDate-error" className={styles.error}>
@@ -150,7 +159,9 @@ export default function CheckoutPayment({
           </div>
 
           <div className={styles.formField}>
-            <label htmlFor="securityCode">CVC</label>
+            <label htmlFor="securityCode" className={styles.label}>
+              CVC
+            </label>
             <input
               type="text"
               id="securityCode"
@@ -163,6 +174,7 @@ export default function CheckoutPayment({
               aria-describedby={errors.securityCode ? "securityCode-error" : ""}
               value={formPaymentDetails.securityCode}
               onChange={handleSecurityCodeChange}
+              className={styles.input}
             />
             {errors.securityCode && (
               <p id="securityCode-error" className={styles.error}>
@@ -179,9 +191,12 @@ export default function CheckoutPayment({
                 id="saveCard"
                 checked={formPaymentDetails.saveCard}
                 onChange={handleSaveCardChange}
+                className={styles.checkboxInput}
               />
 
-              <span>Save card information for future purchases</span>
+              <span className={styles.checkboxLabel}>
+                Save card information for future purchases
+              </span>
             </label>
           </div>
 
@@ -202,12 +217,23 @@ export default function CheckoutPayment({
             <button
               type="submit"
               className={`button button--primary ${styles.buttonNext}`}
+              disabled={isAuthorizing}
+              aria-busy={isAuthorizing}
             >
-              Complete Purchase <LockKeyhole />
+              {isAuthorizing ? (
+                <>
+                  <span className={styles.spinner} aria-hidden="true" />
+                  Authorizing...
+                </>
+              ) : (
+                <>
+                  Complete Purchase <LockKeyhole aria-hidden="true" />
+                </>
+              )}
             </button>
           </div>
-          <p>
-            <span>
+          <p className={styles.encryption}>
+            <span aria-hidden="true">
               <ShieldCheck />
             </span>
             Encrypted and secure checkout
