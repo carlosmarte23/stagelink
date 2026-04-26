@@ -33,7 +33,7 @@ export default function Cart() {
     email: "",
     phone: "",
   }));
-  const [paymentDetails, setPaymentDetails] = useState(() => ({
+  const [_paymentDetails, setPaymentDetails] = useState(() => ({
     method: "",
     cardLast4: "",
     saveCard: false,
