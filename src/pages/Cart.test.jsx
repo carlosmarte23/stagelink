@@ -1,6 +1,6 @@
 import { describe, expect, it, beforeEach } from "vitest";
 
-import { render, screen, within } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 
@@ -35,6 +35,40 @@ function getTimeline() {
 
 function getTimelineStep(stepLabel) {
   return within(getTimeline()).getByText(stepLabel).closest("li");
+}
+
+async function fillBuyerDetails(user) {
+  await user.type(
+    screen.getByRole("textbox", { name: /primary contact name/i }),
+    "John Doe",
+  );
+  await user.type(
+    screen.getByRole("textbox", { name: /email address/i }),
+    "john.doe@example.com",
+  );
+  await user.type(
+    screen.getByRole("textbox", { name: /phone number/i }),
+    "5555551234",
+  );
+}
+
+async function goToPaymentStep(user) {
+  await user.click(
+    screen.getByRole("button", { name: /next: enter your details/i }),
+  );
+  await fillBuyerDetails(user);
+  await user.click(
+    screen.getByRole("button", { name: /next: choose payment method/i }),
+  );
+}
+
+async function fillPaymentDetails(user) {
+  await user.type(
+    screen.getByRole("textbox", { name: /card number/i }),
+    "4242424242424242",
+  );
+  await user.type(screen.getByRole("textbox", { name: /expiry/i }), "01/29");
+  await user.type(screen.getByRole("textbox", { name: /cvc/i }), "123");
 }
 
 describe("<Cart />", () => {
@@ -165,6 +199,102 @@ describe("<Cart />", () => {
       expect(getTimelineStep(/details/i)).toHaveAttribute(
         "data-status",
         CHECKOUT_STEP_STATUS.UPCOMING,
+      );
+    });
+
+    it("navigates to the payment step after valid buyer details are submitted", async () => {
+      const user = userEvent.setup();
+      renderCart();
+
+      await goToPaymentStep(user);
+
+      expect(
+        screen.getByRole("heading", { level: 2, name: /payment method/i }),
+      ).toBeInTheDocument();
+
+      expect(getTimelineStep(/review/i)).toHaveAttribute(
+        "data-status",
+        CHECKOUT_STEP_STATUS.COMPLETE,
+      );
+      expect(getTimelineStep(/details/i)).toHaveAttribute(
+        "data-status",
+        CHECKOUT_STEP_STATUS.COMPLETE,
+      );
+      expect(getTimelineStep(/pay/i)).toHaveAttribute(
+        "data-status",
+        CHECKOUT_STEP_STATUS.ACTIVE,
+      );
+      expect(getTimelineStep(/done/i)).toHaveAttribute(
+        "data-status",
+        CHECKOUT_STEP_STATUS.UPCOMING,
+      );
+    });
+
+    it("returns to the details step when the payment back button is clicked", async () => {
+      const user = userEvent.setup();
+      renderCart();
+
+      await goToPaymentStep(user);
+
+      await user.click(
+        screen.getByRole("button", { name: /back to details/i }),
+      );
+
+      expect(
+        screen.getByRole("heading", { level: 2, name: /guest details/i }),
+      ).toBeInTheDocument();
+
+      expect(getTimelineStep(/details/i)).toHaveAttribute(
+        "data-status",
+        CHECKOUT_STEP_STATUS.ACTIVE,
+      );
+      expect(getTimelineStep(/pay/i)).toHaveAttribute(
+        "data-status",
+        CHECKOUT_STEP_STATUS.UPCOMING,
+      );
+    });
+
+    it("completes the payment step and renders the done placeholder", async () => {
+      const user = userEvent.setup();
+      renderCart();
+
+      await goToPaymentStep(user);
+      await fillPaymentDetails(user);
+      await user.click(
+        screen.getByRole("button", { name: /complete purchase/i }),
+      );
+
+      expect(
+        screen.getByRole("button", { name: /authorizing/i }),
+      ).toBeDisabled();
+
+      await waitFor(
+        () => {
+          expect(
+            screen.getByRole("heading", {
+              level: 2,
+              name: /order confirmed/i,
+            }),
+          ).toBeInTheDocument();
+        },
+        { timeout: 3000 },
+      );
+
+      expect(getTimelineStep(/review/i)).toHaveAttribute(
+        "data-status",
+        CHECKOUT_STEP_STATUS.COMPLETE,
+      );
+      expect(getTimelineStep(/details/i)).toHaveAttribute(
+        "data-status",
+        CHECKOUT_STEP_STATUS.COMPLETE,
+      );
+      expect(getTimelineStep(/pay/i)).toHaveAttribute(
+        "data-status",
+        CHECKOUT_STEP_STATUS.COMPLETE,
+      );
+      expect(getTimelineStep(/done/i)).toHaveAttribute(
+        "data-status",
+        CHECKOUT_STEP_STATUS.ACTIVE,
       );
     });
   });

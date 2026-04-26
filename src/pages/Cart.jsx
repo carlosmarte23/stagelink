@@ -1,7 +1,10 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+
+import CheckoutTimeline from "../components/checkout/CheckoutTimeline/CheckoutTimeline";
 import CheckoutReview from "../components/checkout/CheckoutReview/CheckoutReview";
 import CheckoutDetails from "../components/checkout/CheckoutDetails/CheckoutDetails.jsx";
-import CheckoutTimeline from "../components/checkout/CheckoutTimeline/CheckoutTimeline";
+import CheckoutPayment from "../components/checkout/CheckoutPayment/CheckoutPayment.jsx";
 
 import {
   CHECKOUT_STEPS,
@@ -29,6 +32,11 @@ export default function Cart() {
     fullName: "",
     email: "",
     phone: "",
+  }));
+  const [paymentDetails, setPaymentDetails] = useState(() => ({
+    method: "",
+    cardLast4: "",
+    saveCard: false,
   }));
 
   const isCartEmpty = checkoutCartItems.length === 0;
@@ -75,6 +83,13 @@ export default function Cart() {
     }
   }
 
+  function handlePaymentSubmit(authorizedPaymentDetails) {
+    if (currentStep === CHECKOUT_STEPS.PAY) {
+      setPaymentDetails(authorizedPaymentDetails);
+      goToNextStep();
+    }
+  }
+
   return (
     <section className={styles.page} aria-labelledby="checkout-title">
       <header className={styles.header}>
@@ -83,16 +98,15 @@ export default function Cart() {
         </h1>
         <p className={styles.description}>{stepMeta.description}</p>
       </header>
+      <div className={styles.stepContainer}>
+        {!isCartEmpty && (
+          <CheckoutTimeline
+            checkoutSteps={CHECKOUT_STEP_ITEMS}
+            activeStep={currentStep}
+          />
+        )}
 
-      {!isCartEmpty && (
-        <CheckoutTimeline
-          checkoutSteps={CHECKOUT_STEP_ITEMS}
-          activeStep={currentStep}
-        />
-      )}
-
-      {currentStep === CHECKOUT_STEPS.REVIEW && (
-        <div className={styles.stepContainer}>
+        {currentStep === CHECKOUT_STEPS.REVIEW && (
           <CheckoutReview
             cartItems={checkoutCartItems}
             onIncreaseTicket={handleIncreaseTicket}
@@ -100,28 +114,32 @@ export default function Cart() {
             onRemoveTicket={handleRemoveTicket}
             onContinue={handleReviewSubmit}
           />
-        </div>
-      )}
+        )}
 
-      {currentStep === CHECKOUT_STEPS.DETAILS && (
-        <div className={styles.stepContainer}>
+        {currentStep === CHECKOUT_STEPS.DETAILS && (
           <CheckoutDetails
             totalAmountDue={amountDue}
             initialDetails={buyerDetails}
             onBack={goToPreviousStep}
             onContinue={handleDetailsSubmit}
           />
-        </div>
-      )}
+        )}
 
-      {currentStep === CHECKOUT_STEPS.PAY && (
-        <div className={styles.stepContainer}>
-          <h2>WIP: Pay Step</h2>
-          <button type="button" onClick={goToPreviousStep}>
-            Back
-          </button>
-        </div>
-      )}
+        {currentStep === CHECKOUT_STEPS.PAY && (
+          <CheckoutPayment
+            totalAmountDue={amountDue}
+            onBack={goToPreviousStep}
+            onContinue={handlePaymentSubmit}
+          />
+        )}
+
+        {currentStep === CHECKOUT_STEPS.DONE && (
+          <>
+            <h2>Order Confirmed!</h2>
+            <Link to="/">Return to Home</Link>
+          </>
+        )}
+      </div>
     </section>
   );
 }
