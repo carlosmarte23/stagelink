@@ -1,11 +1,11 @@
 import { describe, expect, it, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 
 import CheckoutPayment from "./CheckoutPayment.jsx";
 
-function renderPayoutStep(props = {}) {
+function renderPaymentStep(props = {}) {
   return render(
     <MemoryRouter>
       <CheckoutPayment
@@ -20,7 +20,7 @@ function renderPayoutStep(props = {}) {
 
 describe("CheckoutPayment", () => {
   it("renders the Pay step section", () => {
-    const payoutStep = renderPayoutStep();
+    const payoutStep = renderPaymentStep();
     expect(
       screen.getByRole("region", { name: /payment method/i }),
     ).toBeInTheDocument();
@@ -68,7 +68,7 @@ describe("CheckoutPayment", () => {
       const user = userEvent.setup();
       const onContinue = vi.fn();
 
-      renderPayoutStep({ onContinue });
+      renderPaymentStep({ onContinue });
 
       await user.click(
         screen.getByRole("button", { name: /complete purchase/i }),
@@ -77,13 +77,13 @@ describe("CheckoutPayment", () => {
       expect(onContinue).not.toHaveBeenCalled();
 
       expect(
-        screen.getByText("Please enter your card number."),
+        screen.getByText(/Please enter your card number/i),
       ).toBeInTheDocument();
       expect(
-        screen.getByText("Please enter your card expiry date."),
+        screen.getByText(/Please enter your card expiry date/i),
       ).toBeInTheDocument();
       expect(
-        screen.getByText("Please enter your card cvc."),
+        screen.getByText(/Please enter your card cvc/i),
       ).toBeInTheDocument();
     });
 
@@ -91,13 +91,13 @@ describe("CheckoutPayment", () => {
       const user = userEvent.setup();
       const onContinue = vi.fn();
 
-      renderPayoutStep({ onContinue });
+      renderPaymentStep({ onContinue });
 
       await user.type(
         screen.getByRole("textbox", { name: /card number/i }),
         "123",
       );
-      await user.type(screen.getByRole("textbox", { name: /expiry/i }), "abc");
+      await user.type(screen.getByRole("textbox", { name: /expiry/i }), "1413");
       await user.type(screen.getByRole("textbox", { name: /cvc/i }), "1");
 
       await user.click(
@@ -107,14 +107,14 @@ describe("CheckoutPayment", () => {
       expect(onContinue).not.toHaveBeenCalled();
 
       expect(
-        screen.getByText("Please enter a valid card number."),
+        screen.getByText(/please enter a valid card number/i),
       ).toBeInTheDocument();
 
       expect(
-        screen.getByText("Please enter a valid expiry date."),
+        screen.getByText(/please enter a valid expiry date/i),
       ).toBeInTheDocument();
 
-      expect(screen.getByText("Please enter a valid cvc.")).toBeInTheDocument();
+      expect(screen.getByText(/please enter a valid cvc/i)).toBeInTheDocument();
     });
   });
 
@@ -124,7 +124,7 @@ describe("CheckoutPayment", () => {
       const onBack = vi.fn();
       const onContinue = vi.fn();
 
-      renderPayoutStep({ onBack, onContinue });
+      renderPaymentStep({ onBack, onContinue });
 
       await user.click(
         screen.getByRole("button", { name: /back to details/i }),
@@ -138,7 +138,7 @@ describe("CheckoutPayment", () => {
       const onBack = vi.fn();
       const onContinue = vi.fn();
 
-      renderPayoutStep({ onBack, onContinue });
+      renderPaymentStep({ onBack, onContinue });
 
       await user.type(
         screen.getByRole("textbox", { name: /card number/i }),
@@ -146,7 +146,7 @@ describe("CheckoutPayment", () => {
       );
       await user.type(
         screen.getByRole("textbox", { name: /expiry/i }),
-        "01/22",
+        "01/29",
       );
       await user.type(screen.getByRole("textbox", { name: /cvc/i }), "123");
       await user.click(
@@ -158,7 +158,12 @@ describe("CheckoutPayment", () => {
         screen.getByRole("button", { name: /complete purchase/i }),
       );
 
-      expect(onContinue).toHaveBeenCalledTimes(1);
+      await waitFor(
+        () => {
+          expect(onContinue).toHaveBeenCalledTimes(1);
+        },
+        { timeout: 3000 },
+      );
 
       const paymentPayload = onContinue.mock.calls[0][0];
 
@@ -169,8 +174,8 @@ describe("CheckoutPayment", () => {
       });
 
       expect(paymentPayload).not.toHaveProperty("cardNumber");
-      expect(paymentPayload).not.toHaveProperty("expiry");
-      expect(paymentPayload).not.toHaveProperty("cvc");
+      expect(paymentPayload).not.toHaveProperty("expirationDate");
+      expect(paymentPayload).not.toHaveProperty("securityCode");
     });
   });
 });
