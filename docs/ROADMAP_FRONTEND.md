@@ -1,12 +1,12 @@
 # StageLink Frontend Roadmap
 
-This roadmap covers the frontend implementation of StageLink, aligned with the Stitch design pack.
+This roadmap covers the final frontend MVP implementation of StageLink, aligned with the Stitch design pack.
 
-The scope includes UI, routing, client-side state, local persistence, accessibility basics, and a realistic ticketing flow using mock data. Backend APIs, database design, authentication services, and real payments are outside this roadmap and will be planned separately.
+The scope includes UI, routing, client-side state, local persistence, accessibility basics, and a realistic ticketing flow using mock data. Backend APIs, database design, user accounts, admin tools, and real payments are outside this MVP.
 
 ## Frontend Goals
 
-- Build a complete, navigable ticketing SPA that matches the Stitch screens
+- Build a complete, navigable ticketing SPA for the public purchase flow
 - Use canonical mock data to simulate a realistic product catalog
 - Persist cart, orders, and tickets locally through `localStorage`
 - Keep feature work organized through page/component separation and milestone documents
@@ -33,14 +33,11 @@ Completed
 
 In progress
 
-- My Tickets planning
+- My Tickets UI
 
 Planned
 
-- My Tickets UI
-- Auth UI
-- Admin UI
-- Final frontend polish pass
+- Final MVP polish pass
 
 ## Routes
 
@@ -52,23 +49,6 @@ Public
 - `/cart` Checkout
 - `/my-tickets` My Tickets
 - `*` NotFound
-
-Auth UI
-
-- `/login`
-- `/register`
-- `/forgot-password`
-
-Admin UI
-
-- `/admin`
-- `/admin/users`
-- `/admin/roles`
-- `/admin/venues`
-- `/admin/concerts`
-- `/admin/events`
-- `/admin/prices`
-- `/admin/orders`
 
 ## Data & Persistence
 
@@ -84,7 +64,6 @@ Local persistence
 - Cart items
 - Orders
 - Tickets
-- Future fake session state for auth UI
 
 ## Milestones
 
@@ -166,30 +145,20 @@ Milestone document
 
 - [Cart / Checkout UI](./milestones/MILESTONE_CART_CHECKOUT_UI.md)
 
-### 6. My Tickets UI (planned)
+### 6. My Tickets UI (in progress)
 
 - Tabs for upcoming and past tickets
 - Search and sorting controls
 - Ticket cards
-- QR placeholder display
+- QR preview and focused QR modal
 - Empty states
+- Checkout confirmation handoff to `/my-tickets`
 
-### 7. Auth UI (planned)
+Milestone document
 
-- Login form
-- Register form
-- Forgot password form
-- Optional fake session state
-- Header state for signed-in and signed-out UI
+- [My Tickets UI](./milestones/MILESTONE_MY_TICKETS_UI.md)
 
-### 8. Admin UI (planned)
-
-- Admin layout with sidebar
-- Dashboard cards from mock data
-- Orders and tickets management table
-- UI-only CRUD screens for users, roles, venues, concerts, events, and prices
-
-### 9. Polish (planned)
+### 7. Final MVP Polish (planned)
 
 - Accessibility pass
 - Responsive refinements
@@ -205,5 +174,5 @@ Milestone document
 - Webhooks, emails, and refunds
 - Database constraints and conflict rules
 - Production-grade inventory locking
-
-These concerns belong to the backend and systems roadmap.
+- User account routes
+- Admin management routes

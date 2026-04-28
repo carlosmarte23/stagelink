@@ -13,7 +13,6 @@ Non-goals (not in this milestone)
 - No real backend or live inventory reservation
 - No seat map or seat selection
 - No checkout implementation beyond add-to-cart handoff
-- No admin UI for creating tiers in this milestone
 - No recommendations or related events section for now
 
 ## Stitch Design
@@ -256,5 +255,5 @@ Required test cases
 - Tablet follows the mobile-first structure, not the desktop sidebar-first layout
 - `doorsAt` is optional and falls back to one hour before `startsAt`
 - `perOrderLimit` defaults to `8` when omitted
-- Tier count is admin-defined, but simulated only through mock data in this milestone
+- Ticket tier counts are simulated through mock data in this milestone
 

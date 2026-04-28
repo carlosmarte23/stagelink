@@ -12,7 +12,6 @@ Non-goals (not in this milestone)
 - No real backend
 - No server-side filtering or pagination
 - No URL query param sync yet
-- No favorites or auth-gated behavior unless already present and easy to reuse
 - No advanced search engine behavior
 
 ## Stitch Design

@@ -2,7 +2,7 @@
 
 **A modern, frontend-first concert ticketing experience.**
 
-StageLink is a React-based application that simulates a concert ticketing flow with mocked data and local persistence. The project focuses on clean frontend architecture, reusable UI, deterministic tests, and a realistic browse-to-cart user experience.
+StageLink is a React-based application that simulates a concert ticketing flow with mocked data and local persistence. The project focuses on clean frontend architecture, reusable UI, deterministic tests, and a realistic browse-to-ticket-wallet user experience.
 
 > **⚠️ Note:** This is a portfolio project using a mocked backend and browser storage. No real payments are processed.
 
@@ -33,12 +33,12 @@ _Checkout Page_
 - **Ticket Selection:** Select variable ticket tiers, respect per-tier limits, and handle sold-out tiers.
 - **Persistent Cart:** Add event ticket selections to a local cart using `localStorage`.
 - **Frontend Checkout:** Review cart items, collect guest details, simulate payment, confirm orders, generate local tickets, and clear the purchased cart.
+- **Local Ticket Wallet:** View generated tickets after checkout with search, upcoming/past organization, QR previews, and a focused QR modal.
 - **Testing Foundation:** Vitest and React Testing Library cover shared utilities, components, and page-level flows.
-- **My Tickets:** Planned digital ticket wallet fed by generated local tickets.
 
 ## 🧭 Project Status
 
-Current phase: MVP frontend implementation.
+Current phase: final MVP frontend route.
 
 Completed:
 
@@ -52,13 +52,10 @@ Completed:
 
 In progress:
 
-- My Tickets planning
+- My Tickets UI
 
 Planned:
 
-- My Tickets UI
-- Auth UI
-- Admin UI
 - Final responsive and accessibility polish
 
 ## 📚 Documentation
@@ -69,6 +66,7 @@ Planned:
 - [Events UI Milestone](./docs/milestones/MILESTONE_EVENTS_UI.md)
 - [Event Detail UI Milestone](./docs/milestones/MILESTONE_EVENT_DETAIL_UI.md)
 - [Cart / Checkout UI Milestone](./docs/milestones/MILESTONE_CART_CHECKOUT_UI.md)
+- [My Tickets UI Milestone](./docs/milestones/MILESTONE_MY_TICKETS_UI.md)
 
 ## 🛠️ Tech Stack
 
