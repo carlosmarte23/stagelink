@@ -1,5 +1,23 @@
+function createRandomIdSegment() {
+  if (crypto.randomUUID) {
+    return crypto.randomUUID().slice(0, 8).toUpperCase();
+  }
+
+  if (crypto.getRandomValues) {
+    const values = new Uint8Array(4);
+    crypto.getRandomValues(values);
+
+    return Array.from(values)
+      .map((value) => value.toString(16).padStart(2, "0"))
+      .join("")
+      .toUpperCase();
+  }
+
+  return Math.random().toString(16).slice(2, 10).toUpperCase();
+}
+
 function createOrderId() {
-  return `SL-${crypto.randomUUID().slice(0, 8).toUpperCase()}`;
+  return `SL-${createRandomIdSegment().slice(0, 8).toUpperCase()}`;
 }
 
 function createTicketId(orderId, eventId, tierId, ticketNumber) {
