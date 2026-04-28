@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 
 import CheckoutTimeline from "../components/checkout/CheckoutTimeline/CheckoutTimeline";
 import CheckoutReview from "../components/checkout/CheckoutReview/CheckoutReview";
 import CheckoutDetails from "../components/checkout/CheckoutDetails/CheckoutDetails.jsx";
 import CheckoutPayment from "../components/checkout/CheckoutPayment/CheckoutPayment.jsx";
+import CheckoutDone from "../components/checkout/CheckoutDone/CheckoutDone.jsx";
 
 import {
   CHECKOUT_STEPS,
@@ -23,6 +23,8 @@ import {
 } from "../features/cart/lib/cartStorage.js";
 import { calculateCheckoutTotals } from "../features/pricing/lib/ticketPricing.js";
 
+import { completeCheckout } from "../features/checkout/services/completeCheckout.js";
+
 import styles from "./Cart.module.css";
 
 export default function Cart() {
@@ -33,14 +35,14 @@ export default function Cart() {
     email: "",
     phone: "",
   }));
-  const [_paymentDetails, setPaymentDetails] = useState(() => ({
-    method: "",
-    cardLast4: "",
-    saveCard: false,
-  }));
+
+  const [confirmedOrder, setConfirmedOrder] = useState(null);
 
   const isCartEmpty = checkoutCartItems.length === 0;
-  const currentStep = isCartEmpty ? CHECKOUT_STEPS.REVIEW : activeStep;
+  const currentStep =
+    isCartEmpty && activeStep !== CHECKOUT_STEPS.DONE
+      ? CHECKOUT_STEPS.REVIEW
+      : activeStep;
   const stepMeta = getCheckoutStepMeta(currentStep);
   const checkoutTotals = calculateCheckoutTotals(checkoutCartItems);
   const amountDue = checkoutTotals.total;
@@ -83,11 +85,20 @@ export default function Cart() {
     }
   }
 
-  function handlePaymentSubmit(authorizedPaymentDetails) {
-    if (currentStep === CHECKOUT_STEPS.PAY) {
-      setPaymentDetails(authorizedPaymentDetails);
-      goToNextStep();
-    }
+  async function handlePaymentSubmit(authorizedPaymentDetails) {
+    if (currentStep !== CHECKOUT_STEPS.PAY) return;
+
+    const { confirmedOrder } = await completeCheckout({
+      items: checkoutCartItems,
+      totals: checkoutTotals,
+      buyerDetails,
+      paymentDetails: authorizedPaymentDetails,
+    });
+
+    setConfirmedOrder(confirmedOrder);
+
+    setCheckoutCartItems(() => getCheckoutCart());
+    goToNextStep();
   }
 
   return (
@@ -99,7 +110,7 @@ export default function Cart() {
         <p className={styles.description}>{stepMeta.description}</p>
       </header>
       <div className={styles.stepContainer}>
-        {!isCartEmpty && (
+        {(!isCartEmpty || currentStep === CHECKOUT_STEPS.DONE) && (
           <CheckoutTimeline
             checkoutSteps={CHECKOUT_STEP_ITEMS}
             activeStep={currentStep}
@@ -134,10 +145,7 @@ export default function Cart() {
         )}
 
         {currentStep === CHECKOUT_STEPS.DONE && (
-          <>
-            <h2>Order Confirmed!</h2>
-            <Link to="/">Return to Home</Link>
-          </>
+          <CheckoutDone confirmedOrder={confirmedOrder} />
         )}
       </div>
     </section>
