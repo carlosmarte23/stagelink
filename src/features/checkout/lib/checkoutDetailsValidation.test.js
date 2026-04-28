@@ -48,7 +48,7 @@ describe("checkoutDetailsValidation", () => {
       }).validatedValues,
     ).toEqual({
       fullName: "John Doe",
-      email: "G2v0o@example.com",
+      email: "g2v0o@example.com",
       phone: "1234567890",
     });
   });
@@ -61,8 +61,46 @@ describe("checkoutDetailsValidation", () => {
       }).validatedValues,
     ).toEqual({
       fullName: "John Doe",
-      email: "G2v0o@example.com",
+      email: "g2v0o@example.com",
       phone: "1234567890",
     });
+  });
+
+  it("returns a lowercase trimmed email in valid values", () => {
+    expect(
+      validateBuyerDetails({
+        fullName: "John Doe",
+        email: "  JOHN.DOE@EXAMPLE.COM  ",
+        phone: "1234567890",
+      }).validatedValues,
+    ).toEqual({
+      fullName: "John Doe",
+      email: "john.doe@example.com",
+      phone: "1234567890",
+    });
+  });
+
+  it("accepts formatted phone numbers and returns only digits in valid values", () => {
+    expect(
+      validateBuyerDetails({
+        fullName: "John Doe",
+        email: "john@example.com",
+        phone: "(555) 123-4567",
+      }).validatedValues,
+    ).toEqual({
+      fullName: "John Doe",
+      email: "john@example.com",
+      phone: "5551234567",
+    });
+  });
+
+  it("returns a phone error when the phone has fewer than 10 digits after normalization", () => {
+    expect(
+      validateBuyerDetails({
+        fullName: "John Doe",
+        email: "john@example.com",
+        phone: "(555) 123",
+      }).errors.phone,
+    ).toBe("Please enter a valid 10-digit phone number.");
   });
 });

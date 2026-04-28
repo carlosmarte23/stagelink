@@ -106,6 +106,57 @@ describe("CheckoutDetails", () => {
     );
   });
 
+  it("formats the phone number while typing and ignores non-digit characters", async () => {
+    const user = userEvent.setup();
+
+    renderCheckoutDetails();
+
+    const phoneInput = screen.getByLabelText(/phone number/i);
+
+    await user.type(phoneInput, "555abc1234567");
+
+    expect(phoneInput).toHaveValue("(555) 123-4567");
+  });
+
+  it("does not allow more than 10 phone digits", async () => {
+    const user = userEvent.setup();
+
+    renderCheckoutDetails();
+
+    const phoneInput = screen.getByLabelText(/phone number/i);
+
+    await user.type(phoneInput, "5551234567899");
+
+    expect(phoneInput).toHaveValue("(555) 123-4567");
+  });
+
+  it("calls onContinue with a canonical phone number and normalized email", async () => {
+    const user = userEvent.setup();
+    const onContinue = vi.fn();
+
+    renderCheckoutDetails({ onContinue });
+
+    await user.type(screen.getByLabelText(/primary contact name/i), "John Doe");
+    await user.type(
+      screen.getByLabelText(/email address/i),
+      "  JOHN.DOE@EXAMPLE.COM  ",
+    );
+    await user.type(screen.getByLabelText(/phone number/i), "5551234567");
+
+    await user.click(
+      screen.getByRole("button", {
+        name: /next: choose payment method/i,
+      }),
+    );
+
+    expect(onContinue).toHaveBeenCalledWith(
+      expect.objectContaining({
+        email: "john.doe@example.com",
+        phone: "5551234567",
+      }),
+    );
+  });
+
   it("prefills the form with initial buyer details", () => {
     const filledValues = {
       fullName: "John Doe",
