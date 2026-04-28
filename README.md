@@ -23,10 +23,8 @@ _Events Page_
 [![Event Detail Screenshot](./docs/screenshots/event-detail.png "Event Detail Page")](./docs/screenshots/event-detail.png "Open full size")
 _Event Detail Page_
 
-## Checkout Design (Stitch)
-
-[![Checkout Review Design](./docs/design/cart-checkout-review.png "Checkout Review Step")](./docs/design/cart-checkout-review.png "Open full size")
-_Checkout Review Step_
+[![Checkout Screenshot](./docs/screenshots/checkout.png "Checkout Page")](./docs/screenshots/checkout.png "Open full size")
+_Checkout Page_
 
 ## ✨ Key Features (MVP)
 
@@ -34,8 +32,8 @@ _Checkout Review Step_
 - **Canonical Event Data:** Home, Events, and Event Detail share one event contract through repository/selectors.
 - **Ticket Selection:** Select variable ticket tiers, respect per-tier limits, and handle sold-out tiers.
 - **Persistent Cart:** Add event ticket selections to a local cart using `localStorage`.
+- **Frontend Checkout:** Review cart items, collect guest details, simulate payment, confirm orders, generate local tickets, and clear the purchased cart.
 - **Testing Foundation:** Vitest and React Testing Library cover shared utilities, components, and page-level flows.
-- **Simulated Checkout:** Design-first checkout plan for a premium single-page flow with a centered step panel and no real transactions.
 - **My Tickets:** Planned digital ticket wallet fed by generated local tickets.
 
 ## 🧭 Project Status
@@ -48,15 +46,16 @@ Completed:
 - Events listing UI
 - Event Detail UI
 - Add-to-cart persistence
+- Cart / Checkout UI
+- Local order and ticket persistence
 - Frontend testing setup and initial regression coverage
 
 In progress:
 
-- Cart / Checkout design definition and milestone planning
+- My Tickets planning
 
 Planned:
 
-- Cart / Checkout implementation
 - My Tickets UI
 - Auth UI
 - Admin UI
