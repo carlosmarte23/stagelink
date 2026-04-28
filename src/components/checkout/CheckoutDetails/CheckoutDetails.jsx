@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
+import { formatPhoneNumber } from "../../../features/checkout/lib/checkoutDetailsValidation.js";
 import { formatCurrency } from "../../../utils/currency.js";
 import { validateBuyerDetails } from "../../../features/checkout/lib/checkoutDetailsValidation.js";
 
@@ -31,6 +32,10 @@ export default function CheckoutDetails({
       [fieldName]: value,
     }));
   };
+
+  function handlePhoneChange(value) {
+    handleGuestValueChange(formatPhoneNumber(value), "phone");
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -118,11 +123,10 @@ export default function CheckoutDetails({
                 type="tel"
                 placeholder="(555) 555-5555"
                 value={formBuyerDetails.phone}
-                onChange={(e) =>
-                  handleGuestValueChange(e.target.value, "phone")
-                }
+                onChange={(e) => handlePhoneChange(e.target.value, "phone")}
                 aria-invalid={errors.phone ? "true" : "false"}
                 aria-describedby={errors.phone ? "phone-error" : undefined}
+                maxLength={14}
                 className={styles.input}
               />
               {errors.phone && (
