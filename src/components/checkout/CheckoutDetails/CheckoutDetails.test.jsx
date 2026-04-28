@@ -82,14 +82,11 @@ describe("CheckoutDetails", () => {
 
     renderCheckoutDetails({ onContinue });
 
-    await user.type(
-      screen.getByLabelText(/primary contact name/i),
-      "Carlos Marte",
-    );
+    await user.type(screen.getByLabelText(/primary contact name/i), "John Doe");
 
     await user.type(
       screen.getByLabelText(/email address/i),
-      "carlos@example.com",
+      "john@example.com",
     );
 
     await user.type(screen.getByLabelText(/phone number/i), "5551234567");
@@ -102,8 +99,8 @@ describe("CheckoutDetails", () => {
 
     expect(onContinue).toHaveBeenCalledWith(
       expect.objectContaining({
-        fullName: "Carlos Marte",
-        email: "carlos@example.com",
+        fullName: "John Doe",
+        email: "john@example.com",
         phone: "5551234567",
       }),
     );
@@ -111,8 +108,8 @@ describe("CheckoutDetails", () => {
 
   it("prefills the form with initial buyer details", () => {
     const filledValues = {
-      fullName: "Carlos Marte",
-      email: "carlos@example.com",
+      fullName: "John Doe",
+      email: "john@example.com",
       phone: "5551234567",
     };
 
@@ -151,7 +148,7 @@ describe("CheckoutDetails", () => {
     const onContinue = vi.fn();
 
     const initialDetails = {
-      fullName: "Carlos Marte",
+      fullName: "Jhon Doe",
       phone: "5551234567",
     };
 
@@ -174,10 +171,7 @@ describe("CheckoutDetails", () => {
 
     renderCheckoutDetails({ onContinue });
 
-    await user.type(
-      screen.getByLabelText(/primary contact name/i),
-      "Carlos Marte",
-    );
+    await user.type(screen.getByLabelText(/primary contact name/i), "Jhon Doe");
 
     expect(
       screen.queryByText(/please enter your full name/i),

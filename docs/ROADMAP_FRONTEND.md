@@ -25,17 +25,18 @@ Completed
 - Event Detail UI with event lookup, responsive detail layout, ticket tiers, sold-out handling, and add-to-cart behavior
 - Local cart storage helpers with tests
 - Checkout Review step with multi-event cart contents, selected tier rows, quantity/removal actions, shared fee model, and recalculated totals
+- Checkout Details step with guest/contact data collection and step-state progression
+- Checkout Pay step with frontend-only payment validation and simulated authorization
+- Checkout Done step with confirmed order summary, local order/ticket persistence, and cart clearing
 - Testing foundation with Vitest, React Testing Library, jest-dom, user-event, and jsdom
-- Unit, component, and page-level tests for event logic, date helpers, pagination, newsletter, Home, Events, Event Detail, Ticket Purchase Panel, and cart storage
+- Unit, component, and page-level tests for event logic, date helpers, pagination, newsletter, Home, Events, Event Detail, Ticket Purchase Panel, cart storage, checkout pricing, checkout steps, checkout confirmation, and the full checkout flow
 
 In progress
 
-- Checkout Details step with guest/contact data collection and step-state progression
+- My Tickets planning
 
 Planned
 
-- Checkout Pay step with frontend-only payment validation
-- Checkout Done step with simulated backend payload, local order/ticket persistence, and cart clearing
 - My Tickets UI
 - Auth UI
 - Admin UI
@@ -143,7 +144,7 @@ Milestone document
 
 - [Event Detail UI](./milestones/MILESTONE_EVENT_DETAIL_UI.md)
 
-### 5. Checkout UI (in progress)
+### 5. Checkout UI (done)
 
 - New Stitch design for a premium single-page checkout
 - Multi-event cart review built around a visual progress timeline
@@ -157,7 +158,9 @@ Milestone document
 - Fake payment details stored only as safe simulated data
 - Confirmed order payload assembled at confirmation time, not as a mutable object throughout the flow
 - Confirmed orders store the minimum pricing and event/tier snapshot data needed to reconstruct local orders and My Tickets
-- Local confirmation handoff to My Tickets
+- Local order and ticket records persisted after successful checkout
+- Purchased cart cleared after confirmation
+- Done step renders order number, grouped ticket summary, total paid, and handoff CTA
 
 Milestone document
 

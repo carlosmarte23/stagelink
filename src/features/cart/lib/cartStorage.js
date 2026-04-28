@@ -201,3 +201,8 @@ export function removeCartTicketTier(eventId, tierId) {
 
   return updatedCart;
 }
+
+export function clearCart() {
+  localStorage.removeItem(CART_STORAGE_KEY);
+  return getCart();
+}
