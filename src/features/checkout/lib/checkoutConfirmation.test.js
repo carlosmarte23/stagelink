@@ -79,8 +79,8 @@ const mockOrderPayload = {
     },
   ],
   buyerDetails: {
-    fullName: "Carlos Marte",
-    email: "carlos@test.com",
+    fullName: "Jhon Doe",
+    email: "john@test.com",
     phone: "5555551234",
   },
   paymentDetails: {
