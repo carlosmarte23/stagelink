@@ -82,14 +82,11 @@ describe("CheckoutDetails", () => {
 
     renderCheckoutDetails({ onContinue });
 
-    await user.type(
-      screen.getByLabelText(/primary contact name/i),
-      "Carlos Marte",
-    );
+    await user.type(screen.getByLabelText(/primary contact name/i), "John Doe");
 
     await user.type(
       screen.getByLabelText(/email address/i),
-      "carlos@example.com",
+      "john@example.com",
     );
 
     await user.type(screen.getByLabelText(/phone number/i), "5551234567");
@@ -102,8 +99,59 @@ describe("CheckoutDetails", () => {
 
     expect(onContinue).toHaveBeenCalledWith(
       expect.objectContaining({
-        fullName: "Carlos Marte",
-        email: "carlos@example.com",
+        fullName: "John Doe",
+        email: "john@example.com",
+        phone: "5551234567",
+      }),
+    );
+  });
+
+  it("formats the phone number while typing and ignores non-digit characters", async () => {
+    const user = userEvent.setup();
+
+    renderCheckoutDetails();
+
+    const phoneInput = screen.getByLabelText(/phone number/i);
+
+    await user.type(phoneInput, "555abc1234567");
+
+    expect(phoneInput).toHaveValue("(555) 123-4567");
+  });
+
+  it("does not allow more than 10 phone digits", async () => {
+    const user = userEvent.setup();
+
+    renderCheckoutDetails();
+
+    const phoneInput = screen.getByLabelText(/phone number/i);
+
+    await user.type(phoneInput, "5551234567899");
+
+    expect(phoneInput).toHaveValue("(555) 123-4567");
+  });
+
+  it("calls onContinue with a canonical phone number and normalized email", async () => {
+    const user = userEvent.setup();
+    const onContinue = vi.fn();
+
+    renderCheckoutDetails({ onContinue });
+
+    await user.type(screen.getByLabelText(/primary contact name/i), "John Doe");
+    await user.type(
+      screen.getByLabelText(/email address/i),
+      "  JOHN.DOE@EXAMPLE.COM  ",
+    );
+    await user.type(screen.getByLabelText(/phone number/i), "5551234567");
+
+    await user.click(
+      screen.getByRole("button", {
+        name: /next: choose payment method/i,
+      }),
+    );
+
+    expect(onContinue).toHaveBeenCalledWith(
+      expect.objectContaining({
+        email: "john.doe@example.com",
         phone: "5551234567",
       }),
     );
@@ -111,8 +159,8 @@ describe("CheckoutDetails", () => {
 
   it("prefills the form with initial buyer details", () => {
     const filledValues = {
-      fullName: "Carlos Marte",
-      email: "carlos@example.com",
+      fullName: "John Doe",
+      email: "john@example.com",
       phone: "5551234567",
     };
 
@@ -151,7 +199,7 @@ describe("CheckoutDetails", () => {
     const onContinue = vi.fn();
 
     const initialDetails = {
-      fullName: "Carlos Marte",
+      fullName: "Jhon Doe",
       phone: "5551234567",
     };
 
@@ -174,10 +222,7 @@ describe("CheckoutDetails", () => {
 
     renderCheckoutDetails({ onContinue });
 
-    await user.type(
-      screen.getByLabelText(/primary contact name/i),
-      "Carlos Marte",
-    );
+    await user.type(screen.getByLabelText(/primary contact name/i), "Jhon Doe");
 
     expect(
       screen.queryByText(/please enter your full name/i),

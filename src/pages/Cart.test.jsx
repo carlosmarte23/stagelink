@@ -4,12 +4,17 @@ import { render, screen, waitFor, within } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 
-import { getCheckoutStepMeta } from "../features/checkout/lib/checkoutSteps";
+import { getCheckoutStepMeta } from "../features/checkout/lib/checkoutSteps.js";
 import {
   CHECKOUT_STEPS,
   CHECKOUT_STEP_STATUS,
 } from "../features/checkout/config/checkoutStepsConfig.js";
 import { CART_STORAGE_KEY } from "../features/cart/config/cartConfig.js";
+import { ORDER_STORAGE_KEY } from "../features/orders/config/orderConfig.js";
+import { TICKET_STORAGE_KEY } from "../features/tickets/config/ticketConfig.js";
+import { getCart } from "../features/cart/lib/cartStorage.js";
+import { getOrders } from "../features/orders/lib/orderStorage.js";
+import { getTickets } from "../features/tickets/lib/ticketStorage.js";
 
 import Cart from "./Cart.jsx";
 
@@ -69,6 +74,12 @@ async function fillPaymentDetails(user) {
   );
   await user.type(screen.getByRole("textbox", { name: /expiry/i }), "01/29");
   await user.type(screen.getByRole("textbox", { name: /cvc/i }), "123");
+}
+
+async function completePayment(user) {
+  await goToPaymentStep(user);
+  await fillPaymentDetails(user);
+  await user.click(screen.getByRole("button", { name: /complete purchase/i }));
 }
 
 describe("<Cart />", () => {
@@ -292,6 +303,120 @@ describe("<Cart />", () => {
         "data-status",
         CHECKOUT_STEP_STATUS.COMPLETE,
       );
+      expect(getTimelineStep(/done/i)).toHaveAttribute(
+        "data-status",
+        CHECKOUT_STEP_STATUS.ACTIVE,
+      );
+    });
+  });
+
+  describe("checkout confirmation flow", () => {
+    beforeEach(() => {
+      localStorage.removeItem(CART_STORAGE_KEY);
+      localStorage.removeItem(ORDER_STORAGE_KEY);
+      localStorage.removeItem(TICKET_STORAGE_KEY);
+    });
+    it("persists a confirmed order after successful fake payment", async () => {
+      const user = userEvent.setup();
+      renderCart();
+
+      await completePayment(user);
+
+      expect(
+        screen.getByRole("button", { name: /authorizing/i }),
+      ).toBeDisabled();
+
+      await waitFor(
+        () => {
+          expect(
+            screen.getByRole("heading", {
+              level: 2,
+              name: /order confirmed/i,
+            }),
+          ).toBeInTheDocument();
+        },
+        { timeout: 3000 },
+      );
+
+      const orders = getOrders();
+
+      expect(orders).toHaveLength(1);
+
+      expect(orders[0].orderId).toMatch(/^SL-[A-F0-9]{8}$/);
+      expect(orders[0].confirmedAt).toEqual(expect.any(String));
+
+      expect(JSON.stringify(orders[0].paymentDetails)).not.toContain(
+        "4242424242424242",
+      );
+      expect(JSON.stringify(orders[0].paymentDetails)).not.toContain("01/29");
+      expect(JSON.stringify(orders[0].paymentDetails)).not.toContain("123");
+    });
+
+    it("persists generated tickets after successful fake payment", async () => {
+      const user = userEvent.setup();
+      renderCart();
+
+      await completePayment(user);
+
+      await waitFor(
+        () => {
+          expect(
+            screen.getByRole("heading", {
+              level: 2,
+              name: /order confirmed/i,
+            }),
+          ).toBeInTheDocument();
+        },
+        { timeout: 3000 },
+      );
+
+      const tickets = getTickets();
+      expect(tickets).toHaveLength(2);
+    });
+
+    it("clears the cart after successful fake payment", async () => {
+      const user = userEvent.setup();
+      renderCart();
+
+      await completePayment(user);
+
+      await waitFor(
+        () => {
+          expect(
+            screen.getByRole("heading", {
+              level: 2,
+              name: /order confirmed/i,
+            }),
+          ).toBeInTheDocument();
+        },
+        { timeout: 3000 },
+      );
+
+      expect(getCart()).toHaveLength(0);
+    });
+
+    it("renders the done confirmation from the confirmed order", async () => {
+      const user = userEvent.setup();
+      renderCart();
+
+      await completePayment(user);
+
+      await waitFor(
+        () => {
+          expect(
+            screen.getByRole("heading", {
+              level: 2,
+              name: /order confirmed/i,
+            }),
+          ).toBeInTheDocument();
+        },
+        { timeout: 3000 },
+      );
+
+      expect(
+        screen.getByRole("heading", { level: 2, name: /order confirmed/i }),
+      ).toBeInTheDocument();
+
       expect(getTimelineStep(/done/i)).toHaveAttribute(
         "data-status",
         CHECKOUT_STEP_STATUS.ACTIVE,

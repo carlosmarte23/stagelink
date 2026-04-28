@@ -45,6 +45,10 @@
           font-size: 0.875rem;
           line-height: 1.25;
 
+          &:focus-visible {
+            outline: 0.125rem solid var(--focus-ring);
+          }
+
           &[aria-invalid="true"] {
             border-color: var(--error);
           }

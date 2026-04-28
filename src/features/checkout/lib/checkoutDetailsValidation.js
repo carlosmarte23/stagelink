@@ -1,27 +1,47 @@
+export function normalizePhoneDigits(phone) {
+  return phone.replace(/\D/g, "").slice(0, 10);
+}
+
+export function formatPhoneNumber(phone) {
+  const digits = normalizePhoneDigits(phone);
+
+  if (digits.length <= 3) return digits;
+  if (digits.length <= 6) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+
+  return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
+}
+
 export function validateBuyerDetails(buyerDetails) {
-  const fullName = buyerDetails.fullName.trim();
-  const email = buyerDetails.email.trim();
-  const phone = buyerDetails.phone.trim();
+  const cleanFullName = buyerDetails.fullName.trim();
+  const cleanEmail = buyerDetails.email.trim().toLowerCase();
+  const cleanPhone = normalizePhoneDigits(buyerDetails.phone.trim());
 
   const errors = {};
 
-  if (!fullName) {
+  if (!cleanFullName) {
     errors.fullName = "Please enter your full name.";
-  } else if (fullName.split(" ").length < 2) {
+  } else if (cleanFullName.split(" ").length < 2) {
     errors.fullName = "Please enter your full name.";
   }
 
-  if (!email) {
+  if (!cleanEmail) {
     errors.email = "Please enter your email address.";
-  } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+  } else if (!/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(cleanEmail)) {
     errors.email = "Please enter a valid email address.";
   }
 
-  if (!phone) {
+  if (!cleanPhone) {
     errors.phone = "Please enter your phone number.";
-  } else if (!/^(?:\(\d{3}\)|\d{3})[-.\s]?\d{3}[-.\s]?\d{4}$/.test(phone)) {
+  } else if (cleanPhone.length !== 10) {
     errors.phone = "Please enter a valid 10-digit phone number.";
   }
 
-  return { errors: errors, validatedValues: { fullName, email, phone } };
+  return {
+    errors: errors,
+    validatedValues: {
+      fullName: cleanFullName,
+      email: cleanEmail,
+      phone: cleanPhone,
+    },
+  };
 }
