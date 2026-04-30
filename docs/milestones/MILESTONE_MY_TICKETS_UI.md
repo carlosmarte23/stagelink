@@ -16,7 +16,7 @@ Non-goals
 ## Design Direction
 
 - Use the accepted Stitch direction as a reference, but keep the current StageLink public header and app shell.
-- Keep the current StageLink public header and avoid extra Stitch navbar elements.
+- Avoid extra Stitch navbar elements.
 - Cards should feel like a premium ticket wallet: compact, readable, image-led, and focused on the venue-ready ticket.
 - The QR modal should stay intentionally small in scope: large QR display, event title, tier, holder name, and ticket ID.
 
@@ -77,10 +77,24 @@ Suggested branch:
 
 Suggested commits:
 
+- `test: define my tickets qr and filtering contracts`
 - `feat: generate useful qr values for tickets`
 - `feat: add my tickets wallet page`
 - `test: cover my tickets wallet flow`
-- `docs: mark my tickets as final mvp route`
+
+## TDD Delivery Strategy
+
+PR2 should follow a test-first workflow. Each stage starts by writing a focused failing test, then implements the smallest change needed to pass, then refactors while tests stay green.
+
+Recommended sequence:
+
+- QR contract tests, then update `qrValue` generation.
+- Ticket wallet helper tests, then implement grouping, searching, sorting, and short ID display.
+- Page state tests, then replace the `/my-tickets` placeholder with empty and no-results states.
+- Ticket card tests, then render saved tickets from local storage.
+- Interaction tests, then wire tabs, search, sorting, and QR modal behavior.
+- Checkout handoff test, then update Checkout Done to link to `/my-tickets`.
+- Full regression with `pnpm test:run`, `pnpm lint`, and one manual checkout-to-wallet walkthrough.
 
 ## Testing Expectations
 
