@@ -1,3 +1,5 @@
+import { TICKET_QR_BASE_URL } from "../../tickets/config/ticketConfig.js";
+
 function createRandomIdSegment() {
   if (crypto.randomUUID) {
     return crypto.randomUUID().slice(0, 8).toUpperCase();
@@ -16,6 +18,15 @@ function createRandomIdSegment() {
   return Math.random().toString(16).slice(2, 10).toUpperCase();
 }
 
+export function createTicketQrValue(ticketId, BaseUrl = TICKET_QR_BASE_URL) {
+  const url = new URL(BaseUrl);
+
+  url.searchParams.set("source", "stagelink-ticket");
+  url.searchParams.set("ticketId", ticketId);
+
+  return url.toString();
+}
+
 function createOrderId() {
   return `SL-${createRandomIdSegment().slice(0, 8).toUpperCase()}`;
 }
@@ -27,10 +38,6 @@ function createTicketId(orderId, eventId, tierId, ticketNumber) {
 
   const paddedTicketNumber = ticketNumber.toString().padStart(3, "0");
   return `${orderId}-${eventId.toUpperCase()}-${tierId.toUpperCase()}-${paddedTicketNumber}`;
-}
-
-function createQRValue(ticketId) {
-  return `STAGELINK:TICKET:${ticketId}`;
 }
 
 export function createConfirmedOrder({
@@ -99,7 +106,7 @@ export function generateLocalTicketsFromOrder(order) {
 
       for (let i = 1; i <= quantity; i++) {
         const ticketId = createTicketId(orderId, eventId, tierId, i);
-        const qrValue = createQRValue(ticketId);
+        const qrValue = createTicketQrValue(ticketId);
 
         orderTickets.push({
           orderId,
