@@ -13,8 +13,6 @@ Non-goals (not in this milestone)
 - No real payment provider integration
 - No backend order API
 - No live inventory reservation
-- No saved payment methods
-- No refunds, cancellations, or email delivery
 - No full My Tickets implementation beyond the checkout handoff
 
 ## Stitch Design
@@ -121,7 +119,7 @@ Checkout data should be collected by step and assembled into a backend-like payl
 - Pay fills a dedicated `paymentDetails` state object with safe simulated data only:
   - payment method
   - card last four digits when the card option is used
-  - save-card preference as UI-only data unless scoped later
+  - save-card preference as safe simulated UI data
 - Done assembles the final confirmed order payload from the current cart, recalculated totals, `buyerDetails`, `paymentDetails`, and confirmation metadata
 
 ### Confirmed order payload direction
@@ -247,7 +245,7 @@ Includes
 - Card number field
 - Expiry field
 - CVC field
-- Save card checkbox as UI-only unless scoped later
+- Save card checkbox as safe simulated UI state
 - Total amount
 - Secure checkout note
 - Simulated submit state
@@ -272,8 +270,7 @@ Includes
 - Order summary grouped by event and tier
 - Generated ticket count
 - Total paid
-- CTA to My Tickets or Home
-- Optional receipt action as UI-only unless scoped later
+- CTA to My Tickets
 - Local order/ticket persistence
 - Purchased cart cleared after success
 - Timeline complete through Done
@@ -325,7 +322,7 @@ Required test cases for implementation stages
 - Successful checkout persists a local order
 - Successful checkout generates one ticket record per purchased ticket
 - Successful checkout clears the purchased cart
-- Done step renders order summary, ticket count, total paid, and My Tickets/Home handoff
+- Done step renders order summary, ticket count, total paid, and My Tickets handoff
 - Event Detail ticket panel calculates service fees per selected ticket
 - Checkout recalculates service fees from total ticket quantity across all events
 - Facility charge applies once per checkout order
@@ -343,7 +340,7 @@ Required test cases for implementation stages
 - Inline totals show accurate subtotal, fees, facility charge, and total
 - Fake payment language is clear and never implies real processing
 - Successful checkout creates local orders and tickets
-- Confirmation links to My Tickets or Home
+- Confirmation links to My Tickets
 - `pnpm test:run` and `pnpm lint` pass
 - No console errors
 
@@ -353,7 +350,6 @@ Required test cases for implementation stages
 - Payment is simulated and never leaves the browser
 - The cart can contain multiple events
 - One event can contain multiple selected ticket tiers
-- Receipt download remains UI-only unless explicitly scoped later
 - Service fee remains a fixed per-ticket amount unless product requirements change
 - Ticket inventory is not reserved during cart review
-- My Tickets will consume generated local ticket records in a later milestone
+- My Tickets will consume generated local ticket records in the final MVP route

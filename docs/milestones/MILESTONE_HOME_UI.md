@@ -9,9 +9,8 @@ Build the Home page UI so it visually matches the design and behaves like a real
 
 Non-goals (not in this milestone)
 
-- No header redesign (search/login/avatar can be tackled later)
+- No header redesign
 - No real backend
-- No real auth
 - No real payments
 
 ## Stitch Design
