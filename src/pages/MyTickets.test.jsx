@@ -3,8 +3,14 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 
-import { ORDER_STORAGE_KEY } from "../features/orders/config/orderConfig.js";
-import { TICKET_STORAGE_KEY } from "../features/tickets/config/ticketConfig.js";
+import {
+  DEFAULT_DEMO_ORDERS,
+  ORDER_STORAGE_KEY,
+} from "../features/orders/config/orderConfig.js";
+import {
+  DEFAULT_DEMO_TICKETS,
+  TICKET_STORAGE_KEY,
+} from "../features/tickets/config/ticketConfig.js";
 
 import MyTickets from "./MyTickets.jsx";
 
@@ -318,8 +324,6 @@ describe("MyTickets", () => {
     });
 
     it("renders the empty state when there are no buyed tickets", () => {
-      localStorage.setItem(TICKET_STORAGE_KEY, JSON.stringify([]));
-
       renderMyTickets(false);
 
       expect(
@@ -336,10 +340,34 @@ describe("MyTickets", () => {
       expect(
         screen.getByRole("link", { name: /explore events/i }),
       ).toBeInTheDocument();
+      expect(
+        screen.getByRole("button", { name: /load demo tickets/i }),
+      ).toBeInTheDocument();
       expect(screen.queryByRole("searchbox")).not.toBeInTheDocument();
       expect(
         screen.queryByRole("link", { name: /browse more events/i }),
       ).not.toBeInTheDocument();
+    });
+
+    it("loads demo tickets from the empty state", async () => {
+      const user = userEvent.setup();
+
+      renderMyTickets(false);
+
+      await user.click(
+        screen.getByRole("button", { name: /load demo tickets/i }),
+      );
+
+      expect(screen.getByRole("searchbox")).toBeInTheDocument();
+      expect(
+        screen.getByRole("heading", { name: /indie sunset sessions/i }),
+      ).toBeInTheDocument();
+      expect(JSON.parse(localStorage.getItem(TICKET_STORAGE_KEY))).toEqual(
+        DEFAULT_DEMO_TICKETS,
+      );
+      expect(JSON.parse(localStorage.getItem(ORDER_STORAGE_KEY))).toEqual(
+        DEFAULT_DEMO_ORDERS,
+      );
     });
 
     it("renders the list of tickets when there are buyed tickets", () => {
@@ -353,8 +381,12 @@ describe("MyTickets", () => {
 
       await user.type(screen.getByRole("searchbox"), "does-not-exist");
 
-      expect(screen.getByText(/no tickets match your search/i)).toBeInTheDocument();
-      expect(screen.getByText(/try another event, venue, or order number/i)).toBeInTheDocument();
+      expect(
+        screen.getByText(/no tickets match your search/i),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText(/try another event, venue, or order number/i),
+      ).toBeInTheDocument();
     });
   });
 });

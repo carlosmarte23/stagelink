@@ -6,10 +6,7 @@ import {
   getTickets,
   saveTickets,
 } from "./ticketStorage.js";
-import {
-  DEFAULT_DEMO_TICKETS,
-  TICKET_STORAGE_KEY,
-} from "../config/ticketConfig.js";
+import { TICKET_STORAGE_KEY } from "../config/ticketConfig.js";
 
 const mockTickets = [
   {
@@ -114,13 +111,7 @@ describe("ticketStorage", () => {
     localStorage.removeItem(TICKET_STORAGE_KEY);
   });
 
-  it("returns demo tickets when no ticket storage exists", () => {
-    expect(getTickets()).toEqual(DEFAULT_DEMO_TICKETS);
-  });
-
-  it("returns an empty array when tickets are explicitly saved empty", () => {
-    localStorage.setItem(TICKET_STORAGE_KEY, JSON.stringify([]));
-
+  it("returns an empty array when no tickets exist", () => {
     expect(getTickets()).toEqual([]);
   });
 

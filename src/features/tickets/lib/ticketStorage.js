@@ -1,17 +1,10 @@
-import {
-  DEFAULT_DEMO_TICKETS,
-  TICKET_STORAGE_KEY,
-} from "../config/ticketConfig.js";
-
-function cloneTickets(tickets) {
-  return JSON.parse(JSON.stringify(tickets));
-}
+import { TICKET_STORAGE_KEY } from "../config/ticketConfig.js";
 
 export function getTickets() {
   const tickets = localStorage.getItem(TICKET_STORAGE_KEY);
 
   if (!tickets) {
-    return cloneTickets(DEFAULT_DEMO_TICKETS);
+    return [];
   }
 
   try {

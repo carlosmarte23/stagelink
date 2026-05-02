@@ -1,7 +1,13 @@
 import { useState } from "react";
 
+import { DEFAULT_DEMO_ORDERS } from "../features/orders/config/orderConfig.js";
+import { DEFAULT_DEMO_TICKETS } from "../features/tickets/config/ticketConfig.js";
+import { saveOrders } from "../features/orders/lib/orderStorage.js";
 import { TICKET_DATE_GROUPS } from "../features/tickets/lib/ticketWallet.js";
-import { getTickets } from "../features/tickets/lib/ticketStorage.js";
+import {
+  getTickets,
+  saveTickets,
+} from "../features/tickets/lib/ticketStorage.js";
 import { getVisibleTickets } from "../features/tickets/lib/ticketWallet.js";
 
 import EmptyTicketList from "../components/tickets/EmptyTicketList/EmptyTicketList.jsx";
@@ -13,12 +19,12 @@ import styles from "./MyTickets.module.css";
 import { Link } from "react-router-dom";
 
 export default function MyTickets() {
+  const [tickets, setTickets] = useState(() => getTickets());
   const [searchQuery, setSearchQuery] = useState("");
   const [activeTab, setActiveTab] = useState(TICKET_DATE_GROUPS.UPCOMING);
   const [sortDirection, setSortDirection] = useState("asc");
   const [selectedTicket, setSelectedTicket] = useState(null);
 
-  const tickets = getTickets();
   const isEmpty = tickets.length === 0;
 
   const visibleTickets = getVisibleTickets({
@@ -46,6 +52,12 @@ export default function MyTickets() {
 
   function handleCloseModal() {
     setSelectedTicket(null);
+  }
+
+  function handleLoadDemoTickets() {
+    saveOrders(DEFAULT_DEMO_ORDERS);
+    const demoTickets = saveTickets(DEFAULT_DEMO_TICKETS);
+    setTickets(demoTickets);
   }
 
   return (
@@ -76,7 +88,7 @@ export default function MyTickets() {
       )}
       <div className={styles.content}>
         {isEmpty ? (
-          <EmptyTicketList />
+          <EmptyTicketList onLoadDemoTickets={handleLoadDemoTickets} />
         ) : (
           <TicketList
             tickets={visibleTickets}
