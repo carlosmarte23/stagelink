@@ -177,8 +177,11 @@
     }
   }
 
-  .backButton {
-    margin-top: 1rem;
+  .navButtons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-block-start: 1rem;
   }
 }
 
@@ -186,5 +189,10 @@
   .doneCard {
     max-width: 700px;
     margin: 0 auto;
+
+    .navButtons {
+      flex-direction: row;
+      justify-content: center;
+    }
   }
 }

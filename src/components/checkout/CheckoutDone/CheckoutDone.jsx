@@ -68,12 +68,17 @@ export default function CheckoutDone({ confirmedOrder }) {
               {formatCurrency(totals.total)}
             </p>
           </div>
-          <Link
-            to="/"
-            className={`button button--primary ${styles.backButton}`}
-          >
-            Return to Home
-          </Link>
+          <div className={styles.navButtons}>
+            <Link to="/" className={`button ${styles.linkButton}`}>
+              Return to Home
+            </Link>
+            <Link
+              to="/my-tickets"
+              className={`button button--primary ${styles.linkButton}`}
+            >
+              Go to tickets
+            </Link>
+          </div>
         </div>
       </div>
     </section>
