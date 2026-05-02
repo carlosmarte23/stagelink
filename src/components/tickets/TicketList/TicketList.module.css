@@ -1,0 +1,41 @@
+.ticketList {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.5rem;
+  max-width: 44rem;
+  margin-inline: auto;
+}
+
+.noResults {
+  width: 100%;
+  max-width: 44rem;
+  margin-inline: auto;
+  padding: 2rem 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background-color: var(--surface-1);
+  text-align: center;
+
+  h2 {
+    margin: 0;
+    color: var(--text-strong);
+    font-size: 1.25rem;
+    line-height: 1.25;
+  }
+
+  p {
+    margin: 0.5rem 0 0;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .ticketList {
+    max-width: none;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+  }
+}

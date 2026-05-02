@@ -3,6 +3,7 @@ import { describe, it, expect } from "vitest";
 import {
   createConfirmedOrder,
   generateLocalTicketsFromOrder,
+  createTicketQrValue,
 } from "./checkoutConfirmation.js";
 
 const mockOrderPayload = {
@@ -172,9 +173,11 @@ describe("checkoutConfirmation", () => {
   it("generateTicketsFromOrder returns one ticket object per purchased ticket quantity", () => {
     const order = createConfirmedOrder(mockOrderPayload);
     const tickets = generateLocalTicketsFromOrder(order);
+    const firstTicket = tickets[0];
+    const testQrValue = createTicketQrValue(firstTicket.ticketId);
 
     expect(tickets).toHaveLength(4);
-    expect(tickets[0]).toMatchObject({
+    expect(firstTicket).toMatchObject({
       orderId: order.orderId,
       status: "active",
       holderName: mockOrderPayload.buyerDetails.fullName,
@@ -196,8 +199,9 @@ describe("checkoutConfirmation", () => {
       },
     });
 
-    expect(tickets[0].ticketId).toEqual(expect.any(String));
-    expect(tickets[0].qrValue).toContain(tickets[0].ticketId);
-    expect(tickets[0].qrValue).toMatch(/^STAGELINK:TICKET:/);
+    expect(firstTicket.ticketId).toEqual(expect.any(String));
+    expect(firstTicket.qrValue).toMatch(testQrValue);
+    expect(firstTicket.qrValue).toContain(firstTicket.ticketId);
+    expect(firstTicket.qrValue).toContain("source=stagelink-ticket");
   });
 });
