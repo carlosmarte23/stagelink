@@ -92,11 +92,10 @@ export function getVisibleTickets({
   tickets,
   activeTab,
   searchQuery,
+  sortOrder = activeTab === "upcoming" ? "asc" : "desc",
   now = new Date(),
 }) {
   if (!Array.isArray(tickets)) return [];
-
-  const sortOrder = activeTab === "upcoming" ? "asc" : "desc";
 
   const filteredTickets = tickets
     .filter((ticket) => getTicketDateGroup(ticket, now) === activeTab)
