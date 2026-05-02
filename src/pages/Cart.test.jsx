@@ -11,7 +11,10 @@ import {
 } from "../features/checkout/config/checkoutStepsConfig.js";
 import { CART_STORAGE_KEY } from "../features/cart/config/cartConfig.js";
 import { ORDER_STORAGE_KEY } from "../features/orders/config/orderConfig.js";
-import { TICKET_STORAGE_KEY } from "../features/tickets/config/ticketConfig.js";
+import {
+  DEFAULT_DEMO_TICKETS,
+  TICKET_STORAGE_KEY,
+} from "../features/tickets/config/ticketConfig.js";
 import { getCart } from "../features/cart/lib/cartStorage.js";
 import { getOrders } from "../features/orders/lib/orderStorage.js";
 import { getTickets } from "../features/tickets/lib/ticketStorage.js";
@@ -371,7 +374,19 @@ describe("<Cart />", () => {
       );
 
       const tickets = getTickets();
-      expect(tickets).toHaveLength(2);
+      const generatedTickets = tickets.filter(
+        (ticket) => ticket.orderId !== DEFAULT_DEMO_TICKETS[0].orderId,
+      );
+
+      expect(tickets).toHaveLength(DEFAULT_DEMO_TICKETS.length + 2);
+      expect(tickets).toEqual(
+        expect.arrayContaining([
+          expect.objectContaining({
+            ticketId: DEFAULT_DEMO_TICKETS[0].ticketId,
+          }),
+        ]),
+      );
+      expect(generatedTickets).toHaveLength(2);
     });
 
     it("clears the cart after successful fake payment", async () => {
