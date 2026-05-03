@@ -1,6 +1,8 @@
 import { describe, it, expect, beforeEach } from "vitest";
 import { render, screen, within } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
+import { MemoryRouter } from "react-router-dom";
+
 import { TicketPurchasePanel } from "./TicketPurchasePanel.jsx";
 
 import { formatCurrency } from "../../../utils/currency.js";
@@ -56,10 +58,12 @@ function calculateExpectedServiceFee(ticketQuantity) {
 
 function renderTicketPurchasePanel() {
   return render(
-    <TicketPurchasePanel
-      eventId={mockEvent.id}
-      ticketTiers={mockEvent.ticketTiers}
-    />,
+    <MemoryRouter>
+      <TicketPurchasePanel
+        eventId={mockEvent.id}
+        ticketTiers={mockEvent.ticketTiers}
+      />
+    </MemoryRouter>,
   );
 }
 
@@ -532,7 +536,11 @@ describe("TicketPurchasePanel", () => {
       expect(cart[0].total).toBe(generalPrice + expectedServiceFee);
 
       await user.click(increaseGeneralButton);
-      await user.click(buyTicketsButton);
+      await user.click(
+        screen.getByRole("button", {
+          name: /buy tickets/i,
+        }),
+      );
 
       expectedServiceFee = calculateExpectedServiceFee(2);
 
@@ -560,9 +568,17 @@ describe("TicketPurchasePanel", () => {
       expect(screen.getByRole("status")).toHaveTextContent(
         /tickets added to cart/i,
       );
+
+      expect(
+        screen.queryByRole("button", { name: /buy tickets/i }),
+      ).not.toBeInTheDocument();
+      expect(screen.getByRole("link", { name: /go to cart/i })).toHaveAttribute(
+        "href",
+        "/cart",
+      );
     });
 
-    it("disables the buy tickets button after adding the current selection to cart", async () => {
+    it("replaces the buy tickets button with cart confirmation after adding the current selection", async () => {
       const list = screen.getByRole("list", { name: /ticket tiers/i });
 
       const increaseGeneralButton = within(list).getByRole("button", {
@@ -579,7 +595,13 @@ describe("TicketPurchasePanel", () => {
       expect(buyTicketsButton).not.toBeDisabled();
       await user.click(buyTicketsButton);
 
-      expect(buyTicketsButton).toBeDisabled();
+      expect(
+        screen.queryByRole("button", { name: /buy tickets/i }),
+      ).not.toBeInTheDocument();
+      expect(screen.getByRole("link", { name: /go to cart/i })).toHaveAttribute(
+        "href",
+        "/cart",
+      );
     });
 
     it("enables the buy tickets button again when the selected quantities change", async () => {
@@ -595,11 +617,18 @@ describe("TicketPurchasePanel", () => {
       await user.click(increaseGeneralButton);
       await user.click(buyTicketsButton);
 
-      expect(buyTicketsButton).toBeDisabled();
+      expect(
+        screen.queryByRole("button", { name: /buy tickets/i }),
+      ).not.toBeInTheDocument();
 
       await user.click(increaseGeneralButton);
 
-      expect(buyTicketsButton).not.toBeDisabled();
+      expect(
+        screen.queryByRole("link", { name: /go to cart/i }),
+      ).not.toBeInTheDocument();
+      expect(
+        screen.getByRole("button", { name: /buy tickets/i }),
+      ).not.toBeDisabled();
     });
   });
 
@@ -695,7 +724,7 @@ describe("TicketPurchasePanel", () => {
       ).toHaveTextContent("0");
     });
 
-    it("keeps the buy tickets button disabled when the current event selection is already in cart", () => {
+    it("does not show the buy tickets button when the current event selection is already in cart", () => {
       const expectedServiceFee = calculateExpectedServiceFee(1);
 
       const eventCartItem = {
@@ -725,9 +754,14 @@ describe("TicketPurchasePanel", () => {
 
       renderTicketPurchasePanel();
 
-      const buyButton = screen.getByRole("button", { name: /buy tickets/i });
-
-      expect(buyButton).toBeDisabled();
+      expect(
+        screen.queryByRole("button", { name: /buy tickets/i }),
+      ).not.toBeInTheDocument();
+      expect(screen.getByText(/tickets already in your cart/i)).toBeInTheDocument();
+      expect(screen.getByRole("link", { name: /go to cart/i })).toHaveAttribute(
+        "href",
+        "/cart",
+      );
     });
   });
 });
