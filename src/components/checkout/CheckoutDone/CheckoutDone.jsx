@@ -25,10 +25,7 @@ export default function CheckoutDone({ confirmedOrder }) {
 
         <div className={styles.orderConfirmation}>
           <p className={styles.confirmationLabel}>Order Number</p>
-          <Link
-            to={`/orders/${confirmedOrder.orderId.toLowerCase()}`}
-            className={styles.confirmationNumber}
-          >{`#${orderId}`}</Link>
+          <p className={styles.confirmationNumber}>{`#${orderId}`}</p>
         </div>
         <div className={styles.orderSummary}>
           <p className={styles.summaryTitle}>Order Summary</p>
