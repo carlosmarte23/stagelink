@@ -38,7 +38,7 @@ _Checkout Page_
 
 ## 🧭 Project Status
 
-Current phase: final MVP frontend route.
+Current phase: MVP portfolio polish.
 
 Completed:
 
@@ -48,15 +48,17 @@ Completed:
 - Add-to-cart persistence
 - Cart / Checkout UI
 - Local order and ticket persistence
+- My Tickets UI
 - Frontend testing setup and initial regression coverage
 
 In progress:
 
-- My Tickets UI
+- Final MVP polish for portfolio readiness
 
 Planned:
 
-- Final responsive and accessibility polish
+- SEO metadata, structured data, sitemap, and social previews
+- Frontend refactors for shared hooks, reusable components, and CSS reuse
 
 ## 📚 Documentation
 
