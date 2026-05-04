@@ -334,6 +334,12 @@ describe("CheckoutReview", () => {
   it("renders an empty cart state when there are no cart items", () => {
     renderCheckoutReview([]);
 
+    const emptyRegion = screen.getByRole("region", {
+      name: /your cart is empty/i,
+    });
+    const emptyLayout = emptyRegion.querySelector('[data-cart-state="empty"]');
+
+    expect(emptyLayout).toBeInTheDocument();
     expect(
       screen.getByText(/add some tickets to your cart to view them here/i),
     ).toBeInTheDocument();

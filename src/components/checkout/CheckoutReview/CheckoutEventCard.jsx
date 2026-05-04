@@ -5,7 +5,7 @@ import { calculateEventSubtotal } from "../../../features/pricing/lib/ticketPric
 
 import CheckoutTicketRow from "./CheckoutTicketRow.jsx";
 
-import styles from "./CheckoutReview.module.css";
+import styles from "./CheckoutCart.module.css";
 import { CalendarDays } from "lucide-react";
 import { MapPin } from "lucide-react";
 

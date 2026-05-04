@@ -2,7 +2,7 @@ import { Trash2 } from "lucide-react";
 import { getEffectiveTierLimit } from "../../../features/events/lib/eventSelectors.js";
 import { formatCurrency } from "../../../utils/currency.js";
 
-import styles from "./CheckoutReview.module.css";
+import styles from "./CheckoutCart.module.css";
 
 export default function CheckoutTicketRow({
   eventId,
