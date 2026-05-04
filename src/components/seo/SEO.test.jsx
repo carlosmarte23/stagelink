@@ -75,6 +75,19 @@ describe("SEO", () => {
       "content",
       "https://stagelink-one.vercel.app/og/stagelink-default.jpg",
     );
+
+    expect(getMetaByProperty("og:image:width")).toHaveAttribute(
+      "content",
+      "1200",
+    );
+    expect(getMetaByProperty("og:image:height")).toHaveAttribute(
+      "content",
+      "630",
+    );
+    expect(getMetaByName("twitter:image:alt")).toHaveAttribute(
+      "content",
+      "StageLink live events preview",
+    );
   });
 
   it("renders JSON-LD structured data scripts when provided", () => {

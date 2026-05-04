@@ -24,13 +24,16 @@ export default function SEO({ jsonLd, ...props }) {
       <meta property="og:title" content={meta.title} />
       <meta property="og:description" content={meta.description} />
       <meta property="og:url" content={meta.canonicalUrl} />
+      <meta property="og:image:width" content={String(meta.imageWidth)} />
+      <meta property="og:image:height" content={String(meta.imageHeight)} />
       <meta property="og:image" content={meta.imageUrl} />
-      <meta property="og:image:alt" content={meta.title} />
+      <meta property="og:image:alt" content={meta.imageAlt} />
 
       <meta name="twitter:card" content={meta.twitterCard} />
       <meta name="twitter:title" content={meta.title} />
       <meta name="twitter:description" content={meta.description} />
       <meta name="twitter:image" content={meta.imageUrl} />
+      <meta name="twitter:image:alt" content={meta.imageAlt} />
     </Helmet>
   );
 }

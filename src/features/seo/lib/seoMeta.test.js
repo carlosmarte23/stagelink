@@ -24,4 +24,20 @@ describe("seoMeta", () => {
       robots: "noindex, nofollow",
     });
   });
+
+  it("falls back to the default social image when imagePath is empty", () => {
+    expect(buildSeoMeta({ imagePath: "" })).toMatchObject({
+      imageUrl: "https://stagelink-one.vercel.app/og/stagelink-default.jpg",
+    });
+  });
+
+  it("preserves external event image URLs", () => {
+    expect(
+      buildSeoMeta({
+        imagePath: "https://images.unsplash.com/photo-123",
+      }),
+    ).toMatchObject({
+      imageUrl: "https://images.unsplash.com/photo-123",
+    });
+  });
 });

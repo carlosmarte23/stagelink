@@ -49,6 +49,7 @@ export default function EventDetail() {
         description={`${event.description} See tickets for ${event.title} at ${venueName}.`}
         canonicalPath={`/events/${event.id}`}
         imagePath={event.imageUrl}
+        imageAlt={`Promotional artwork for ${event.title}`}
         jsonLd={[buildEventJsonLd(event), buildEventBreadcrumbJsonLd(event)]}
       />
 
@@ -59,7 +60,9 @@ export default function EventDetail() {
             src={mobileHeroImg}
             srcSet={`${mobileHeroImg} 600w, ${desktopHeroImg} 900w`}
             sizes={`(max-width: 768px) 100vw, 60vw`}
-            alt={event.title}
+            alt={`Promotional artwork for ${event.title}`}
+            fetchPriority="high"
+            decoding="async"
           />
         </div>
 

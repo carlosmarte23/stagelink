@@ -7,4 +7,7 @@ export const SEO_SITE = {
   productionOrigin: "https://stagelink-one.vercel.app/",
   defaultImagePath: "/og/stagelink-default.jpg",
   locale: "en_US",
+  defaultImageWidth: 1200,
+  defaultImageHeight: 630,
+  defaultImageAlt: "StageLink live events preview",
 };
