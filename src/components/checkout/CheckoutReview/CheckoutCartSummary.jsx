@@ -1,7 +1,7 @@
 import { Receipt } from "lucide-react";
 import { formatCurrency } from "../../../utils/currency.js";
 
-import styles from "./CheckoutReview.module.css";
+import styles from "./CheckoutCartSummary.module.css";
 import { ArrowRight } from "lucide-react";
 
 export default function CheckoutCartSummary({ checkoutTotals, onContinue }) {
