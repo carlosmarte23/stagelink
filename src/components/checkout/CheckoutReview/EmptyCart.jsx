@@ -10,7 +10,7 @@ export default function EmptyCart() {
         <ShoppingBag />
       </div>
       <h3 id="checkout-review-title" className={styles.title}>
-        Your cart
+        Your cart is empty
       </h3>
       <p className={styles.description}>
         Add some tickets to your cart to view them here.

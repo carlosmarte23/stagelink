@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 import { getEffectiveTierLimit } from "../../../features/events/lib/eventSelectors";
 import { formatCurrency } from "../../../utils/currency.js";
@@ -42,18 +43,18 @@ export function TicketPurchasePanel({ eventId, ticketTiers }) {
     return initialPanelState.quantities;
   });
 
-  const [cartFeedBackMessage, setCartFeedBackMessage] = useState("");
-
   const totalTicketQuantity = Object.values(ticketTierQuantity).reduce(
     (acc, quantity) => acc + quantity,
     0,
   );
 
-  const [isSelectionAddedToCart, setIsSelectionAddedToCart] = useState(
+  const [hasSavedSelection, setHasSavedSelection] = useState(
     initialPanelState.isSelectionAddedToCart,
   );
 
-  const isCtaDisabled = totalTicketQuantity === 0 || isSelectionAddedToCart;
+  const [showCartConfirmation, setShowCartConfirmation] = useState(false);
+
+  const isCtaDisabled = totalTicketQuantity === 0 || hasSavedSelection;
 
   function handleTicketTierChange(tierId, quantity) {
     setTicketTierQuantity((prev) => ({
@@ -61,11 +62,7 @@ export function TicketPurchasePanel({ eventId, ticketTiers }) {
       [tierId]: quantity,
     }));
 
-    if (cartFeedBackMessage) {
-      setCartFeedBackMessage("");
-    }
-
-    setIsSelectionAddedToCart(false);
+    setHasSavedSelection(false);
   }
   function reduceTicketQuantity(tier) {
     const currentValue = ticketTierQuantity[tier.id];
@@ -113,8 +110,8 @@ export function TicketPurchasePanel({ eventId, ticketTiers }) {
     const updatedCart = addEventTicketsToCart(currentCart, eventCartItem);
     saveCart(updatedCart);
 
-    setCartFeedBackMessage("Tickets added to cart!");
-    setIsSelectionAddedToCart(true);
+    setHasSavedSelection(true);
+    setShowCartConfirmation(true);
   }
 
   const subtotalPrice = ticketTiers.reduce((acc, tier) => {
@@ -205,19 +202,34 @@ export function TicketPurchasePanel({ eventId, ticketTiers }) {
         </p>
       </div>
 
-      <button
-        type="button"
-        disabled={isCtaDisabled}
-        aria-disabled={isCtaDisabled}
-        className={`button button--primary ${styles.ctaButton}`}
-        onClick={handleBuyClick}
-      >
-        Buy tickets
-      </button>
-      {cartFeedBackMessage && (
-        <p role="status" className={styles.cartMessage}>
-          {cartFeedBackMessage}
-        </p>
+      {hasSavedSelection ? (
+        <div className={styles.confirmationPanel}>
+          <p
+            role={showCartConfirmation ? "status" : undefined}
+            className={styles.cartMessage}
+          >
+            {showCartConfirmation
+              ? "Tickets added to cart!"
+              : "Tickets already in your cart"}
+          </p>
+
+          <Link
+            className={`button button--primary ${styles.cartLink}`}
+            to="/cart"
+          >
+            Go to cart
+          </Link>
+        </div>
+      ) : (
+        <button
+          type="button"
+          disabled={isCtaDisabled}
+          aria-disabled={isCtaDisabled}
+          className={`button button--primary ${styles.ctaButton}`}
+          onClick={handleBuyClick}
+        >
+          Buy tickets
+        </button>
       )}
     </aside>
   );

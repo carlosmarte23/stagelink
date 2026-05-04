@@ -28,16 +28,15 @@ Completed
 - Checkout Details step with guest/contact data collection and step-state progression
 - Checkout Pay step with frontend-only payment validation and simulated authorization
 - Checkout Done step with confirmed order summary, local order/ticket persistence, and cart clearing
+- My Tickets UI with upcoming/past ticket organization, search, sorting, ticket cards, QR previews, focused QR modal, empty states, and checkout handoff
 - Testing foundation with Vitest, React Testing Library, jest-dom, user-event, and jsdom
-- Unit, component, and page-level tests for event logic, date helpers, pagination, newsletter, Home, Events, Event Detail, Ticket Purchase Panel, cart storage, checkout pricing, checkout steps, checkout confirmation, and the full checkout flow
-
-In progress
-
-- My Tickets UI
+- Unit, component, and page-level tests for event logic, date helpers, pagination, newsletter, Home, Events, Event Detail, Ticket Purchase Panel, cart storage, checkout pricing, checkout steps, checkout confirmation, My Tickets wallet helpers, and the full checkout flow
 
 Planned
 
 - Final MVP polish pass
+- SEO metadata, structured data, sitemap, robots, and social previews
+- Frontend refactors for shared hooks, reusable components, storage helpers, and CSS reuse
 
 ## Routes
 
@@ -145,7 +144,7 @@ Milestone document
 
 - [Cart / Checkout UI](./milestones/MILESTONE_CART_CHECKOUT_UI.md)
 
-### 6. My Tickets UI (in progress)
+### 6. My Tickets UI (done)
 
 - Tabs for upcoming and past tickets
 - Search and sorting controls
@@ -158,13 +157,28 @@ Milestone document
 
 - [My Tickets UI](./milestones/MILESTONE_MY_TICKETS_UI.md)
 
-### 7. Final MVP Polish (planned)
+### 7. Final MVP Polish (in progress)
 
 - Accessibility pass
 - Responsive refinements
 - Consistent empty/loading states
 - README screenshots and demo instructions
 - Final regression testing for the MVP frontend flow
+
+### 8. SEO Real-World Layer (planned)
+
+- Route-level titles, descriptions, canonical URLs, and robots directives
+- Open Graph and Twitter social preview metadata
+- Structured data for Organization, WebSite, Event, ItemList, and BreadcrumbList
+- Sitemap and robots assets generated from the public route/event catalog
+- `noindex` handling for local/transitional routes such as `/cart` and `/my-tickets`
+
+### 9. Frontend Refactor Polish (planned)
+
+- Shared hooks for event listing state, scroll locking, checkout flow, and ticket wallet state
+- Reusable UI primitives for filter sections, chip groups, quantity steppers, form fields, page headers, and empty states
+- Consolidated local collection storage helpers for cart, orders, and tickets
+- CSS reuse pass for repeated card, surface, form, chip, and metadata patterns
 
 ## Non-Goals
 

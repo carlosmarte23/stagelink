@@ -59,6 +59,9 @@ export default function PublicHeader() {
             type="button"
             aria-expanded={isMenuOpen}
             aria-controls="mobile-menu"
+            aria-label={
+              isMenuOpen ? "Close navigation menu" : "Open navigation menu"
+            }
             onClick={handleToggleMenu}
             className={`${styles.menuButton} ${isMenuOpen ? styles.menuButtonOpen : ""}`}
           >

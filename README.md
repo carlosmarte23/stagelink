@@ -1,4 +1,6 @@
-# 🎟️ StageLink
+# StageLink
+
+![StageLink brand icon](./public/favicon-96x96.png)
 
 **A modern, frontend-first concert ticketing experience.**
 
@@ -14,17 +16,24 @@ The UI is inspired by the Stitch design pack to keep the product experience visu
 
 ## Implemented App Screenshots
 
-[![Home Screenshot](./docs/screenshots/home.png "Home Page")](./docs/screenshots/home.png "Open full size")
 _Home Page_
 
-[![Events Screenshot](./docs/screenshots/events.png "Events Page")](./docs/screenshots/events.png "Open full size")
+[![Home Screenshot](./docs/screenshots/home.png "Home Page")](./docs/screenshots/home.png "Open full size")
+
 _Events Page_
 
-[![Event Detail Screenshot](./docs/screenshots/event-detail.png "Event Detail Page")](./docs/screenshots/event-detail.png "Open full size")
+[![Events Screenshot](./docs/screenshots/events.png "Events Page")](./docs/screenshots/events.png "Open full size")
+
 _Event Detail Page_
 
-[![Checkout Screenshot](./docs/screenshots/checkout.png "Checkout Page")](./docs/screenshots/checkout.png "Open full size")
+[![Event Detail Screenshot](./docs/screenshots/event-detail.png "Event Detail Page")](./docs/screenshots/event-detail.png "Open full size")
+
 _Checkout Page_
+
+[![Checkout Screenshot](./docs/screenshots/checkout.png "Checkout Page")](./docs/screenshots/checkout.png "Open full size")
+
+_My Tickets Page_
+[![My Tickets Screenshot](./docs/screenshots/my-tickets.png "Checkout Page")](./docs/screenshots/my-tickets.png "Open full size")
 
 ## ✨ Key Features (MVP)
 
@@ -38,7 +47,7 @@ _Checkout Page_
 
 ## 🧭 Project Status
 
-Current phase: final MVP frontend route.
+Current phase: MVP polish, SEO, and frontend refactors.
 
 Completed:
 
@@ -48,15 +57,12 @@ Completed:
 - Add-to-cart persistence
 - Cart / Checkout UI
 - Local order and ticket persistence
+- My Tickets UI
 - Frontend testing setup and initial regression coverage
 
 In progress:
 
-- My Tickets UI
-
-Planned:
-
-- Final responsive and accessibility polish
+- Final MVP polish for portfolio readiness, SEO, and frontend refactors.
 
 ## 📚 Documentation
 
@@ -101,7 +107,7 @@ pnpm lint
 
 Carlos Marte
 
-GitHub: https://github.com/carlosmarte23
+[My GitHub](https://github.com/carlosmarte23)`
 
 ## License
 
