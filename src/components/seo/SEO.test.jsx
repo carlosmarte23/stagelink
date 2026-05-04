@@ -77,4 +77,26 @@ describe("SEO", () => {
       "https://stagelink-one.vercel.app/og/stagelink-default.jpg",
     );
   });
+
+  it("renders JSON-LD structured data scripts when provided", () => {
+    const organizationJsonLd = {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      name: "StageLink",
+      url: "https://stagelink-one.vercel.app/",
+    };
+
+    renderSEO({
+      title: "Discover Live Events",
+      canonicalPath: "/",
+      jsonLd: organizationJsonLd,
+    });
+
+    const scripts = document.head.querySelectorAll(
+      'script[type="application/ld+json"]',
+    );
+
+    expect(scripts).toHaveLength(1);
+    expect(JSON.parse(scripts[0].textContent)).toEqual(organizationJsonLd);
+  });
 });
