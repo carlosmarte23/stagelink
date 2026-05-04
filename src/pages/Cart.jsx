@@ -109,7 +109,10 @@ export default function Cart() {
         </h1>
         <p className={styles.description}>{stepMeta.description}</p>
       </header>
-      <div className={styles.stepContainer}>
+      <div
+        className={styles.stepContainer}
+        data-cart-state={isCartEmpty ? "empty" : "filled"}
+      >
         {(!isCartEmpty || currentStep === CHECKOUT_STEPS.DONE) && (
           <CheckoutTimeline
             checkoutSteps={CHECKOUT_STEP_ITEMS}
