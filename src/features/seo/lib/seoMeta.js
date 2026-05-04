@@ -1,8 +1,12 @@
 import { SEO_SITE } from "../config/seoConfig.js";
 
 export function buildAbsoluteUrl(path = "/") {
-  const normalizedPath = path.startsWith("/") ? path : `/${path}`;
-  return new URL(normalizedPath, SEO_SITE.productionOrigin).toString();
+  try {
+    return new URL(path).toString();
+  } catch {
+    const normalizedPath = path.startsWith("/") ? path : `/${path}`;
+    return new URL(normalizedPath, SEO_SITE.productionOrigin).toString();
+  }
 }
 
 export function buildPageTitle(title) {

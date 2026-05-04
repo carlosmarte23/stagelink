@@ -34,10 +34,9 @@ describe("SEO", () => {
       "Discover upcoming live events on StageLink.",
     );
     expect(getMetaByName("robots")).toHaveAttribute("content", "index, follow");
-    expect(document.head.querySelector('link[rel="canonical"]')).toHaveAttribute(
-      "href",
-      "https://stagelink-one.vercel.app/events",
-    );
+    expect(
+      document.head.querySelector('link[rel="canonical"]'),
+    ).toHaveAttribute("href", "https://stagelink-one.vercel.app/events");
 
     expect(getMetaByProperty("og:site_name")).toHaveAttribute(
       "content",
@@ -92,7 +91,7 @@ describe("SEO", () => {
       jsonLd: organizationJsonLd,
     });
 
-    const scripts = document.head.querySelectorAll(
+    const scripts = document.querySelectorAll(
       'script[type="application/ld+json"]',
     );
 

@@ -34,7 +34,7 @@ function getInitialPanelState(eventId, ticketTiers) {
   };
 }
 
-export function TicketPurchasePanel({ eventId, ticketTiers }) {
+export default function TicketPurchasePanel({ eventId, ticketTiers }) {
   const [initialPanelState] = useState(() =>
     getInitialPanelState(eventId, ticketTiers),
   );

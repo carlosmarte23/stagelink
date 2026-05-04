@@ -1,6 +1,5 @@
 import { useParams, Link } from "react-router-dom";
 
-import SEO from "../components/seo/SEO.jsx";
 import { CalendarDays, MapPin, ArrowLeft } from "lucide-react";
 import { getEventById } from "../features/events/data/eventsRepository";
 import {
@@ -9,11 +8,15 @@ import {
   getFormattedShowAt,
   getFormattedDoorsAt,
 } from "../features/events/lib/eventSelectors";
-
+import {
+  buildEventJsonLd,
+  buildEventBreadcrumbJsonLd,
+} from "../features/seo/lib/jsonLd";
 import { buildUnsplashImageUrl } from "../utils/images";
 
-import { EventDetailNotFound } from "../components/events/EventDetailNotFound/EventDetailNotFound.jsx";
-import { TicketPurchasePanel } from "../components/events/TicketPurchasePanel/TicketPurchasePanel.jsx";
+import SEO from "../components/seo/SEO.jsx";
+import EventDetailNotFound from "../components/events/EventDetailNotFound/EventDetailNotFound.jsx";
+import TicketPurchasePanel from "../components/events/TicketPurchasePanel/TicketPurchasePanel.jsx";
 
 import styles from "./EventDetail.module.css";
 
@@ -46,6 +49,7 @@ export default function EventDetail() {
         description={`${event.description} See tickets for ${event.title} at ${venueName}.`}
         canonicalPath={`/events/${event.id}`}
         imagePath={event.imageUrl}
+        jsonLd={[buildEventJsonLd(event), buildEventBreadcrumbJsonLd(event)]}
       />
 
       <div className={styles.page}>

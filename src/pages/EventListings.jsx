@@ -8,6 +8,8 @@ import EventsFiltersPanel from "../components/events/EventsFiltersPanel/EventFil
 import Pagination from "../components/shared/Pagination/Pagination.jsx";
 
 import { getAllEvents } from "../features/events/data/eventsRepository.js";
+import { buildEventsItemListJsonLd } from "../features/seo/lib/jsonLd.js";
+
 import styles from "./EventListings.module.css";
 
 import {
@@ -180,6 +182,7 @@ export default function EventListings() {
         title="Upcoming Events"
         description="Browse curated concerts and live experiences by genre, city, date, and price."
         canonicalPath="/events"
+        jsonLd={buildEventsItemListJsonLd(paginatedEvents)}
       />
 
       <section className={styles.page}>

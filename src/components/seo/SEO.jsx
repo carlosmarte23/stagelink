@@ -2,11 +2,17 @@ import { Helmet } from "react-helmet-async";
 import { SEO_SITE } from "../../features/seo/config/seoConfig";
 import { buildSeoMeta } from "../../features/seo/lib/seoMeta";
 
-export default function SEO(props) {
+export default function SEO({ jsonLd, ...props }) {
   const meta = buildSeoMeta(props);
+  const jsonLdItems = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
 
   return (
-    <Helmet>
+    <Helmet
+      script={jsonLdItems.map((schema) => ({
+        type: "application/ld+json",
+        innerHTML: JSON.stringify(schema),
+      }))}
+    >
       <title>{meta.title}</title>
       <meta name="description" content={meta.description} />
       <meta name="robots" content={meta.robots} />
