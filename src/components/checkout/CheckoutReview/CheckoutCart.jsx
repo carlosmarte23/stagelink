@@ -1,6 +1,6 @@
 import CheckoutEventCard from "./CheckoutEventCard.jsx";
 
-import styles from "./CheckoutReview.module.css";
+import styles from "./CheckoutCart.module.css";
 
 export default function CheckoutCart({
   cartItems,

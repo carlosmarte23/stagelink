@@ -1,0 +1,307 @@
+.checkoutEventList {
+  display: grid;
+  gap: 1.5rem;
+  border-block-end: 0;
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+
+  .checkoutEvent {
+    display: grid;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 4px solid var(--border);
+
+    &:last-of-type {
+      border-bottom: 0;
+    }
+
+    .checkoutEventHeader {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 1rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1rem;
+
+      .eventImage {
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 5rem;
+        height: 5rem;
+        border-radius: var(--radius-lg);
+        background-color: var(--surface-2);
+        object-fit: cover;
+
+        & img {
+          width: 100%;
+          height: 100%;
+          border-radius: var(--radius-lg);
+        }
+      }
+
+      .eventInfo {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+
+        .eventGenres {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          gap: 0.25rem;
+
+          .eventGenreBadge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.2rem 0.55rem;
+            border-radius: 999px;
+            background: rgb(var(--purple) / 0.16);
+            color: rgb(var(--purple) / 0.95);
+            font-size: 0.75rem;
+            font-weight: 700;
+            line-height: 1;
+            border: 1px solid rgb(var(--purple) / 0.28);
+          }
+        }
+
+        .eventTitle {
+          margin: 0;
+          font-size: 1.25rem;
+          color: var(--text-strong);
+          line-height: 1.25;
+        }
+
+        .eventDate,
+        .eventVenue {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          gap: 0.25rem;
+          margin: 0;
+          color: var(--text-muted);
+          font-size: 0.875rem;
+          line-height: 1.25;
+        }
+      }
+    }
+
+    .ticketList {
+      display: grid;
+      gap: 1.5rem;
+      margin: 1rem 0;
+
+      .ticketListItem {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        .ticketInfo {
+          display: flex;
+          flex-direction: column;
+          gap: 0.15rem;
+          align-self: flex-start;
+
+          .ticketName {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-strong);
+            line-height: 1.25;
+          }
+
+          .ticketPrice {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            line-height: 1.25;
+          }
+        }
+
+        .ticketControls {
+          display: grid;
+          grid-template-columns: 2fr auto auto;
+          align-items: center;
+          gap: 0.5rem;
+
+          .buttonControls {
+            background-color: var(--surface-1);
+            border-radius: var(--radius-lg);
+            display: inline-flex;
+            align-items: center;
+            justify-content: space-between;
+            width: fit-content;
+            align-self: flex-start;
+            gap: 1.5rem;
+            padding: 0rem 0.5rem;
+
+            & button {
+              appearance: none;
+              border: none;
+              border-radius: var(--radius-lg);
+              padding: 0.75rem;
+              background-color: inherit;
+              color: var(--text-strong);
+              font-size: 0.875rem;
+              line-height: 1.25rem;
+              width: 2rem;
+              cursor: pointer;
+            }
+          }
+
+          .ticketSubtotal {
+            margin: 0;
+            color: var(--text-strong);
+            font-size: 1rem;
+            line-height: 1.25;
+            font-weight: 700;
+            inline-size: 7ch;
+            justify-self: end;
+            text-align: end;
+            font-variant-numeric: tabular-nums;
+          }
+
+          .removeButton {
+            appearance: none;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-inline-size: 2.875rem;
+            min-block-size: 2.875rem;
+            justify-self: flex-end;
+            border-radius: var(--radius-lg);
+            padding: 0.45rem;
+            background-color: inherit;
+            color: var(--text-muted);
+            line-height: 1.25rem;
+            cursor: pointer;
+
+            &:hover,
+            &:focus-visible {
+              color: var(--error);
+            }
+          }
+        }
+      }
+    }
+
+    .eventSubtotal {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      background-color: var(--surface-3);
+      border-radius: var(--radius-lg);
+      padding: 1rem;
+
+      .label {
+        margin: 0;
+        color: var(--text);
+        font-size: 1rem;
+        line-height: 1.25;
+      }
+
+      .value {
+        margin: 0;
+        color: var(--text-strong);
+        font-size: 1.25rem;
+        line-height: 1.25;
+        font-weight: 700;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .checkoutEventList {
+    .checkoutEvent {
+      .checkoutEventHeader {
+        .eventImage {
+          width: 7rem;
+          height: 7rem;
+        }
+
+        .eventInfo {
+          .eventTitle {
+            font-size: 1.5rem;
+          }
+
+          .eventDate,
+          .eventVenue {
+            font-size: 1rem;
+          }
+        }
+      }
+
+      .ticketList {
+        .ticketListItem {
+          flex-direction: row;
+          width: 100%;
+          justify-content: space-between;
+
+          .ticketInfo {
+            gap: 0.5rem;
+
+            .ticketName {
+              font-size: 1.125rem;
+            }
+
+            .ticketPrice {
+              font-size: 1rem;
+            }
+          }
+
+          .ticketControls {
+            .buttonControls {
+              gap: 1.5rem;
+              font-size: 1.25rem;
+            }
+
+            .ticketSubtotal {
+              font-size: 1.25rem;
+            }
+
+            .removeButton {
+              min-inline-size: 3.25rem;
+              min-block-size: 3.25rem;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 1100px) {
+  .checkoutEventList {
+    .checkoutEvent {
+      .ticketList {
+        .ticketListItem {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: space-between;
+
+          .ticketControls {
+            grid-template-columns: 8.5rem 7ch 3rem;
+            column-gap: 1.25rem;
+            justify-content: end;
+
+            .buttonControls {
+              justify-self: end;
+            }
+
+            .ticketSubtotal,
+            .removeButton {
+              justify-self: end;
+            }
+          }
+        }
+      }
+    }
+  }
+}

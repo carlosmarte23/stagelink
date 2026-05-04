@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { ShoppingBag } from "lucide-react";
 
-import styles from "./CheckoutReview.module.css";
+import styles from "./EmptyCart.module.css";
 
 export default function EmptyCart() {
   return (
