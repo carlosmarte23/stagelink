@@ -18,8 +18,7 @@ export default function CheckoutDone({ confirmedOrder }) {
             Order Confirmed!
           </h2>
           <p className={styles.description}>
-            Your tickets have been sent to your email and are available in your
-            account.
+            Your tickets are ready in My Tickets for this browser session.
           </p>
         </header>
 
