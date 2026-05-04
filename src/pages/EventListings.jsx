@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
+import SEO from "../components/seo/SEO.jsx";
 import EventsToolbar from "../components/events/EventsToolbar/EventsToolbar.jsx";
 import EventsGrid from "../components/events/EventsGrid/EventsGrid.jsx";
 import EventsEmptyState from "../components/events/EventsEmptyState/EventsEmptyState.jsx";
@@ -174,69 +175,77 @@ export default function EventListings() {
   };
 
   return (
-    <section className={styles.page}>
-      <div className={`container ${styles.layout}`}>
-        <div className={styles.content}>
-          <EventsToolbar
-            resultsCount={eventsCount}
-            totalCount={totalEventsCount}
-            onOpenFilters={() => setIsFilterModalOpen(true)}
-            sortValue={sortValue}
-            onSortChange={(e) => handleSortChange(e.target.value)}
-          />
+    <>
+      <SEO
+        title="Upcoming Events"
+        description="Browse curated concerts and live experiences by genre, city, date, and price."
+        canonicalPath="/events"
+      />
 
-          {eventsCount === 0 ? (
-            <EventsEmptyState
-              suggestedEvents={suggestedEvents}
-              onClearFilters={handleClearFilters}
+      <section className={styles.page}>
+        <div className={`container ${styles.layout}`}>
+          <div className={styles.content}>
+            <EventsToolbar
+              resultsCount={eventsCount}
+              totalCount={totalEventsCount}
+              onOpenFilters={() => setIsFilterModalOpen(true)}
+              sortValue={sortValue}
+              onSortChange={(e) => handleSortChange(e.target.value)}
             />
-          ) : (
-            <EventsGrid events={paginatedEvents} />
-          )}
 
-          {totalPages > 1 && (
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={handlePageChange}
-            />
-          )}
-        </div>
+            {eventsCount === 0 ? (
+              <EventsEmptyState
+                suggestedEvents={suggestedEvents}
+                onClearFilters={handleClearFilters}
+              />
+            ) : (
+              <EventsGrid events={paginatedEvents} />
+            )}
 
-        <aside className={styles.desktopFilters} aria-label="Desktop Filters">
-          <EventsFiltersPanel {...filtersPanelProps} />
-        </aside>
+            {totalPages > 1 && (
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+              />
+            )}
+          </div>
 
-        <div
-          className={`${styles.mobileFiltersModal} ${isFilterModalOpen ? styles.open : ""}`}
-          role="presentation"
-        >
-          <button
-            type="button"
-            className={styles.mobileFiltersBackdrop}
-            aria-label="Close Filters"
-            onClick={() => closeFilterModal({ scrollToTop: true })}
-          />
+          <aside className={styles.desktopFilters} aria-label="Desktop Filters">
+            <EventsFiltersPanel {...filtersPanelProps} />
+          </aside>
 
           <div
-            className={styles.mobileFiltersShell}
-            role="dialog"
-            aria-modal="true"
-            aria-label="Mobile filters"
+            className={`${styles.mobileFiltersModal} ${isFilterModalOpen ? styles.open : ""}`}
+            role="presentation"
           >
             <button
               type="button"
-              className={`button ${styles.mobileFiltersClose}`}
+              className={styles.mobileFiltersBackdrop}
+              aria-label="Close Filters"
               onClick={() => closeFilterModal({ scrollToTop: true })}
+            />
+
+            <div
+              className={styles.mobileFiltersShell}
+              role="dialog"
+              aria-modal="true"
+              aria-label="Mobile filters"
             >
-              Close
-            </button>
-            <div className={styles.mobileFiltersPanel}>
-              <EventsFiltersPanel {...filtersPanelProps} isMobile={true} />
+              <button
+                type="button"
+                className={`button ${styles.mobileFiltersClose}`}
+                onClick={() => closeFilterModal({ scrollToTop: true })}
+              >
+                Close
+              </button>
+              <div className={styles.mobileFiltersPanel}>
+                <EventsFiltersPanel {...filtersPanelProps} isMobile={true} />
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }

@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+import SEO from "../components/seo/SEO.jsx";
 import CheckoutTimeline from "../components/checkout/CheckoutTimeline/CheckoutTimeline";
 import CheckoutReview from "../components/checkout/CheckoutReview/CheckoutReview";
 import CheckoutDetails from "../components/checkout/CheckoutDetails/CheckoutDetails.jsx";
@@ -102,55 +103,64 @@ export default function Cart() {
   }
 
   return (
-    <section className={styles.page} aria-labelledby="checkout-title">
-      <header className={styles.header}>
-        <h1 id="checkout-title" className={styles.title}>
-          Checkout
-        </h1>
-        <p className={styles.description}>{stepMeta.description}</p>
-      </header>
-      <div
-        className={styles.stepContainer}
-        data-cart-state={isCartEmpty ? "empty" : "filled"}
-      >
-        {(!isCartEmpty || currentStep === CHECKOUT_STEPS.DONE) && (
-          <CheckoutTimeline
-            checkoutSteps={CHECKOUT_STEP_ITEMS}
-            activeStep={currentStep}
-          />
-        )}
+    <>
+      <SEO
+        title="Checkout"
+        description="Checkout your tickets and complete your purchase."
+        canonicalPath="/cart"
+        noindex
+      />
 
-        {currentStep === CHECKOUT_STEPS.REVIEW && (
-          <CheckoutReview
-            cartItems={checkoutCartItems}
-            onIncreaseTicket={handleIncreaseTicket}
-            onDecreaseTicket={handleDecreaseTicket}
-            onRemoveTicket={handleRemoveTicket}
-            onContinue={handleReviewSubmit}
-          />
-        )}
+      <section className={styles.page} aria-labelledby="checkout-title">
+        <header className={styles.header}>
+          <h1 id="checkout-title" className={styles.title}>
+            Checkout
+          </h1>
+          <p className={styles.description}>{stepMeta.description}</p>
+        </header>
+        <div
+          className={styles.stepContainer}
+          data-cart-state={isCartEmpty ? "empty" : "filled"}
+        >
+          {(!isCartEmpty || currentStep === CHECKOUT_STEPS.DONE) && (
+            <CheckoutTimeline
+              checkoutSteps={CHECKOUT_STEP_ITEMS}
+              activeStep={currentStep}
+            />
+          )}
 
-        {currentStep === CHECKOUT_STEPS.DETAILS && (
-          <CheckoutDetails
-            totalAmountDue={amountDue}
-            initialDetails={buyerDetails}
-            onBack={goToPreviousStep}
-            onContinue={handleDetailsSubmit}
-          />
-        )}
+          {currentStep === CHECKOUT_STEPS.REVIEW && (
+            <CheckoutReview
+              cartItems={checkoutCartItems}
+              onIncreaseTicket={handleIncreaseTicket}
+              onDecreaseTicket={handleDecreaseTicket}
+              onRemoveTicket={handleRemoveTicket}
+              onContinue={handleReviewSubmit}
+            />
+          )}
 
-        {currentStep === CHECKOUT_STEPS.PAY && (
-          <CheckoutPayment
-            totalAmountDue={amountDue}
-            onBack={goToPreviousStep}
-            onContinue={handlePaymentSubmit}
-          />
-        )}
+          {currentStep === CHECKOUT_STEPS.DETAILS && (
+            <CheckoutDetails
+              totalAmountDue={amountDue}
+              initialDetails={buyerDetails}
+              onBack={goToPreviousStep}
+              onContinue={handleDetailsSubmit}
+            />
+          )}
 
-        {currentStep === CHECKOUT_STEPS.DONE && (
-          <CheckoutDone confirmedOrder={confirmedOrder} />
-        )}
-      </div>
-    </section>
+          {currentStep === CHECKOUT_STEPS.PAY && (
+            <CheckoutPayment
+              totalAmountDue={amountDue}
+              onBack={goToPreviousStep}
+              onContinue={handlePaymentSubmit}
+            />
+          )}
+
+          {currentStep === CHECKOUT_STEPS.DONE && (
+            <CheckoutDone confirmedOrder={confirmedOrder} />
+          )}
+        </div>
+      </section>
+    </>
   );
 }

@@ -1,3 +1,4 @@
+import SEO from "../components/seo/SEO.jsx";
 import { getAllEvents } from "../features/events/data/eventsRepository.js";
 import { getUpcomingEvents } from "../features/events/lib/eventListingUtils.js";
 
@@ -13,6 +14,11 @@ export default function Home() {
     .slice(0, 6);
   return (
     <>
+      <SEO
+        title="Discover Live Events"
+        description="Find curated concerts and live experiences, choose tickets, and keep your passes together with StageLink."
+        canonicalPath="/"
+      />
       <HomeHero />
       <div className="container">
         <FeaturedEventsSection events={featured} />

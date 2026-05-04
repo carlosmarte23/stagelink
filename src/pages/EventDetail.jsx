@@ -1,4 +1,6 @@
 import { useParams, Link } from "react-router-dom";
+
+import SEO from "../components/seo/SEO.jsx";
 import { CalendarDays, MapPin, ArrowLeft } from "lucide-react";
 import { getEventById } from "../features/events/data/eventsRepository";
 import {
@@ -38,55 +40,64 @@ export default function EventDetail() {
   const ticketTiers = event.ticketTiers;
 
   return (
-    <div className={styles.page}>
-      <div className={styles.hero}>
-        <img
-          className={styles.image}
-          src={mobileHeroImg}
-          srcSet={`${mobileHeroImg} 600w, ${desktopHeroImg} 900w`}
-          sizes={`(max-width: 768px) 100vw, 60vw`}
-          alt={event.title}
-        />
-      </div>
+    <>
+      <SEO
+        title={event.title}
+        description={`${event.description} See tickets for ${event.title} at ${venueName}.`}
+        canonicalPath={`/events/${event.id}`}
+        imagePath={event.imageUrl}
+      />
 
-      <div className={styles.content}>
-        <div className={styles.mainInfo}>
-          <header className={styles.header}>
-            <h1 className={styles.title}>{event.title}</h1>
-            <p className={styles.description}>{event.description}</p>
-          </header>
-          <div className={styles.infoSections}>
-            <section className={styles.contentSection}>
-              <span className={styles.icon} aria-hidden="true">
-                <CalendarDays />
-              </span>
-              <div className={styles.text}>
-                <h2 className={styles.title}>{eventStartsAt.fullDate}</h2>
-                <p className={styles.detail}>
-                  <span>{`Doors at ${eventDoorsAt?.time},`}</span>
-                  <span>{`Show at ${eventStartsAt?.timeWithZone}`}</span>
-                </p>
-              </div>
-            </section>
-            <section className={styles.contentSection}>
-              <span className={styles.icon}>
-                <MapPin />
-              </span>
-              <div className={styles.text}>
-                <h2 className={styles.title}>{venueName}</h2>
-                <p className={styles.detail}>{venueAddress}</p>
-              </div>
-            </section>
-          </div>
-          <div className={styles.backLinkWrapper}>
-            <Link className={`${styles.backLink}`} to="/events">
-              <ArrowLeft />
-              Go back to events
-            </Link>
-          </div>
+      <div className={styles.page}>
+        <div className={styles.hero}>
+          <img
+            className={styles.image}
+            src={mobileHeroImg}
+            srcSet={`${mobileHeroImg} 600w, ${desktopHeroImg} 900w`}
+            sizes={`(max-width: 768px) 100vw, 60vw`}
+            alt={event.title}
+          />
         </div>
-        <TicketPurchasePanel eventId={eventId} ticketTiers={ticketTiers} />
+
+        <div className={styles.content}>
+          <div className={styles.mainInfo}>
+            <header className={styles.header}>
+              <h1 className={styles.title}>{event.title}</h1>
+              <p className={styles.description}>{event.description}</p>
+            </header>
+            <div className={styles.infoSections}>
+              <section className={styles.contentSection}>
+                <span className={styles.icon} aria-hidden="true">
+                  <CalendarDays />
+                </span>
+                <div className={styles.text}>
+                  <h2 className={styles.title}>{eventStartsAt.fullDate}</h2>
+                  <p className={styles.detail}>
+                    <span>{`Doors at ${eventDoorsAt?.time},`}</span>
+                    <span>{`Show at ${eventStartsAt?.timeWithZone}`}</span>
+                  </p>
+                </div>
+              </section>
+              <section className={styles.contentSection}>
+                <span className={styles.icon}>
+                  <MapPin />
+                </span>
+                <div className={styles.text}>
+                  <h2 className={styles.title}>{venueName}</h2>
+                  <p className={styles.detail}>{venueAddress}</p>
+                </div>
+              </section>
+            </div>
+            <div className={styles.backLinkWrapper}>
+              <Link className={`${styles.backLink}`} to="/events">
+                <ArrowLeft />
+                Go back to events
+              </Link>
+            </div>
+          </div>
+          <TicketPurchasePanel eventId={eventId} ticketTiers={ticketTiers} />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
