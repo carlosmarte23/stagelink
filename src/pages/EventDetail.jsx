@@ -48,8 +48,6 @@ export default function EventDetail() {
         title={event.title}
         description={`${event.description} See tickets for ${event.title} at ${venueName}.`}
         canonicalPath={`/events/${event.id}`}
-        imagePath={event.imageUrl}
-        imageAlt={`Promotional artwork for ${event.title}`}
         jsonLd={[buildEventJsonLd(event), buildEventBreadcrumbJsonLd(event)]}
       />
 
