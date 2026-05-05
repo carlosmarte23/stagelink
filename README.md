@@ -48,7 +48,7 @@ _My Tickets Page_
 
 ## 🧭 Project Status
 
-Current phase: MVP polish, SEO, and frontend refactors.
+Current phase: MVP portfolio release complete.
 
 Completed:
 
@@ -60,10 +60,13 @@ Completed:
 - Local order and ticket persistence
 - My Tickets UI
 - Frontend testing setup and initial regression coverage
+- Final MVP visual polish
+- SEO metadata, structured data, sitemap, robots, and social preview support
 
-In progress:
+Final status:
 
-- Final MVP polish for portfolio readiness, SEO, and frontend refactors.
+- StageLink is ready as a frontend portfolio MVP.
+- Additional frontend refactors are a possible future improvement, but they are not required for this release.
 
 ## 📚 Documentation
 
@@ -75,6 +78,7 @@ In progress:
 - [Cart / Checkout UI Milestone](./docs/milestones/MILESTONE_CART_CHECKOUT_UI.md)
 - [My Tickets UI Milestone](./docs/milestones/MILESTONE_MY_TICKETS_UI.md)
 - [SEO Strategy](./docs/SEO_STRATEGY.md)
+- [Project Completion Notes](./docs/PROJECT_COMPLETION.md)
 
 ## 🛠️ Tech Stack
 
