@@ -3,7 +3,7 @@ import { render, screen, within } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 
-import { TicketPurchasePanel } from "./TicketPurchasePanel.jsx";
+import TicketPurchasePanel from "./TicketPurchasePanel.jsx";
 
 import { formatCurrency } from "../../../utils/currency.js";
 import { SERVICE_FEE_PER_TICKET } from "../../../features/pricing/config/pricingConfig.js";
@@ -757,7 +757,9 @@ describe("TicketPurchasePanel", () => {
       expect(
         screen.queryByRole("button", { name: /buy tickets/i }),
       ).not.toBeInTheDocument();
-      expect(screen.getByText(/tickets already in your cart/i)).toBeInTheDocument();
+      expect(
+        screen.getByText(/tickets already in your cart/i),
+      ).toBeInTheDocument();
       expect(screen.getByRole("link", { name: /go to cart/i })).toHaveAttribute(
         "href",
         "/cart",

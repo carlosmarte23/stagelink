@@ -10,6 +10,7 @@ import {
 } from "../features/tickets/lib/ticketStorage.js";
 import { getVisibleTickets } from "../features/tickets/lib/ticketWallet.js";
 
+import SEO from "../components/seo/SEO.jsx";
 import EmptyTicketList from "../components/tickets/EmptyTicketList/EmptyTicketList.jsx";
 import TicketsToolbar from "../components/tickets/TicketsToolbar/TicketsToolbar.jsx";
 import TicketList from "../components/tickets/TicketList/TicketList.jsx";
@@ -61,50 +62,59 @@ export default function MyTickets() {
   }
 
   return (
-    <section className={styles.page}>
-      <header className={styles.header}>
-        <h1 className={styles.pageTitle}>My Tickets</h1>
-        <p className={styles.pageDescription}>
-          Access and manage your digital event passes.
-        </p>
+    <>
+      <SEO
+        title="My Tickets"
+        description="Manage local demo event passes in your StageLink ticket wallet."
+        canonicalPath="/my-tickets"
+        noindex
+      />
+
+      <section className={styles.page}>
+        <header className={styles.header}>
+          <h1 className={styles.pageTitle}>My Tickets</h1>
+          <p className={styles.pageDescription}>
+            Access and manage your digital event passes.
+          </p>
+          {!isEmpty && (
+            <Link
+              to="/events"
+              className={`button button--primary ${styles.headerLink}`}
+            >
+              Browse More Events
+            </Link>
+          )}
+        </header>
+        {!isEmpty && (
+          <TicketsToolbar
+            searchQuery={searchQuery}
+            onSearchQueryChange={handleSearchQueryChange}
+            activeTab={activeTab}
+            onActiveTabChange={handleActiveTabChange}
+            sortDirection={sortDirection}
+            onSortDirectionChange={handleSortDirectionChange}
+          />
+        )}
+        <div className={styles.content}>
+          {isEmpty ? (
+            <EmptyTicketList onLoadDemoTickets={handleLoadDemoTickets} />
+          ) : (
+            <TicketList
+              tickets={visibleTickets}
+              onViewTicketModal={handleViewTicketModal}
+            />
+          )}
+        </div>
+        <TicketModal ticket={selectedTicket} onClose={handleCloseModal} />
         {!isEmpty && (
           <Link
             to="/events"
-            className={`button button--primary ${styles.headerLink}`}
+            className={`button button--primary ${styles.footerLink}`}
           >
             Browse More Events
           </Link>
         )}
-      </header>
-      {!isEmpty && (
-        <TicketsToolbar
-          searchQuery={searchQuery}
-          onSearchQueryChange={handleSearchQueryChange}
-          activeTab={activeTab}
-          onActiveTabChange={handleActiveTabChange}
-          sortDirection={sortDirection}
-          onSortDirectionChange={handleSortDirectionChange}
-        />
-      )}
-      <div className={styles.content}>
-        {isEmpty ? (
-          <EmptyTicketList onLoadDemoTickets={handleLoadDemoTickets} />
-        ) : (
-          <TicketList
-            tickets={visibleTickets}
-            onViewTicketModal={handleViewTicketModal}
-          />
-        )}
-      </div>
-      <TicketModal ticket={selectedTicket} onClose={handleCloseModal} />
-      {!isEmpty && (
-        <Link
-          to="/events"
-          className={`button button--primary ${styles.footerLink}`}
-        >
-          Browse More Events
-        </Link>
-      )}
-    </section>
+      </section>
+    </>
   );
 }

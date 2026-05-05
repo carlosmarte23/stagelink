@@ -38,7 +38,12 @@ export default function EventCard({ event, variant = "default" }) {
     <Link to={`/events/${event.id}`} className={cardClassName}>
       <div className={styles.cardHeader}>
         {isFeatured && <span className={styles.featuredBadge}>Featured</span>}
-        <img src={imgSrc} alt="" loading="lazy" decoding="async" />
+        <img
+          src={imgSrc}
+          alt={`Promotional artwork for ${event.title}`}
+          loading="lazy"
+          decoding="async"
+        />
       </div>
       <div className={styles.cardInner}>
         <div className={styles.cardBody}>

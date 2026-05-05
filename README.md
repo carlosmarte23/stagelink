@@ -43,6 +43,7 @@ _My Tickets Page_
 - **Persistent Cart:** Add event ticket selections to a local cart using `localStorage`.
 - **Frontend Checkout:** Review cart items, collect guest details, simulate payment, confirm orders, generate local tickets, and clear the purchased cart.
 - **Local Ticket Wallet:** View generated tickets after checkout with search, upcoming/past organization, QR previews, and a focused QR modal.
+- **SEO Readiness:** Route-level metadata, social previews, JSON-LD, robots, and sitemap assets support portfolio discovery.
 - **Testing Foundation:** Vitest and React Testing Library cover shared utilities, components, and page-level flows.
 
 ## 🧭 Project Status
@@ -73,6 +74,7 @@ In progress:
 - [Event Detail UI Milestone](./docs/milestones/MILESTONE_EVENT_DETAIL_UI.md)
 - [Cart / Checkout UI Milestone](./docs/milestones/MILESTONE_CART_CHECKOUT_UI.md)
 - [My Tickets UI Milestone](./docs/milestones/MILESTONE_MY_TICKETS_UI.md)
+- [SEO Strategy](./docs/SEO_STRATEGY.md)
 
 ## 🛠️ Tech Stack
 
@@ -101,6 +103,7 @@ pnpm dev
 ```bash
 pnpm test:run
 pnpm lint
+pnpm build
 ```
 
 ## Author

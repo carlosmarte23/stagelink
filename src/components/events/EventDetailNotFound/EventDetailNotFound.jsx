@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import styles from "./EventDetailNotFound.module.css";
 
-export function EventDetailNotFound() {
+export default function EventDetailNotFound() {
   return (
     <div className={styles.page}>
       <div className={styles.backgroundLayer} aria-hidden="true">
