@@ -61,7 +61,7 @@ document.querySelector('meta[name="twitter:image"]')?.content
 document.querySelector('meta[name="twitter:image:alt"]')?.content
 ```
 
-Home and Events should use the stable StageLink preview image. Event Detail should use the event image when available and fall back to the global preview image when not.
+Home, Events, and Event Detail should use the stable StageLink preview image for social previews. Event Detail JSON-LD can still reference the event image as structured event data, but social unfurls use the global fallback because this app is a client-rendered SPA.
 
 ## Robots And Sitemap
 

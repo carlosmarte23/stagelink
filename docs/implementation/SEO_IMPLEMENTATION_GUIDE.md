@@ -190,11 +190,11 @@ Do not create canonical URLs for temporary filter state unless those filters bec
   title={event.title}
   description={`${event.description} See tickets for ${event.title} at ${venueName}.`}
   canonicalPath={`/events/${event.id}`}
-  imagePath={event.imageUrl}
 />
 ```
 
 Event detail pages are the most valuable SEO pages because they have specific content: title, date, venue, description, and ticket tiers.
+Social previews use the global StageLink image in the initial HTML; event images remain available in the page UI and Event JSON-LD.
 
 ### Cart
 
