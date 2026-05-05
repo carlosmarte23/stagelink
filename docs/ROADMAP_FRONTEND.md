@@ -32,10 +32,13 @@ Completed
 - Testing foundation with Vitest, React Testing Library, jest-dom, user-event, and jsdom
 - Unit, component, and page-level tests for event logic, date helpers, pagination, newsletter, Home, Events, Event Detail, Ticket Purchase Panel, cart storage, checkout pricing, checkout steps, checkout confirmation, My Tickets wallet helpers, and the full checkout flow
 
-Planned
+Completed
 
 - Final MVP polish pass
 - SEO metadata, structured data, sitemap, robots, and social previews
+
+Possible future improvements
+
 - Frontend refactors for shared hooks, reusable components, storage helpers, and CSS reuse
 
 ## Routes
@@ -157,7 +160,7 @@ Milestone document
 
 - [My Tickets UI](./milestones/MILESTONE_MY_TICKETS_UI.md)
 
-### 7. Final MVP Polish (in progress)
+### 7. Final MVP Polish (done)
 
 - Accessibility pass
 - Responsive refinements
@@ -165,7 +168,7 @@ Milestone document
 - README screenshots and demo instructions
 - Final regression testing for the MVP frontend flow
 
-### 8. SEO Real-World Layer (planned)
+### 8. SEO Real-World Layer (done)
 
 - Route-level titles, descriptions, canonical URLs, and robots directives
 - Open Graph and Twitter social preview metadata
@@ -173,7 +176,7 @@ Milestone document
 - Sitemap and robots assets generated from the public route/event catalog
 - `noindex` handling for local/transitional routes such as `/cart` and `/my-tickets`
 
-### 9. Frontend Refactor Polish (planned)
+### 9. Frontend Refactor Polish (possible future improvement)
 
 - Shared hooks for event listing state, scroll locking, checkout flow, and ticket wallet state
 - Reusable UI primitives for filter sections, chip groups, quantity steppers, form fields, page headers, and empty states
